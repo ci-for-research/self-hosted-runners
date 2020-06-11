@@ -60,7 +60,7 @@ target/
 *~
 
 #vi
-*.swp 
+*.swp
 
 #Profiling
 *.lprof
@@ -75,3 +75,7 @@ target/
 
 # playbook
 *.retry
+
+# ignore ssh-keys
+*.pub
+*id_rsa*

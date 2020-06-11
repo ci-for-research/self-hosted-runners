@@ -1,0 +1,11 @@
+---
+- name: This is a hello-world example
+  hosts: all
+  become_user: ubuntu
+
+  tasks:
+  - name: Print debug message
+    debug:
+      msg: Hello, GT!
+  - name: list home folder
+    command: ls -asl /home/ubuntu
