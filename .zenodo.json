@@ -1,0 +1,12 @@
+{
+   "creators": [
+      {
+         "name": "Zapata, Felipe"
+      }
+   ], 
+   "description": "An Ansible playbook to use GitHub Actions with your own hardware.", 
+   "license": {
+      "id": "Apache-2.0"
+   }, 
+   "title": "linux_actions_runner"
+}
