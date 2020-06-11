@@ -1,3 +1,11 @@
+| Five recommendations for fair software from [fair-software.nl](https://fair-software.nl) | Badges |
+| --- | --- |
+| 1. Code repository | [![GitHub badge](https://img.shields.io/badge/github-repo-000.svg?logo=github&labelColor=gray&color=blue)](https://github.com/NLESC-JCER/linux_actions_runner/) |
+| 2. License | [![License badge](https://img.shields.io/github/license/NLESC-JCER/linux_actions_runner)](https://github.com/NLESC-JCER/linux_actions_runner/) |
+| 3. Community registry | [![Ansible Galaxy badge](https://img.shields.io/badge/galaxy-fixme.fixme-660198.svg)](https://galaxy.ansible.com/fixme/fixme) | 
+| 4. Enable citation | [![DOI](https://zenodo.org/badge/DOI/10.0000/FIXME.svg)](https://doi.org/10.0000/FIXME) |
+| 5. Checklist | ? |
+
 # What is this repository for?
 This repository contains a recipe to use the [GitHub Actions infrastucture](https://docs.gitlab.com/ee/ci/README.html) with your own infrastucture. The recipe installs and configures a [GitHub action runner](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/hosting-your-own-runners) using [ansible](https://www.ansible.com/).
 
