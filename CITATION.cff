@@ -5,9 +5,12 @@ authors:
   -
     family-names: Zapata
     given-names: Felipe
+    orcid: "https://orcid.org/0000-0001-8286-677X"
 cff-version: "1.1.0"
 doi: "10.0000/FIXME"
-keywords: 
+keywords:
+  - "Continuous Integration"
+  - "Github Actions"
 license: "Apache-2.0"
 message: "If you use this software, please cite it using these metadata."
 repository-code: "https://github.com/NLESC-JCER/linux_actions_runner"
