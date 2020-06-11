@@ -1,0 +1,15 @@
+# YAML 1.2
+---
+abstract: "An Ansible playbook to use GitHub Actions with your own hardware."
+authors: 
+  -
+    family-names: Zapata
+    given-names: Felipe
+cff-version: "1.1.0"
+doi: "10.0000/FIXME"
+keywords: 
+license: "Apache-2.0"
+message: "If you use this software, please cite it using these metadata."
+repository-code: "https://github.com/NLESC-JCER/linux_actions_runner"
+title: "linux_actions_runner"
+...
