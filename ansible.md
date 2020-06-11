@@ -36,6 +36,6 @@ cd /gt
 Finally, use the command below to run ansible:
 
 ```shell
-ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook --user ubuntu --private-key=$KEY_PATH -i inventory ./ansible-example/hello-playbook.yml
+ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook --user ubuntu --private-key=$KEY_PATH -i ./ansible-example/inventory ./ansible-example/hello-playbook.yml
 ```
 In this command  you will need to replace $KEY_PATH with the path which you have the ssh-keys. If you are using the Docker image, it will be `/gt/id_rsa_ci_sprint`
