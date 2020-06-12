@@ -1,0 +1,11 @@
+---
+- hosts: all
+  remote_user: tester
+  tasks: 
+  - name: updates apt's cache
+    apt:
+      update_cache: yes
+  - name: install nano
+    apt:
+      name: nano
+      state: present
