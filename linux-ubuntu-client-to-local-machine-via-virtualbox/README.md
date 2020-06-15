@@ -5,14 +5,13 @@ Describe general layout of the approach
 ## Prerequisites
 
 1. Install VirtualBox on the client: https://www.virtualbox.org/wiki/Linux_Downloads
-1. Download Ubuntu 18.04.4-desktop image from http://releases.ubuntu.com/18.04/
+1. Download an Ubuntu iso image from https://ubuntu.com/#download. Both the desktop and the server variant are
+suitable --choose whichever you're comfortable with.
 
 ## Server side configuration
 
-1. Create a new virtual machine in VirtualBox using Ubuntu 18.04.4-desktop as a base image.
-1. Configure the VM with at least 2 CPUs.
-1. Configure main memory to use 4 GB.
-1. Configure video memory to use the maximum of 128 MB.
+1. Create a new virtual machine in VirtualBox using Ubuntu as a base image.
+You can keep the default settings for the new virtual machine or adjust it as you prefer.
 1. Call the user ``tester``
 1. Set the user's password to ``password``
 1. Update packages
@@ -22,15 +21,23 @@ Describe general layout of the approach
     sudo apt upgrade
     ```
 
-1. Configure OpenSSH, check permissions on relevant files and directories
+1. Configure a ssh-server (OpenSSH) for remote connection, check permissions on relevant files and directories
 
     ```
-    sudo apt install openssh-client
+    sudo apt install openssh-server
     chmod go-w /home/tester
+    mkdir /home/tester/.ssh
     chmod 700 /home/tester/.ssh
     touch /home/tester/.ssh/known_hosts && chmod 644 /home/tester/.ssh/known_hosts
     touch /home/tester/.ssh/config      && chmod 600 /home/tester/.ssh/config
     chown -R tester:tester /home/.ssh
+    ```
+
+    Note you can use ``stat``'s ``%a`` option to see a file's permissions as an octal number, e.g.
+
+    ```shell
+    stat -c "%a %n" <filename>
+    stat -c "%a %n" `ls -1`
     ```
 
 1. Configure port forwarding
@@ -94,9 +101,35 @@ Describe general layout of the approach
     ssh -i id_rsa -p 2222 tester@127.0.0.1
     ```
 
-1. Test 'hello world' playbook:
+1. Log out of the server with
+
+    ```shell
+    exit
+    ```
+
+1. Test 'hello ansible' playbook:
 
     ```
-    ansible-playbook --key-file id_rsa --inventory hosts playbook-hello-world.yml
+    ansible-playbook --key-file id_rsa --inventory inventory playbook-hello-ansible.yml
     ```
 
+1. Test playbook that needs sudo permissions:
+
+    ```
+    ansible-playbook --key-file id_rsa --inventory inventory --ask-become-pass playbook-install-nano.yml
+    ```
+
+1. Use ``ansible-playbook``'s verbosity flag ``-v`` to see the directory listing result:
+
+    ```
+    ansible-playbook --key-file id_rsa --inventory inventory --ask-become-pass -v playbook-install-nano.yml
+    ```
+
+1. Sometimes, the Ansible output can be a bit difficult to read. You can enable pretty-printing Ansible's stdout by
+   creating a configuration file, ``ansible.cfg`` in the current directory, with the ``stdout_callback`` option.
+
+    ```
+    [defaults]
+    # Use a callback plugin to pretty print standard out.
+    stdout_callback = yaml
+    ```
