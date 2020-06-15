@@ -12,7 +12,6 @@ suitable --choose whichever you're comfortable with.
 
 1. Create a new virtual machine in VirtualBox using Ubuntu as a base image.
 You can keep the default settings for the new virtual machine or adjust it as you prefer.
-1. Configure main memory to use 4 GB.
 1. Call the user ``tester``
 1. Set the user's password to ``password``
 1. Update packages
