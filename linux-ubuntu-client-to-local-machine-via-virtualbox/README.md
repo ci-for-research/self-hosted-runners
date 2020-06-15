@@ -11,7 +11,7 @@ suitable --choose whichever you're comfortable with.
 ## Server side configuration
 
 1. Create a new virtual machine in VirtualBox using Ubuntu 18.04.4 as a base image.
-1. Configure the VM with at least 2 CPUs.
+You can keep the default settings for the new virtual machine or adjust it as you prefer.
 1. Configure main memory to use 4 GB.
 1. Configure video memory to use the maximum of 128 MB.
 1. Call the user ``tester``
