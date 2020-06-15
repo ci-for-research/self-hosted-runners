@@ -5,7 +5,7 @@ Describe general layout of the approach
 ## Prerequisites
 
 1. Install VirtualBox on the client: https://www.virtualbox.org/wiki/Linux_Downloads
-1. Download an Ubuntu 18.04.4 image from http://releases.ubuntu.com/18.04/. Both the desktop and the server variant are
+1. Download an Ubuntu iso image from https://ubuntu.com/#download. Both the desktop and the server variant are
 suitable --choose whichever you're comfortable with.
 
 ## Server side configuration
