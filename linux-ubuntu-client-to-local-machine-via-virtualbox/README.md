@@ -112,19 +112,19 @@ suitable --choose whichever you're comfortable with.
 1. Test 'hello ansible' playbook:
 
     ```
-    ansible-playbook --key-file id_rsa --inventory hosts playbook-hello-ansible.yml
+    ansible-playbook --key-file id_rsa --inventory inventory playbook-hello-ansible.yml
     ```
 
 1. Test playbook that needs sudo permissions:
 
     ```
-    ansible-playbook --key-file id_rsa --inventory hosts --ask-become-pass playbook-hello-nano.yml
+    ansible-playbook --key-file id_rsa --inventory inventory --ask-become-pass playbook-install-nano.yml
     ```
 
-1. Use ``ansible-playbooks`` verbosity flag ``-v`` to see the directory listing result:
+1. Use ``ansible-playbook``'s verbosity flag ``-v`` to see the directory listing result:
 
     ```
-    ansible-playbook --key-file id_rsa --inventory hosts --ask-become-pass -v playbook-hello-nano.yml
+    ansible-playbook --key-file id_rsa --inventory inventory --ask-become-pass -v playbook-install-nano.yml
     ```
 
 1. Sometimes, the Ansible output can be a bit difficult to read. You can enable pretty-printing Ansible's stdout by
