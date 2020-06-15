@@ -121,6 +121,12 @@ suitable --choose whichever you're comfortable with.
     ansible-playbook --key-file id_rsa --inventory hosts --ask-become-pass playbook-hello-nano.yml
     ```
 
+1. Use ``ansible-playbooks`` verbosity flag ``-v`` to see the directory listing result:
+
+    ```
+    ansible-playbook --key-file id_rsa --inventory hosts --ask-become-pass -v playbook-hello-nano.yml
+    ```
+
 1. Sometimes, the Ansible output can be a bit difficult to read. You can enable pretty-printing Ansible's stdout by
    creating a configuration file, ``ansible.cfg`` in the current directory, with the ``stdout_callback`` option.
 
