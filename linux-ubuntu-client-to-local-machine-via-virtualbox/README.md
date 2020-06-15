@@ -22,7 +22,7 @@ You can keep the default settings for the new virtual machine or adjust it as yo
     sudo apt upgrade
     ```
 
-1. Configure OpenSSH, check permissions on relevant files and directories
+1. Configure a ssh-server (OpenSSH) for remote connection, check permissions on relevant files and directories
 
     ```
     sudo apt install openssh-server
