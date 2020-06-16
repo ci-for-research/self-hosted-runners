@@ -145,3 +145,5 @@ You can keep the default settings for the new virtual machine or adjust it as yo
     ```
     ansible-playbook --key-file id_rsa --inventory inventory -v playbook-set-up-runner.yml
     ```
+
+1. Go to https://github.com/<org>/<repo>/settings/actions, select _Enable local actions only for this repository_. Then click _Add runner_.
