@@ -6,10 +6,13 @@
   vars_prompt:
     - name: "ORG"
       prompt: "What is the GitHub organization?"
+      private: no
     - name: "REPO"
       prompt: "What is the GitHub repository?"
-    - name: "GITHUB_ACTIONS_TOKEN"
+      private: no
+    - name: "TOKEN"
       prompt: "Please enter the GitHub Actions token for this workflow"
+      private: no
   remote_user: tester
   become: no
   tasks:
@@ -31,7 +34,7 @@
         remote_src: yes
 
     - name: Configure GitHub Action runner
-      command: chdir=/tmp/actions_runner ./config.sh --url https://github.com/{{ ORG }}/{{ REPO }} --token '{{ GITHUB_ACTIONS_TOKEN }}'
+      command: chdir=/tmp/actions_runner ./config.sh --url https://github.com/{{ ORG }}/{{ REPO }} --token '{{ TOKEN }}'
 
     - name: run it
       shell: /tmp/actions_runner/run.sh &
