@@ -54,7 +54,7 @@ suitable --choose whichever you're comfortable with.
     sudo apt install net-tools
     ```
 
-    In the VM, open a terminal and type ``ifconfig``. Look for an entry that has an ``inet`` key.
+    In the VM, open a terminal and type ``ifconfig``. Look for an entry that has an ``inet`` key. Mine says ``192.168.1.73``.
 
 ## Client side configuration
 
@@ -75,10 +75,10 @@ suitable --choose whichever you're comfortable with.
     sudo apt install openssh-client
     ```
 
-1. Generate a key pair (files ``id_rsa`` and ``id_rsa.pub``) in directory ``linux-ubuntu-client-to-local-machine-via-virtualbox`` using RSA encryption:
+1. Generate a key pair (files ``id_rsa`` and ``id_rsa.pub``) in directory ``[ubuntu-virtualbox](/ubuntu-virtualbox)`` using RSA encryption:
 
     ```shell
-    cd linux-ubuntu-client-to-local-machine-via-virtualbox
+    cd ubuntu-virtualbox
     ssh-keygen -t rsa -f id_rsa -N ''
     ```
 
