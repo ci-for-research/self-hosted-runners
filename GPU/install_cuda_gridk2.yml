@@ -1,0 +1,99 @@
+---
+- name: Install Nvidia drivers and Cuda for Grid K2
+  hosts: all
+  vars:
+    download_path: "/tmp/installers"
+    driver_version: "367.134"
+    cuda_version_major: "8.0"
+    cuda_version_minor: "61_375.26"
+  tasks:
+
+  - name:  Install gcc-5 and g++-5
+    apt:
+      pkg:
+      - gcc-5
+      - g++-5
+      - make
+      - perl
+
+  - name: Set deafult gcc
+    command: update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 10
+    args:
+      creates: /usr/bin/gcc
+
+  - name: Set deafult cc
+    command: update-alternatives --install /usr/bin/cc cc /usr/bin/gcc 30
+    args:
+      creates: /usr/bin/cc
+
+  - name: Set deafult g++
+    command: update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 10
+    args:
+      creates: /usr/bin/g++
+
+  - name: Ensures {{download_path}} dir exists
+    file: path={{download_path}} state=directory
+
+  - name: Download Nvidia driver
+    get_url:
+      url: http://us.download.nvidia.com/XFree86/Linux-x86_64/{{driver_version}}/NVIDIA-Linux-x86_64-{{driver_version}}.run
+      dest: /tmp/installers/NVIDIA-Linux-x86_64-{{driver_version}}.run
+    tags:
+      - cuda
+
+  - name: Install Nvidia driver
+    command: sh ./NVIDIA-Linux-x86_64-367.134.run --accept-license  -s
+    args:
+      chdir: /tmp/installers/
+
+  - name: Download Cuda
+    get_url:
+      url: https://developer.nvidia.com/compute/cuda/{{cuda_version_major}}/Prod2/local_installers/cuda_{{cuda_version_major}}.{{cuda_version_minor}}_linux-run
+      dest: /tmp/installers/cuda_{{cuda_version_major}}.{{cuda_version_minor}}_linux-run
+    tags:
+      - cuda
+
+  - name: Exctract runner
+    command: sh ./cuda_8.0.61_375.26_linux-run  --tar mxvf
+    args:
+      chdir: /tmp/installers/
+      creates: /tmp/installers/InstallUtils.pm
+
+  - name: Copy Perl scripts
+    command: cp InstallUtils.pm /usr/lib/x86_64-linux-gnu/perl-base/
+    args:
+      chdir: /tmp/installers/
+      creates: /usr/lib/x86_64-linux-gnu/perl-base/InstallUtils.pm
+
+  - name: Clean extracted files
+    command: rm -rf InstallUtils.pm cuda-installer.pl run_files uninstall_cuda.pl
+    args:
+      chdir: /tmp/installers/
+      removes: /tmp/installers/InstallUtils.pm
+
+  - name: Install Cuda
+    command: sh ./cuda_8.0.61_375.26_linux-run --silent --samples --toolkit --override --verbose
+    args:
+      chdir: /tmp/installers/
+
+  - name: Make gcc-5 default compiler for Cuda
+    command: ln -s /usr/bin/"{{ item.name }}" /usr/local/cuda/bin/"{{ item.dest }}"
+    loop:
+      - { name: 'gcc-5', dest: 'gcc' }
+      - { name: 'g++-5', dest: 'g++' }
+
+  - name: Ensure virtualenv is sourced from the .bashrc
+    blockinfile:
+      dest: "/etc/profile.d/cuda.sh"
+      block: |
+        export PATH=$PATH:/usr/local/cuda-{{cuda_version_major}}/bin
+        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-{{cuda_version_major}}/lib64
+      marker: '# {mark} CUDA environment variables'
+      insertbefore: BOF
+      create: yes
+      mode: a+x
+
+  - name: Clean up - remove {{ download_path }}
+    file:
+      path: "{{ download_path }}"
+      state: absent
