@@ -2,7 +2,7 @@
 | --- | --- |
 | 1. Code repository | [![GitHub badge](https://img.shields.io/badge/github-repo-000.svg?logo=github&labelColor=gray&color=blue)](https://github.com/NLESC-JCER/linux_actions_runner/) |
 | 2. License | [![License badge](https://img.shields.io/github/license/NLESC-JCER/linux_actions_runner)](https://github.com/NLESC-JCER/linux_actions_runner/) |
-| 3. Community registry | [![Ansible Galaxy badge](https://img.shields.io/badge/galaxy-fixme.fixme-660198.svg)](https://galaxy.ansible.com/fixme/fixme) | 
+| 3. Community registry | [![Ansible Galaxy badge](https://img.shields.io/badge/galaxy-fixme.fixme-660198.svg)](https://galaxy.ansible.com/fixme/fixme) |
 | 4. Enable citation | [![DOI](https://zenodo.org/badge/DOI/10.0000/FIXME.svg)](https://doi.org/10.0000/FIXME) |
 | 5. Checklist | ? |
 
@@ -16,7 +16,7 @@ GitHub provides. This can be useful when the code you want to test has special r
 This guide distinguishes between the _client_ and the _server_; the client is your own machine; the server is whichever
 machine runs the tests. For either side, we'll explain what configuration needs to be done. For people who just want to
 try out the instructions but don't have access to remote hardware, we included a few alternatives for running the server
-locally as well, through the use of virtualization (with VirtualBox) and containerization (with Docker). 
+locally as well, through the use of virtualization (with VirtualBox) and containerization (with Docker).
 
 For the client, we included instructions for Linux Ubuntu, Mac, and Windows; the server-side instructions all assume
 Linux Ubuntu.
@@ -37,7 +37,15 @@ Linux Ubuntu.
 [SURF HPC Cloud]: https://userinfo.surfsara.nl/systems/hpc-cloud
 
 
---- 
+## GitHub configuration
+
+Now that we know how to set up a CI server, the next step is to configure Github such that it will start using it
+whenever code is pushed to the repository.
+
+1. TODO first
+1. TODO second
+
+---
 old readme text:
 
 # What is this repository for?
@@ -60,4 +68,3 @@ you will need to:
 
 ### Supported OS
 Currently the recipe only works for **Ubuntu**.
-

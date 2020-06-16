@@ -43,7 +43,7 @@ You can keep the default settings for the new virtual machine or adjust it as yo
 1. Configure port forwarding
 
     1. Get the IP address of the VM
-        
+
         ```shell
         sudo apt install net-tools
         ```
@@ -133,3 +133,17 @@ You can keep the default settings for the new virtual machine or adjust it as yo
     # Use a callback plugin to pretty print standard out.
     stdout_callback = yaml
     ```
+
+1. We're almost ready to use ``ansible-playbook`` to set up a GitHub Runner on your own server, but first we need to generate a token, as follows:
+
+    1. Go to ...
+    1. Then ...
+    1. and then ...
+
+    Now, configure your server to be able to run continuous integration with:
+
+    ```
+    ansible-playbook --key-file id_rsa --inventory inventory -v playbook-set-up-runner.yml
+    ```
+
+1. Go to https://github.com/<org>/<repo>/settings/actions, select _Enable local actions only for this repository_. Then click _Add runner_.
