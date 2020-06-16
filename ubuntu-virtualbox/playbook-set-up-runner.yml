@@ -7,8 +7,10 @@
     - name: "ORG"
       prompt: "What is the GitHub organization?"
       private: no
+      default: jspaaks
     - name: "REPO"
       prompt: "What is the GitHub repository?"
+      default: linux_actions_runner
       private: no
     - name: "TOKEN"
       prompt: "Please enter the GitHub Actions token for this workflow"
@@ -34,7 +36,7 @@
         remote_src: yes
 
     - name: Configuring the GitHub Action runner
-      command: chdir=/tmp/actions-runner ./config.sh --url https://github.com/{{ ORG }}/{{ REPO }} --token {{ TOKEN }}
+      command: chdir=/tmp/actions-runner ./config.sh --unattended --url https://github.com/{{ ORG }}/{{ REPO }} --token {{ TOKEN }} --replace
 
     - name: Running the GitHub Action runner
       shell: /tmp/actions-runner/run.sh &
