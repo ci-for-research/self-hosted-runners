@@ -1,0 +1,12 @@
+name: Self-hosted CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: test
+    steps:
+      - name: Show directory listing
+        shell: bash -l {0}
+        run: |
+          ls -la
