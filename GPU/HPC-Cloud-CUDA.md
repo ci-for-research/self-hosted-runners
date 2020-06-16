@@ -1,3 +1,8 @@
+## Resources
+SURF HPC Documentation
+https://doc.hpccloud.surfsara.nl/gpu-attach
+
+
 ## Requirements
 
 Cuda currently officially supports only two versions of Ubuntu: 18.04 and 16.04. This instructions were tested on Ubuntu 18.04.
@@ -27,21 +32,68 @@ GPU hardware information
 01:01.0 VGA compatible controller: NVIDIA Corporation GK104GL [GRID K2] (rev a1)
 ```
 
-## Install CUDA Toolkit and Drivers
+## Pre install
 
+Cuda 8 only works with only gcc 5.0.
 ```
-# apt install nvidia-profiler nvidia-headless-440 nvidia-cuda-toolkit nvidia-compute-utils-440 nvidia-cuda-gdb   nvidia-visual-profiler nvidia-cuda-doc g++
-```
-
-## Reboot the computer
-
-```
-# reboot
+# apt install gcc-5 g++-5
 ```
 
-## Testing
+## Install
+
+Check compatibility first
+https://docs.nvidia.com/deploy/cuda-compatibility/index.html
+
+See what drivers you need
+https://www.nvidia.com/Download/index.aspx?lang=en-us
+
+### Install Nvidia drivers
+
+```
+# wget http://us.download.nvidia.com/XFree86/Linux-x86_64/367.134/NVIDIA-Linux-x86_64-367.134.run
+sh ./NVIDIA-Linux-x86_64-367.134.run --accept-license  -s
+```
+
+
+### Install Cuda
+
+Download Cuda installer
+```
+# wget https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda_8.0.61_375.26_linux-run
+```
+
+Download Patch release
+```
+# wget https://developer.nvidia.com/compute/cuda/8.0/Prod2/patches/2/cuda_8.0.61.2_linux-run
+```
+Install
+```
+# sh ./cuda_8.0.61_375.26_linux-run --silent --samples --toolkit --override --verbose
+```
+
+### Fix Perl issue
+See: https://forums.developer.nvidia.com/t/cant-locate-installutils-pm-in-inc/46952/10
+
+```
+# sh ./cuda_8.0.61_375.26_linux-run  --tar mxvf
+# cp InstallUtils.pm /usr/lib/x86_64-linux-gnu/perl-base/
+# export $PERL5LIB
+# rm -rf InstallUtils.pm cuda-installer.pl run_files uninstall_cuda.pl
+```
+
+### Environment variables
+
+Add the lines below to .profile
+
+```
+# export PATH=$PATH:/usr/local/cuda-8.0/bin
+# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-8.0/lib64
+```
+
+## Test
 
 ### Cuda compiler
+
 Check the cuda compiler version.
 
 ```
@@ -55,6 +107,7 @@ Cuda compilation tools, release 9.1, V9.1.85
 ### Compile and test Hello World example
 
 Save the example code below as `hello_world.cu`.
+
 ```cpp
 #include<stdio.h>
 #include<stdlib.h>
