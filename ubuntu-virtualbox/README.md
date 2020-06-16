@@ -2,6 +2,12 @@
 
 Describe general layout of the approach
 
+## TL;DR
+
+1. create a virtual machine with an SSH server
+1. enable access to the server via SSH keys
+1. ``ansible-playbook --key-file id_rsa --inventory inventory -v playbook-set-up-runner.yml``
+
 ## Prerequisites
 
 1. Install VirtualBox on the client: https://www.virtualbox.org/wiki/Linux_Downloads
@@ -43,7 +49,7 @@ You can keep the default settings for the new virtual machine or adjust it as yo
 1. Configure port forwarding
 
     1. Get the IP address of the VM
-        
+
         ```shell
         sudo apt install net-tools
         ```
@@ -132,4 +138,16 @@ You can keep the default settings for the new virtual machine or adjust it as yo
     [defaults]
     # Use a callback plugin to pretty print standard out.
     stdout_callback = yaml
+    ```
+
+1. We're almost ready to use ``ansible-playbook`` to set up a GitHub Runner on your own server, but first we need to generate a token, as follows:
+
+    1. Go to ...
+    1. Then ...
+    1. and then ...
+
+    Now, configure your server to be able to run continuous integration with:
+
+    ```
+    ansible-playbook --key-file id_rsa --inventory inventory -v playbook-set-up-runner.yml
     ```

@@ -81,5 +81,4 @@ target/
 *id_rsa*
 
 # ignore ansible config from readme
-/linux-ubuntu-client-to-local-machine-via-virtualbox/ansible.cfg
-
+/ubuntu-virtualbox/ansible.cfg
