@@ -138,7 +138,7 @@ suitable --choose whichever you're comfortable with.
     1. On GitHub, go to https://github.com/<org>/<repo>/settings/actions/add-new-runner
     1. Copy the token (see section _Configure_)
 
-    Now, configure your server to be able to run continuous integration with the command below. Fill in your GitHub organization (or your name), you repository name and the token when prompted:
+    Now, configure your server to be able to run continuous integration with the command below. Fill in your GitHub organization (or your name), your repository name, and the token when prompted:
 
     ```
     ansible-playbook --key-file id_rsa --inventory inventory -v playbook-set-up-runner.yml
