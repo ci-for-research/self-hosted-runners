@@ -21,20 +21,20 @@
       debug:
         msg: "Setting up a GitHub runner for repository: https://github.com/{{ ORG }}/{{ REPO }}"
 
-    - name: Create a directory for the runner
+    - name: Creating a directory for the runner
       file:
         path: /tmp/actions_runner
         state: directory
 
-    - name: Download and extract the runner
+    - name: Downloading and extracting the runner
       unarchive:
         src: https://githubassets.azureedge.net/runners/{{ RUNNER_VERSION }}/actions-runner-linux-x64-{{ RUNNER_VERSION }}.tar.gz
         dest: /tmp/actions_runner/
         creates: /tmp/actions_runner/config.sh
         remote_src: yes
 
-    - name: Configure GitHub Action runner
+    - name: Configuring the GitHub Action runner
       command: chdir=/tmp/actions_runner ./config.sh --url https://github.com/{{ ORG }}/{{ REPO }} --token '{{ TOKEN }}'
 
-    - name: run it
+    - name: Running the GitHub Action runner
       shell: /tmp/actions_runner/run.sh &
