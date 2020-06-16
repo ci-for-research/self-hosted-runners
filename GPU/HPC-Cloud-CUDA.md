@@ -2,6 +2,14 @@
 SURF HPC Documentation
 https://doc.hpccloud.surfsara.nl/gpu-attach
 
+## 1- Installation using ansible playbook
+
+
+ANSIBLE_HOST_KEY_CHECKING=False  docker run --rm -ti -v $PWD:/nlesc -v $YOUR_PRIVATE_KEY:/nlesc/id_rsa_ci_sprint  ansible/ansible-runner  ansible-playbook --become-user=ubuntu --inventory-file /nlesc/GPU/inventory /nlesc/GPU/install_cuda_grid2k.yml --private-key=/nlesc/id_rsa_ci_sprint --ask-become-pass --verbose
+
+You will need to change $YOUR_PRIVATE_KEY with full path of your private key
+
+## 2- Manual installation
 
 ## Requirements
 
@@ -54,7 +62,6 @@ https://www.nvidia.com/Download/index.aspx?lang=en-us
 sh ./NVIDIA-Linux-x86_64-367.134.run --accept-license  -s
 ```
 
-
 ### Install Cuda
 
 Download Cuda installer
@@ -66,6 +73,7 @@ Download Patch release
 ```
 # wget https://developer.nvidia.com/compute/cuda/8.0/Prod2/patches/2/cuda_8.0.61.2_linux-run
 ```
+
 Install
 ```
 # sh ./cuda_8.0.61_375.26_linux-run --silent --samples --toolkit --override --verbose
