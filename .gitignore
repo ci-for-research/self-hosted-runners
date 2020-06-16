@@ -79,3 +79,6 @@ target/
 # ignore ssh-keys
 *.pub
 *id_rsa*
+
+# ignore ansible config from readme
+/ubuntu-virtualbox/ansible.cfg
