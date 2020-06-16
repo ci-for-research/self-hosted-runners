@@ -135,14 +135,10 @@ suitable --choose whichever you're comfortable with.
 
 1. We're almost ready to use ``ansible-playbook`` to set up a GitHub Runner on your own server, but first we need to generate a token, as follows:
 
-    1. On GitHub, go to https://github.com/settings/tokens
-    1. Select Personal access tokens
-    1. Generate new token
-    1. Permissions... TODO
-    1. Click button _Generate token_
-    1. Copy the token
+    1. On GitHub, go to https://github.com/<org>/<repo>/settings/actions/add-new-runner
+    1. Copy the token (see section _Configure_)
 
-    Now, configure your server to be able to run continuous integration with:
+    Now, configure your server to be able to run continuous integration with the command below. Fill in your GitHub organization (or your name), you repository name and the token when prompted:
 
     ```
     ansible-playbook --key-file id_rsa --inventory inventory -v playbook-set-up-runner.yml

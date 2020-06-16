@@ -2,7 +2,7 @@
 - hosts: all
   vars:
     # conda: true
-    RUNNER_VERSION: 2.160.2
+    RUNNER_VERSION: 2.169.1
   vars_prompt:
     - name: "ORG"
       prompt: "What is the GitHub organization?"
@@ -23,18 +23,18 @@
 
     - name: Creating a directory for the runner
       file:
-        path: /tmp/actions_runner
+        path: /tmp/actions-runner
         state: directory
 
     - name: Downloading and extracting the runner
       unarchive:
-        src: https://githubassets.azureedge.net/runners/{{ RUNNER_VERSION }}/actions-runner-linux-x64-{{ RUNNER_VERSION }}.tar.gz
-        dest: /tmp/actions_runner/
-        creates: /tmp/actions_runner/config.sh
+        src: https://github.com/actions/runner/releases/download/v{{ RUNNER_VERSION }}/actions-runner-linux-x64-{{ RUNNER_VERSION }}.tar.gz
+        dest: /tmp/actions-runner/
+        creates: /tmp/actions-runner/config.sh
         remote_src: yes
 
     - name: Configuring the GitHub Action runner
-      command: chdir=/tmp/actions_runner ./config.sh --url https://github.com/{{ ORG }}/{{ REPO }} --token '{{ TOKEN }}'
+      command: chdir=/tmp/actions-runner ./config.sh --url https://github.com/{{ ORG }}/{{ REPO }} --token {{ TOKEN }}
 
     - name: Running the GitHub Action runner
-      shell: /tmp/actions_runner/run.sh &
+      shell: /tmp/actions-runner/run.sh &
