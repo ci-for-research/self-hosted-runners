@@ -2,6 +2,12 @@
 
 Describe general layout of the approach
 
+## TL;DR
+
+1. create a virtual machine with an SSH server
+1. enable access to the server via SSH keys
+1. ``ansible-playbook --key-file id_rsa --inventory inventory -v playbook-set-up-runner.yml``
+
 ## Prerequisites
 
 1. Install VirtualBox on the client: https://www.virtualbox.org/wiki/Linux_Downloads
@@ -145,5 +151,3 @@ You can keep the default settings for the new virtual machine or adjust it as yo
     ```
     ansible-playbook --key-file id_rsa --inventory inventory -v playbook-set-up-runner.yml
     ```
-
-1. Go to https://github.com/<org>/<repo>/settings/actions, select _Enable local actions only for this repository_. Then click _Add runner_.
