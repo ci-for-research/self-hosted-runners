@@ -14,10 +14,6 @@
   become: no
   tasks:
 
-    - name: Say hello from server side
-      debug:
-        msg: Hello Ansible
-
     - name: Showing the input variables
       debug:
         msg: "Setting up a GitHub runner for repository: https://github.com/{{ ORG }}/{{ REPO }}"
