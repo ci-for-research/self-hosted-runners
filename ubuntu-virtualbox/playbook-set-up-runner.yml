@@ -1,15 +1,26 @@
 ---
 - hosts: all
   vars:
-    REPO: NLESC_JCER/linux_actions_runner
     # conda: true
     RUNNER_VERSION: 2.160.2
   vars_prompt:
+    - name: "ORG"
+      prompt: "What is the GitHub organization?"
+    - name: "REPO"
+      prompt: "What is the GitHub repository?"
     - name: "GITHUB_ACTIONS_TOKEN"
-      prompt: "Please enter the GitHub Actions token for this workflow:"
+      prompt: "Please enter the GitHub Actions token for this workflow"
   remote_user: tester
   become: no
   tasks:
+
+    - name: Say hello from server side
+      debug:
+        msg: Hello Ansible
+
+    - name: Showing the input variables
+      debug:
+        msg: "Setting up a GitHub runner for repository: https://github.com/{{ ORG }}/{{ REPO }}"
 
     - name: Create a directory for the runner
       file:
@@ -24,7 +35,7 @@
         remote_src: yes
 
     - name: Configure GitHub Action runner
-      command: chdir=/tmp/actions_runner ./config.sh --url https://github.com/{{ REPO }} --token '{{ GITHUB_ACTIONS_TOKEN }}'
+      command: chdir=/tmp/actions_runner ./config.sh --url https://github.com/{{ ORG }}/{{ REPO }} --token '{{ GITHUB_ACTIONS_TOKEN }}'
 
     - name: run it
       shell: /tmp/actions_runner/run.sh &

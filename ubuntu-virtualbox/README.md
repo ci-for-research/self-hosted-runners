@@ -16,10 +16,12 @@ suitable --choose whichever you're comfortable with.
 
 ## Server side configuration
 
-1. Create a new virtual machine in VirtualBox using Ubuntu as a base image.
-You can keep the default settings for the new virtual machine or adjust it as you prefer.
-1. Call the user ``tester``
-1. Set the user's password to ``password``
+1. Create a new virtual machine in VirtualBox, accepting the wizard's default settings.
+1. For the new virtual machine, go to _Settings_ > _Storage_, then under _IDE controller_ select the item marked _Empty_. Then click the icon to load something into the virtual optical disk, then select the Ubuntu iso file.
+1. For the new virtual machine, go to _Settings_ > _Network_, select the _Adapter 1_ tab, then use the _Attached to_ dropdown menu to select _Bridged Adapter_.
+1. Start the Virtual Machine for the first time.
+1. In Ubuntu's install wizard, call the user ``tester``
+1. In Ubuntu's install wizard, set the user's password to ``password``
 1. Update packages
 
     ```
@@ -27,7 +29,7 @@ You can keep the default settings for the new virtual machine or adjust it as yo
     sudo apt upgrade
     ```
 
-1. Configure a ssh-server (OpenSSH) for remote connection, check permissions on relevant files and directories
+1. Configure an SSH server (OpenSSH) for remote connection; check permissions on relevant files and directories:
 
     ```
     sudo apt install openssh-server
@@ -46,28 +48,13 @@ You can keep the default settings for the new virtual machine or adjust it as yo
     stat -c "%a %n" `ls -1`
     ```
 
-1. Configure port forwarding
+1. Get the IP address of the VM
 
-    1. Get the IP address of the VM
+    ```shell
+    sudo apt install net-tools
+    ```
 
-        ```shell
-        sudo apt install net-tools
-        ```
-
-        In the VM, open a terminal and type ``ifconfig``. Look for an entry that has an ``inet`` value starting with ``10.`` (mine is ``10.0.2.15``). We will use this value as Guest IP later.
-
-    1. In VirtualBox, change the port forwarding settings, as follows:
-        1. Go to menu item ``Machine``
-        1. Go to ``Settings``
-        1. Go to ``Network``
-        1. On tab ``Adaptor 1``, go to ``Advanced``, click on ``Port Forwarding``
-        1. Click the ``plus`` icon to add a rule
-            1. Under ``protocol`` fill in ``TCP``
-            1. Under ``Host IP`` fill in ``127.0.0.1``
-            1. Under ``Host Port`` fill in ``2222``
-            1. Under ``Guest IP`` fill in the value we got from ``ifconfig``
-            1. Under ``Guest Port`` fill in ``22``
-
+    In the VM, open a terminal and type ``ifconfig``. Look for an entry that has an ``inet`` key.
 
 ## Client side configuration
 
@@ -95,22 +82,28 @@ You can keep the default settings for the new virtual machine or adjust it as yo
     ssh-keygen -t rsa -f id_rsa -N ''
     ```
 
-1. Copy the public half of the key pair (i.e. ``id_rsa.pub``) to the server
+1. Copy the public half of the key pair (i.e. ``id_rsa.pub``) to the server using the ``ifconfig`` IP address (see above).
 
     ```shell
-    ssh-copy-id -i id_rsa.pub -p 2222 tester@127.0.0.1
+    ssh-copy-id -i id_rsa.pub -p 22 tester@192.168.1.73
     ```
 
 1. Test if you can SSH into the server
 
     ```shell
-    ssh -i id_rsa -p 2222 tester@127.0.0.1
+    ssh -i id_rsa -p 22 tester@192.168.1.73
     ```
 
 1. Log out of the server with
 
     ```shell
     exit
+    ```
+
+1. Update ``inventory`` with the IP address of the server. Here are the complete contents of my ``inventory``:
+
+    ```shell
+    192.168.1.73:22
     ```
 
 1. Test 'hello ansible' playbook:
