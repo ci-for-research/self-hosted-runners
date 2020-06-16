@@ -75,7 +75,7 @@ suitable --choose whichever you're comfortable with.
     sudo apt install openssh-client
     ```
 
-1. Generate a key pair (files ``id_rsa`` and ``id_rsa.pub``) in directory ``[ubuntu-virtualbox](/ubuntu-virtualbox)`` using RSA encryption:
+1. Generate a key pair (files ``id_rsa`` and ``id_rsa.pub``) in directory [``ubuntu-virtualbox``](/ubuntu-virtualbox) using RSA encryption:
 
     ```shell
     cd ubuntu-virtualbox
