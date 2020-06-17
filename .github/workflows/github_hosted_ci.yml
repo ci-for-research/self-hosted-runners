@@ -1,4 +1,4 @@
-name: CI
+name: GitHub-hosted CI example
 
 on: [push, pull_request]
 

@@ -52,7 +52,6 @@ suitable --choose whichever you're comfortable with.
 
     ```shell
     stat -c "%a %n" <filename>
-    stat -c "%a %n" `ls -1`
     ```
 
 ## Client side configuration
@@ -75,6 +74,8 @@ suitable --choose whichever you're comfortable with.
     ```
 
 1. Generate a key pair (files ``id_rsa`` and ``id_rsa.pub``) in directory [``ubuntu-virtualbox``](/ubuntu-virtualbox) using RSA encryption:
+
+    **Note: ``id_rsa`` is the private half of the SSH key pair; don't share it with anybody else.**
 
     ```shell
     cd ubuntu-virtualbox

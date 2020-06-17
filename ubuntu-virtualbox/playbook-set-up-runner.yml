@@ -6,10 +6,8 @@
     - name: "ORG"
       prompt: "What is the GitHub organization?"
       private: no
-      default: jspaaks
     - name: "REPO"
       prompt: "What is the GitHub repository?"
-      default: linux_actions_runner
       private: no
     - name: "TOKEN"
       prompt: "Please enter the GitHub Actions token for this workflow. Go to https://github.com/<org>/<repo>/settings/actions/add-new-runner and copy it from the 'Configure' section."
