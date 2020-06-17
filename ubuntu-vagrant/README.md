@@ -2,6 +2,8 @@
 
 Vagrant is a tool to build a VirtualBox virtual machine (VM).
 
+We will use a [Vagrant](https://www.vagrantup.com) to create a VM and an Ansible playbook install a [GitHub Action runner](https://help.github.com/en/actions/hosting-your-own-runners) on it. When done a GitHub action workflow configured with `runs-on: self-hosted` will run on that runner in the VM.
+
 ## Prerequisites
 
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
@@ -59,7 +61,7 @@ ssh -i .vagrant/machines/default/virtualbox/private_key -p 2222 vagrant@127.0.0.
 Ansible must be configured for which GitHub account/organization and repository it should setup a runner.
 Edit the `inventory.yml` file and set `github_account` key and repository `github_repo` key.
 
-The Ansible playbook uses personal Access Token for GitHub account to register the unner.
+The Ansible playbook uses personal Access Token for GitHub account to register the runner.
 The token has to have admin rights for the repo.
 Token can be created [here](https://github.com/settings/tokens).
 
