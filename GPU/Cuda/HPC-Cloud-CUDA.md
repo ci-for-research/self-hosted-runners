@@ -168,6 +168,9 @@ Run the example:
 
 ```shell
 ./hello
-Hello World from host!
-Hello World! from thread [0,0]         From device
+This is Houston. Say again, please.
+Houston, we have a problem [0,1]         From Apollo 13
+Houston, we have a problem [1,1]         From Apollo 13
+Houston, we have a problem [0,0]         From Apollo 13
+Houston, we have a problem [1,0]         From Apollo 13
 ```
