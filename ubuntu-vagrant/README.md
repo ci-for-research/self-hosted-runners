@@ -61,9 +61,8 @@ ssh -i .vagrant/machines/default/virtualbox/private_key -p 2222 vagrant@127.0.0.
 Ansible must be configured for which GitHub account/organization and repository it should setup a runner for.
 Edit the `inventory.yml` file and set `github_account` key and repository `github_repo` key.
 
-The Ansible playbook uses personal Access Token for GitHub account to register the runner.
-The token has to have admin rights for the repo.
-Token can be created [here](https://github.com/settings/tokens).
+The Ansible playbook uses Personal Access Token for GitHub account to register the runner.
+The token needs to have full admin rights for the repo. At the moment the checkbox that needs to be checked is called `repo          Full control of private repositories`. The token can be created [here](https://github.com/settings/tokens).
 
 The token should be set as the `PAT` environment variable.
 
