@@ -151,7 +151,8 @@ __global__ void print_gpu(void) {
 }
 
 int main(void) {
-    printf("This is Houston. Say again, please.\n");
+    printf("This is Houston. Say again, please. \
+                From Base\n");
     print_gpu<<<2,2>>>();
     cudaDeviceSynchronize();
     return 0;
@@ -168,9 +169,9 @@ Run the example:
 
 ```shell
 ./hello
-This is Houston. Say again, please.
-Houston, we have a problem in section [0,1]         From Apollo 13
-Houston, we have a problem in section [1,1]         From Apollo 13
+This is Houston. Say again, please.                 From Base
 Houston, we have a problem in section [0,0]         From Apollo 13
 Houston, we have a problem in section [1,0]         From Apollo 13
+Houston, we have a problem in section [0,1]         From Apollo 13
+Houston, we have a problem in section [1,1]         From Apollo 13
 ```
