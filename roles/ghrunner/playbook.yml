@@ -1,0 +1,52 @@
+---
+- name: Install latest runner
+  hosts: all
+  vars:
+    OS: "linux-x64" # osx-x64  win-x64
+    TEMP_PATH: "/tmp/actions_runner/"
+  vars_prompt:
+    - name: "ORG"
+      prompt: "What is the GitHub organization?"
+      private: no
+      default: nlesc
+    - name: "REPO"
+      prompt: "What is the GitHub repository?"
+      default: linux_actions_runner
+      private: no
+    - name: "TOKEN"
+      prompt: "Please enter the GitHub Actions token for this workflow"
+      private: no
+  remote_user: tester
+  become: no
+  tasks:
+
+    - name: Showing the input variables
+      debug:
+        msg: "Setting up a GitHub runner for repository: https://github.com/{{ ORG }}/{{ REPO }}"
+
+    - name: Get latest runner version
+      shell: curl -s https://api.github.com/repos/actions/runner/releases/latest | grep tag_name | cut -d '"' -f 4 |  grep -oE '([0-9].[0-9]+.[0-9])'
+      register: RUNNER_VERSION
+    - debug: var=RUNNER_VERSION
+
+    - set_fact:
+        LATEST_RUNNER: "https://github.com/actions/runner/releases/download/v{{ RUNNER_VERSION.stdout }}/actions-runner-{{ OS }}-{{ RUNNER_VERSION.stdout }}.tar.gz"
+    - debug: var=LATEST_RUNNER
+
+    - name: Create a directory for the runner
+      file:
+        path: "{{ TEMP_PATH }}"
+        state: directory
+
+    - name: Download and extract the runner
+      unarchive:
+        src: "{{ LATEST_RUNNER }}"
+        dest: "{{ TEMP_PATH }}"
+        creates: "{{ TEMP_PATH }}/config.sh"
+        remote_src: yes
+
+    # - name: Configuring the GitHub Action runner
+    #   command: chdir={{ TEMP_PATH }} ./config.sh --unattended --url https://github.com/{{ ORG }}/{{ REPO }} --token {{ TOKEN }} --replace
+
+    # - name: Running the GitHub Action runner
+    #   shell: /tmp/actions-runner/run.sh &
