@@ -11,7 +11,9 @@ GitHub provides. This can be useful when the code you want to test has special r
 
 - it needs a GPU to run
 - it needs multiple nodes
-- the testing requires data that needs to stay on-premises for privacy reasons or legal reasons
+- testing requires data that needs to stay on-premises for privacy reasons or legal reasons
+- testing requires data that is too big to move
+- testing requires specific software
 
 This guide distinguishes between the _client_ and the _server_; the client is your own machine; the server is whichever
 machine runs the tests. For either side, we'll explain what configuration needs to be done. For people who just want to
