@@ -1,13 +1,21 @@
-## Resources
-SURF HPC Documentation
-https://doc.hpccloud.surfsara.nl/gpu-attach
+## Intro
+
+This short guide shows how to install Nvidia drivers and CUDA for GRID K2 hardware. For more information about GPUs on SURF HPC Cloud please visit [SURF HPC Documentation]
+(https://doc.hpccloud.surfsara.nl/gpu-attach).
+
+We have 2 methods to install Nvidia drivers and Cuda.
+- Using ansible playbook
+- Following the steps and installing manually
 
 ## 1- Installation using ansible playbook
 
+The command below runs the ansible-playbook and installs all necassary software. This ansible-playbook is specifically written for SURF HPC Cloud platform and GRID K2 hardware. However, it can easily be adapted for different platforms and graphics cards.
 
+```
 ANSIBLE_HOST_KEY_CHECKING=False  docker run --rm -ti -v $PWD:/nlesc -v $YOUR_PRIVATE_KEY:/nlesc/id_rsa_ci_sprint  ansible/ansible-runner  ansible-playbook --become-user=ubuntu --inventory-file /nlesc/GPU/inventory /nlesc/GPU/install_cuda_grid2k.yml --private-key=/nlesc/id_rsa_ci_sprint --ask-become-pass --verbose
+```
 
-You will need to change $YOUR_PRIVATE_KEY with full path of your private key
+You will need to change $YOUR_PRIVATE_KEY with full path of your private key and inventory file which has to connection details of the server.
 
 ## 2- Manual installation
 
@@ -42,20 +50,25 @@ GPU hardware information
 
 ## Pre install
 
-Cuda 8 only works with only gcc 5.0.
+For Grid K2 card we will need Cuda 8.0. Cuda 8.0 only works with only gcc 5.0 so it should be installed before.
+
+To decide what version of cuda and Nvidia drivers you need, please check the links below.
+
+See what drivers you need:
+https://www.nvidia.com/Download/index.aspx?lang=en-us
+
+Check compatibility first:
+https://docs.nvidia.com/deploy/cuda-compatibility/index.html
+
 ```
 # apt install gcc-5 g++-5
 ```
 
 ## Install
 
-Check compatibility first
-https://docs.nvidia.com/deploy/cuda-compatibility/index.html
-
-See what drivers you need
-https://www.nvidia.com/Download/index.aspx?lang=en-us
-
 ### Install Nvidia drivers
+
+Download Nvidia driver (version 367) and install it.
 
 ```
 # wget http://us.download.nvidia.com/XFree86/Linux-x86_64/367.134/NVIDIA-Linux-x86_64-367.134.run
@@ -64,23 +77,24 @@ sh ./NVIDIA-Linux-x86_64-367.134.run --accept-license  -s
 
 ### Install Cuda
 
-Download Cuda installer
+Download Cuda 8.0 installer
 ```
 # wget https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda_8.0.61_375.26_linux-run
 ```
 
-Download Patch release
+Download Patch release:
+
 ```
 # wget https://developer.nvidia.com/compute/cuda/8.0/Prod2/patches/2/cuda_8.0.61.2_linux-run
 ```
 
-Install
-```
-# sh ./cuda_8.0.61_375.26_linux-run --silent --samples --toolkit --override --verbose
-```
-
 ### Fix Perl issue
+
+While installing Cuda, we had some issues related to Perl scripts.
 See: https://forums.developer.nvidia.com/t/cant-locate-installutils-pm-in-inc/46952/10
+
+
+These commands solves the Perl issues.
 
 ```
 # sh ./cuda_8.0.61_375.26_linux-run  --tar mxvf
@@ -89,16 +103,26 @@ See: https://forums.developer.nvidia.com/t/cant-locate-installutils-pm-in-inc/46
 # rm -rf InstallUtils.pm cuda-installer.pl run_files uninstall_cuda.pl
 ```
 
+### Install Cuda
+
+After fixing the Perl issue, we can install Cuda.
+
+```
+# sh ./cuda_8.0.61_375.26_linux-run --silent --samples --toolkit --override --verbose
+```
+
 ### Environment variables
 
-Add the lines below to .profile
+In order to be able to use Cuda, we need to change our environment variables.
+
+Add the lines below to .profile file.
 
 ```
 # export PATH=$PATH:/usr/local/cuda-8.0/bin
 # export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-8.0/lib64
 ```
 
-## Test
+## Test the installation
 
 ### Cuda compiler
 
