@@ -1,0 +1,14 @@
+[Unit]
+Description=GitHub Runner
+Requires=network.target
+After=syslog.target network.target
+[Service]
+Type=forking
+EnvironmentFile=/etc/sysconfig/ghrunner
+ExecStart={{ghrunner.installation_path}}/bin/ghrunner-server.sh start
+ExecStop={{ghrunner.installation_path}}/bin/ghrunner-server.sh stop
+User=ubuntu
+PIDFile={{ghrunner.installation_path}}/ghrunner.pid
+Environment="GHRUNNER_PID_FILE_PATH={{ghrunner.installation_path}}/ghrunner.pid"
+[Install]
+WantedBy=multi-user.target
