@@ -1,6 +1,8 @@
 # Linux Ubuntu client to local machine via VirtualBox
 
-Describe general layout of the approach
+This guide distinguishes between the _client_ and the _server_; the client is your own machine; the server is whichever
+machine runs the tests. This document describes the case where the server is a virtual machine, running on your own
+physical machine. For guides on how to configure alternative setups, go [here](/README.md).
 
 ## TL;DR
 
@@ -16,9 +18,15 @@ suitable --choose whichever you're comfortable with.
 
 ## Server side configuration
 
-1. Create a new virtual machine in VirtualBox, accepting the wizard's default settings.
+1. Create a new virtual machine in VirtualBox. It's recommended to give it at least 4 GB memory, 2 CPUs, and 20 GB disk space (dynamically allocated).
 1. For the new virtual machine, go to _Settings_ > _Storage_, then under _IDE controller_ select the item marked _Empty_. Then click the icon to load something into the virtual optical disk, then select the Ubuntu iso file.
-1. For the new virtual machine, go to _Settings_ > _Network_, select the _Adapter 1_ tab, then use the _Attached to_ dropdown menu to select _Bridged Adapter_.
+1. For the new virtual machine, go to _Settings_ > _Network_
+    1. On the _Adapter 1_ tab,
+        - make sure that the _Enable Network Adapter_ checkbox is checked
+        - set the _Attached to_ dropdown menu to _Bridged Adapter_.
+    1. On the _Adapter 2_ tab,
+        - make sure that the _Enable Network Adapter_ checkbox is checked
+        - set the _Attached to_ dropdown menu to _NAT_
 1. Start the Virtual Machine for the first time.
 1. In Ubuntu's install wizard, call the user ``tester``
 1. In Ubuntu's install wizard, set the user's password to ``password``
@@ -82,13 +90,28 @@ suitable --choose whichever you're comfortable with.
     ssh-keygen -t rsa -f id_rsa -N ''
     ```
 
+    Make sure that the permissions are set correctly:
+
+    ```
+    chmod 600 id_rsa
+    chmod 644 id_rsa.pub
+    ```
+
+    Note you can use ``stat``'s ``%a`` option to see a file's permissions as an octal number, e.g.
+
+    ```shell
+    stat -c "%a %n" <filename>
+    stat -c "%a %n" `ls -1`
+    ```
+
+
 1. Copy the public half of the key pair (i.e. ``id_rsa.pub``) to the server using the ``ifconfig`` IP address (see above).
 
     ```shell
     ssh-copy-id -i id_rsa.pub -p 22 tester@192.168.1.73
     ```
 
-1. Test if you can SSH into the server
+1. Test if you can SSH into the server using the other half of the key pair (i.e. ``id_rsa``)
 
     ```shell
     ssh -i id_rsa -p 22 tester@192.168.1.73
