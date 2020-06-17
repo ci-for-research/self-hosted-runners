@@ -3,7 +3,7 @@
   hosts: all
   vars:
     OS: "linux-x64" # osx-x64  win-x64
-    TEMP_PATH: "/tmp/actions_runner/"
+    TEMP_PATH: "/opt/ghrunner/"
   vars_prompt:
     - name: "ORG"
       prompt: "What is the GitHub organization?"
