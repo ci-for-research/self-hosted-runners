@@ -166,4 +166,5 @@ Run the example:
 ```
 # ./hello
 Hello World from host!
+Hello World! from thread [0,0]         From device
 ```
