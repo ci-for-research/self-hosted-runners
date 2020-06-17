@@ -146,7 +146,7 @@ Save the example code below as `hello_world.cu`.
 #include<stdlib.h>
 
 __global__ void print_gpu(void) {
-    printf("Houston, we have a problem [%d,%d] \
+    printf("Houston, we have a problem in section [%d,%d] \
         From Apollo 13\n", threadIdx.x,blockIdx.x);
 }
 
@@ -169,8 +169,8 @@ Run the example:
 ```shell
 ./hello
 This is Houston. Say again, please.
-Houston, we have a problem [0,1]         From Apollo 13
-Houston, we have a problem [1,1]         From Apollo 13
-Houston, we have a problem [0,0]         From Apollo 13
-Houston, we have a problem [1,0]         From Apollo 13
+Houston, we have a problem in section [0,1]         From Apollo 13
+Houston, we have a problem in section [1,1]         From Apollo 13
+Houston, we have a problem in section [0,0]         From Apollo 13
+Houston, we have a problem in section [1,0]         From Apollo 13
 ```
