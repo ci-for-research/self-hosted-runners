@@ -1,7 +1,6 @@
 ## Intro
 
-This short guide shows how to install Nvidia drivers and CUDA for GRID K2 hardware. For more information about GPUs on SURF HPC Cloud please visit [SURF HPC Documentation]
-(https://doc.hpccloud.surfsara.nl/gpu-attach).
+This short guide shows how to install Nvidia drivers and CUDA for GRID K2 hardware. For more information about GPUs on SURF HPC Cloud please visit [SURF HPC Documentation](https://doc.hpccloud.surfsara.nl/gpu-attach).
 
 We have 2 methods to install Nvidia drivers and Cuda.
 - Using ansible playbook
