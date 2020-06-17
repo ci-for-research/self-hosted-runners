@@ -1,6 +1,6 @@
 ---
 - name: GitHub Actions Runner
-  hosts: vagrants
+  hosts: all
   become: yes
   vars:
     - runner_user: runner
