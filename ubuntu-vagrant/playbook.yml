@@ -9,6 +9,12 @@
       user:
         name: '{{ runner_user }}'
         state: present
+    - name: Setup Docker engine
+      include_role:
+        name: nickjj.docker
+      vars:
+        docker__users:
+          - '{{ runner_user }}'
     - name: Setup GitHub actions runner
       include_role:
         name: monolithprojects.github_actions_runner
@@ -16,9 +22,3 @@
         access_token: "{{ lookup('env','PAT') }}"
       tags:
         - uninstall
-    - name: Setup Docker engine
-      include_role:
-        name: nickjj.docker
-      vars:
-        docker__users:
-          - '{{ runner_user }}'
