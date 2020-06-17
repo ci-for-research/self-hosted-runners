@@ -2,7 +2,7 @@
 
 Vagrant is a tool to build a VirtualBox virtual machine (VM).
 
-We will use a [Vagrant](https://www.vagrantup.com) to create a VM and an Ansible playbook install a [GitHub Action runner](https://help.github.com/en/actions/hosting-your-own-runners) on it. When done a GitHub action workflow configured with `runs-on: self-hosted` will run on that runner in the VM.
+We will use a [Vagrant](https://www.vagrantup.com) to create a VM and an Ansible playbook to install a [GitHub Action runner](https://help.github.com/en/actions/hosting-your-own-runners) on it. When done a GitHub action workflow configured with `runs-on: self-hosted` will run on that runner in the VM.
 
 ## Prerequisites
 
