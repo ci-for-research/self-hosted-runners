@@ -45,8 +45,5 @@
         creates: "{{ TEMP_PATH }}/config.sh"
         remote_src: yes
 
-    # - name: Configuring the GitHub Action runner
-    #   command: chdir={{ TEMP_PATH }} ./config.sh --unattended --url https://github.com/{{ ORG }}/{{ REPO }} --token {{ TOKEN }} --replace
-
-    # - name: Running the GitHub Action runner
-    #   shell: /tmp/actions-runner/run.sh &
+    - name: Configuring the GitHub Action runner
+      command: chdir={{ TEMP_PATH }} ./config.sh --unattended --url https://github.com/{{ ORG }}/{{ REPO }} --token {{ TOKEN }} --replace
