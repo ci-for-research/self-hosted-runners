@@ -99,7 +99,7 @@ ansible-galaxy install -r requirements.yml
 To provision VM use
 
 ```shell
-ansible-playbook -v playbook.yml
+ansible-playbook playbook.yml
 ```
 
 The log of the runner can be viewed with

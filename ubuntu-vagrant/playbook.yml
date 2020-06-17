@@ -16,3 +16,9 @@
         access_token: "{{ lookup('env','PAT') }}"
       tags:
         - uninstall
+    - name: Setup Docker engine
+      include_role:
+        name: nickjj.docker
+      vars:
+        docker__users:
+          - '{{ runner_user }}'
