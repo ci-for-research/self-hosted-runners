@@ -71,7 +71,9 @@ The token should be set as the `PAT` environment variable.
 export PAT=xxxxxxxxxxxxxxx
 ```
 
-## Provision with Ansible
+## Install GitHub Action runner
+
+To install GitHub Action runner we use an Ansible playbook to provision the VM.
 
 Test that Ansible can ping server with
 
@@ -88,7 +90,7 @@ vagrant | SUCCESS => {
 }
 ```
 
-Download Ansible Galaxy roles with
+The playbook uses roles from [Ansible galaxy](https://galaxy.ansible.com/), they must be downloaded with
 
 ```shell
 ansible-galaxy install -r requirements.yml
