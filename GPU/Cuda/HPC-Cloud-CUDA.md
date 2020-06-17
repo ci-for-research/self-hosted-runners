@@ -10,11 +10,11 @@ We have 2 methods to install Nvidia drivers and Cuda.
 
 The command below runs the ansible-playbook and installs all necassary software. This ansible-playbook is specifically written for SURF HPC Cloud platform and GRID K2 hardware. However, it can easily be adapted for different platforms and graphics cards.
 
-```
+```shell
 ANSIBLE_HOST_KEY_CHECKING=False  docker run --rm -ti -v $PWD:/nlesc -v $YOUR_PRIVATE_KEY:/nlesc/id_rsa_ci_sprint  ansible/ansible-runner  ansible-playbook --become-user=ubuntu --inventory-file /nlesc/GPU/inventory /nlesc/GPU/install_cuda_grid2k.yml --private-key=/nlesc/id_rsa_ci_sprint --verbose
 ```
 
-You will need to change $YOUR_PRIVATE_KEY with full path of your private key and inventory file which has to connection details of the server.
+You will need to change ``$YOUR_PRIVATE_KEY`` with full path of your private key and ``inventory`` file which has to connection details of the server.
 
 ## 2- Manual installation
 
@@ -25,8 +25,9 @@ Cuda currently officially supports only two versions of Ubuntu: 18.04 and 16.04.
 ## System info
 
 Distribution info
-```
-# lsb_release -a
+
+```shell
+lsb_release -a
 No LSB modules are available.
 Distributor ID: Ubuntu
 Description:    Ubuntu 18.04.4 LTS
@@ -36,14 +37,15 @@ Codename:       bionic
 
 Kernel version
 
-```
-# uname -a
+```shell
+uname -a
 Linux packer-Ubuntu-18 4.15.0-101-generic #102-Ubuntu SMP Mon May 11 10:07:26 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
 ```
 
 GPU hardware information
-```
-# lspci | grep -i nvidia
+
+```shell
+lspci | grep -i nvidia
 01:01.0 VGA compatible controller: NVIDIA Corporation GK104GL [GRID K2] (rev a1)
 ```
 
@@ -59,8 +61,8 @@ https://www.nvidia.com/Download/index.aspx?lang=en-us
 Check compatibility first:
 https://docs.nvidia.com/deploy/cuda-compatibility/index.html
 
-```
-# apt install gcc-5 g++-5
+```shell
+apt install gcc-5 g++-5
 ```
 
 ## Install
@@ -69,8 +71,8 @@ https://docs.nvidia.com/deploy/cuda-compatibility/index.html
 
 Download Nvidia driver (version 367) and install it.
 
-```
-# wget http://us.download.nvidia.com/XFree86/Linux-x86_64/367.134/NVIDIA-Linux-x86_64-367.134.run
+```shell
+wget http://us.download.nvidia.com/XFree86/Linux-x86_64/367.134/NVIDIA-Linux-x86_64-367.134.run
 sh ./NVIDIA-Linux-x86_64-367.134.run --accept-license  -s
 ```
 
@@ -83,8 +85,8 @@ Download Cuda 8.0 installer
 
 Download Patch release:
 
-```
-# wget https://developer.nvidia.com/compute/cuda/8.0/Prod2/patches/2/cuda_8.0.61.2_linux-run
+```shell
+wget https://developer.nvidia.com/compute/cuda/8.0/Prod2/patches/2/cuda_8.0.61.2_linux-run
 ```
 
 ### Fix Perl issue
@@ -95,19 +97,19 @@ See: https://forums.developer.nvidia.com/t/cant-locate-installutils-pm-in-inc/46
 
 These commands solves the Perl issues.
 
-```
-# sh ./cuda_8.0.61_375.26_linux-run  --tar mxvf
-# cp InstallUtils.pm /usr/lib/x86_64-linux-gnu/perl-base/
-# export $PERL5LIB
-# rm -rf InstallUtils.pm cuda-installer.pl run_files uninstall_cuda.pl
+```shell
+sh ./cuda_8.0.61_375.26_linux-run  --tar mxvf
+cp InstallUtils.pm /usr/lib/x86_64-linux-gnu/perl-base/
+export $PERL5LIB
+rm -rf InstallUtils.pm cuda-installer.pl run_files uninstall_cuda.pl
 ```
 
 ### Install Cuda
 
 After fixing the Perl issue, we can install Cuda.
 
-```
-# sh ./cuda_8.0.61_375.26_linux-run --silent --samples --toolkit --override --verbose
+```shell
+sh ./cuda_8.0.61_375.26_linux-run --silent --samples --toolkit --override --verbose
 ```
 
 ### Environment variables
@@ -116,9 +118,9 @@ In order to be able to use Cuda, we need to change our environment variables.
 
 Add the lines below to .profile file.
 
-```
-# export PATH=$PATH:/usr/local/cuda-8.0/bin
-# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-8.0/lib64
+```shell
+export PATH=$PATH:/usr/local/cuda-8.0/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-8.0/lib64
 ```
 
 ## Test the installation
@@ -127,8 +129,8 @@ Add the lines below to .profile file.
 
 Check the cuda compiler version.
 
-```
-# nvcc --version
+```shell
+nvcc --version
 nvcc: NVIDIA (R) Cuda compiler driver
 Copyright (c) 2005-2017 NVIDIA Corporation
 Built on Fri_Nov__3_21:07:56_CDT_2017
@@ -143,27 +145,29 @@ Save the example code below as `hello_world.cu`.
 #include<stdio.h>
 #include<stdlib.h>
 
-__global__ void print_from_gpu(void) {
-    printf("Hello World! from thread [%d,%d] \
-        From device\n", threadIdx.x,blockIdx.x);
+__global__ void print_gpu(void) {
+    printf("Houston, we have a problem [%d,%d] \
+        From Apollo 13\n", threadIdx.x,blockIdx.x);
 }
 
 int main(void) {
-    printf("Hello World from host!\n");
-    print_from_gpu<<<1,1>>>();
+    printf("This is Houston. Say again, please.\n");
+    print_gpu<<<2,2>>>();
     cudaDeviceSynchronize();
     return 0;
 }
 ```
 
 Compile the example:
-```
-# nvcc -o hello_world.exe hello_world.cu
+
+```shell
+nvcc -o hello_world.exe hello_world.cu
 ```
 
 Run the example:
-```
-# ./hello
+
+```shell
+./hello
 Hello World from host!
 Hello World! from thread [0,0]         From device
 ```
