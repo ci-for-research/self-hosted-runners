@@ -23,10 +23,9 @@ suitable --choose whichever you're comfortable with.
 1. For the new virtual machine, go to _Settings_ > _Network_
     1. On the _Adapter 1_ tab,
         - make sure that the _Enable Network Adapter_ checkbox is checked
-        - set the _Attached to_ dropdown menu to _Bridged Adapter_.
-    1. On the _Adapter 2_ tab,
-        - make sure that the _Enable Network Adapter_ checkbox is checked
         - set the _Attached to_ dropdown menu to _NAT_
+        - Click _Advanced_, then _Port Forwarding_
+        - Add a new rule, with _Protocol_ TCP, _HostIP_ 127.0.0.1, _Host Port_ 2222, leave _Guest IP_ empty, and _Guest Port_ 22
 1. Start the Virtual Machine for the first time.
 1. In Ubuntu's install wizard, call the user ``tester``
 1. In Ubuntu's install wizard, set the user's password to ``password``
@@ -56,14 +55,6 @@ suitable --choose whichever you're comfortable with.
     stat -c "%a %n" `ls -1`
     ```
 
-1. Get the IP address of the VM
-
-    ```shell
-    sudo apt install net-tools
-    ```
-
-    In the VM, open a terminal and type ``ifconfig``. Look for an entry that has an ``inet`` key. Mine says ``192.168.1.73``.
-
 ## Client side configuration
 
 1. Install Ansible (from PPA; the version you get from the Ubuntu repositories is too old).
@@ -75,7 +66,7 @@ suitable --choose whichever you're comfortable with.
     $ sudo apt install ansible
     ```
 
-    (Find the source [here](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu)).
+    (Find more information [here](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu)).
 
 1. Install OpenSSH client to be able to connect to remote machines via SSH
 
@@ -105,16 +96,16 @@ suitable --choose whichever you're comfortable with.
     ```
 
 
-1. Copy the public half of the key pair (i.e. ``id_rsa.pub``) to the server using the ``ifconfig`` IP address (see above).
+1. Copy the public half of the key pair (i.e. ``id_rsa.pub``) to the server.
 
     ```shell
-    ssh-copy-id -i id_rsa.pub -p 22 tester@192.168.1.73
+    ssh-copy-id -i id_rsa.pub -p 2222 tester@127.0.0.1
     ```
 
 1. Test if you can SSH into the server using the other half of the key pair (i.e. ``id_rsa``)
 
     ```shell
-    ssh -i id_rsa -p 22 tester@192.168.1.73
+    ssh -i id_rsa -p 2222 tester@127.0.0.1
     ```
 
 1. Log out of the server with
@@ -126,7 +117,7 @@ suitable --choose whichever you're comfortable with.
 1. Update ``inventory`` with the IP address of the server. Here are the complete contents of my ``inventory``:
 
     ```shell
-    192.168.1.73:22
+    127.0.0.1:2222
     ```
 
 1. Test 'hello ansible' playbook:
