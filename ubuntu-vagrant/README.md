@@ -58,7 +58,7 @@ ssh -i .vagrant/machines/default/virtualbox/private_key -p 2222 vagrant@127.0.0.
 
 ## Configure
 
-Ansible must be configured for which GitHub account/organization and repository it should setup a runner.
+Ansible must be configured for which GitHub account/organization and repository it should setup a runner for.
 Edit the `inventory.yml` file and set `github_account` key and repository `github_repo` key.
 
 The Ansible playbook uses personal Access Token for GitHub account to register the runner.
