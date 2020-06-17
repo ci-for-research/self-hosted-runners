@@ -1,6 +1,8 @@
 # Linux Ubuntu client to local machine via VirtualBox
 
-Describe general layout of the approach
+This guide distinguishes between the _client_ and the _server_; the client is your own machine; the server is whichever
+machine runs the tests. This document describes the case where the server is a virtual machine, running on your own
+physical machine. For guides on how to configure alternative setups, go [here](/README.md).
 
 ## TL;DR
 
@@ -16,9 +18,14 @@ suitable --choose whichever you're comfortable with.
 
 ## Server side configuration
 
-1. Create a new virtual machine in VirtualBox, accepting the wizard's default settings.
+1. Create a new virtual machine in VirtualBox. It's recommended to give it at least 4 GB memory, 2 CPUs, and 20 GB disk space (dynamically allocated).
 1. For the new virtual machine, go to _Settings_ > _Storage_, then under _IDE controller_ select the item marked _Empty_. Then click the icon to load something into the virtual optical disk, then select the Ubuntu iso file.
-1. For the new virtual machine, go to _Settings_ > _Network_, select the _Adapter 1_ tab, then use the _Attached to_ dropdown menu to select _Bridged Adapter_.
+1. For the new virtual machine, go to _Settings_ > _Network_
+    1. On the _Adapter 1_ tab,
+        - make sure that the _Enable Network Adapter_ checkbox is checked
+        - set the _Attached to_ dropdown menu to _NAT_
+        - Click _Advanced_, then _Port Forwarding_
+        - Add a new rule, with _Protocol_ TCP, _HostIP_ 127.0.0.1, _Host Port_ 2222, leave _Guest IP_ empty, and _Guest Port_ 22
 1. Start the Virtual Machine for the first time.
 1. In Ubuntu's install wizard, call the user ``tester``
 1. In Ubuntu's install wizard, set the user's password to ``password``
@@ -48,14 +55,6 @@ suitable --choose whichever you're comfortable with.
     stat -c "%a %n" `ls -1`
     ```
 
-1. Get the IP address of the VM
-
-    ```shell
-    sudo apt install net-tools
-    ```
-
-    In the VM, open a terminal and type ``ifconfig``. Look for an entry that has an ``inet`` key. Mine says ``192.168.1.73``.
-
 ## Client side configuration
 
 1. Install Ansible (from PPA; the version you get from the Ubuntu repositories is too old).
@@ -67,7 +66,7 @@ suitable --choose whichever you're comfortable with.
     $ sudo apt install ansible
     ```
 
-    (Find the source [here](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu)).
+    (Find more information [here](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu)).
 
 1. Install OpenSSH client to be able to connect to remote machines via SSH
 
@@ -82,16 +81,31 @@ suitable --choose whichever you're comfortable with.
     ssh-keygen -t rsa -f id_rsa -N ''
     ```
 
-1. Copy the public half of the key pair (i.e. ``id_rsa.pub``) to the server using the ``ifconfig`` IP address (see above).
+    Make sure that the permissions are set correctly:
 
-    ```shell
-    ssh-copy-id -i id_rsa.pub -p 22 tester@192.168.1.73
+    ```
+    chmod 600 id_rsa
+    chmod 644 id_rsa.pub
     ```
 
-1. Test if you can SSH into the server
+    Note you can use ``stat``'s ``%a`` option to see a file's permissions as an octal number, e.g.
 
     ```shell
-    ssh -i id_rsa -p 22 tester@192.168.1.73
+    stat -c "%a %n" <filename>
+    stat -c "%a %n" `ls -1`
+    ```
+
+
+1. Copy the public half of the key pair (i.e. ``id_rsa.pub``) to the server.
+
+    ```shell
+    ssh-copy-id -i id_rsa.pub -p 2222 tester@127.0.0.1
+    ```
+
+1. Test if you can SSH into the server using the other half of the key pair (i.e. ``id_rsa``)
+
+    ```shell
+    ssh -i id_rsa -p 2222 tester@127.0.0.1
     ```
 
 1. Log out of the server with
@@ -103,7 +117,7 @@ suitable --choose whichever you're comfortable with.
 1. Update ``inventory`` with the IP address of the server. Here are the complete contents of my ``inventory``:
 
     ```shell
-    192.168.1.73:22
+    127.0.0.1:2222
     ```
 
 1. Test 'hello ansible' playbook:
