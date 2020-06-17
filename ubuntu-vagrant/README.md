@@ -77,7 +77,7 @@ To install GitHub Action runner we use an Ansible playbook to provision the VM.
 Test that Ansible can ping server with
 
 ```shell
-ansible all -m ping
+ansible vagrants -m ping
 ```
 
 Should output something like
