@@ -26,6 +26,7 @@ Linux Ubuntu.
 | Linux Ubuntu | remote machine at [SURF HPC Cloud] | [link](ubuntu-surf-hpc-cloud/README.md) |
 | Linux Ubuntu | local machine via Docker           | [link](ubuntu-docker/README.md) |
 | Linux Ubuntu | local machine via VirtualBox       | [link](ubuntu-virtualbox/README.md) |
+| Linux Ubuntu | local machine via Vagrant          | [link](ubuntu-vagrant/README.md) |
 | Mac          | remote machine at [SURF HPC Cloud] | - |
 | Mac          | local machine via Docker           | - |
 | Mac          | local machine via VirtualBox       | - |

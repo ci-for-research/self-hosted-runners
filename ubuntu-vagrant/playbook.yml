@@ -1,0 +1,14 @@
+---
+- name: GitHub Actions Runner
+  hosts: vagrants
+  become: yes
+  vars:
+    - runner_user: runner
+  tasks:
+    - name: Runner User
+      user:
+        name: '{{ runner_user }}'
+        state: present
+    - name: Setup GitHub actions runner
+      include_role:
+        name: monolithprojects.github_actions_runner
