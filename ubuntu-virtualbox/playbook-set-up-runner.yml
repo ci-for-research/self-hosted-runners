@@ -1,30 +1,39 @@
 ---
 - hosts: all
   vars:
-    REPO: NLESC_JCER/linux_actions_runner
-    # conda: true
-    RUNNER_VERSION: 2.160.2
+    RUNNER_VERSION: 2.169.1
   vars_prompt:
-    - name: "GITHUB_ACTIONS_TOKEN"
-      prompt: "Please enter the GitHub Actions token for this workflow:"
+    - name: "ORG"
+      prompt: "What is the GitHub organization?"
+      private: no
+    - name: "REPO"
+      prompt: "What is the GitHub repository?"
+      private: no
+    - name: "TOKEN"
+      prompt: "Please enter the GitHub Actions token for this workflow. Go to https://github.com/<org>/<repo>/settings/actions/add-new-runner and copy it from the 'Configure' section."
+      private: no
   remote_user: tester
   become: no
   tasks:
 
-    - name: Create a directory for the runner
+    - name: Showing the input variables
+      debug:
+        msg: "Setting up a GitHub runner for repository: https://github.com/{{ ORG }}/{{ REPO }}"
+
+    - name: Creating a directory for the runner
       file:
-        path: /tmp/actions_runner
+        path: ${HOME}/tmp/actions-runner
         state: directory
 
-    - name: Download and extract the runner
+    - name: Downloading and extracting the runner
       unarchive:
-        src: https://githubassets.azureedge.net/runners/{{ RUNNER_VERSION }}/actions-runner-linux-x64-{{ RUNNER_VERSION }}.tar.gz
-        dest: /tmp/actions_runner/
-        creates: /tmp/actions_runner/config.sh
+        src: https://github.com/actions/runner/releases/download/v{{ RUNNER_VERSION }}/actions-runner-linux-x64-{{ RUNNER_VERSION }}.tar.gz
+        dest: ${HOME}/tmp/actions-runner/
+        creates: ${HOME}/tmp/actions-runner/config.sh
         remote_src: yes
 
-    - name: Configure GitHub Action runner
-      command: chdir=/tmp/actions_runner ./config.sh --url https://github.com/{{ REPO }} --token '{{ GITHUB_ACTIONS_TOKEN }}'
+    - name: Configuring the GitHub Action runner
+      command: chdir=${HOME}/tmp/actions-runner ./config.sh --unattended --url https://github.com/{{ ORG }}/{{ REPO }} --token {{ TOKEN }} --replace
 
-    - name: run it
-      shell: /tmp/actions_runner/run.sh &
+    - name: Running the GitHub Action runner
+      shell: ${HOME}/tmp/actions-runner/run.sh

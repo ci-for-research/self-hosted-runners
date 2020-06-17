@@ -1,4 +1,4 @@
-name: Self-hosted CI
+name: Self-hosted CI example
 
 on: [push, pull_request]
 

@@ -1,6 +1,8 @@
 # Linux Ubuntu client to local machine via VirtualBox
 
-Describe general layout of the approach
+This guide distinguishes between the _client_ and the _server_; the client is your own machine; the server is whichever
+machine runs the tests. This document describes the case where the server is a virtual machine, running on your own
+physical machine. For guides on how to configure alternative setups, go [here](/README.md).
 
 ## TL;DR
 
@@ -16,10 +18,17 @@ suitable --choose whichever you're comfortable with.
 
 ## Server side configuration
 
-1. Create a new virtual machine in VirtualBox using Ubuntu as a base image.
-You can keep the default settings for the new virtual machine or adjust it as you prefer.
-1. Call the user ``tester``
-1. Set the user's password to ``password``
+1. Create a new virtual machine in VirtualBox. It's recommended to give it at least 4 GB memory, 2 CPUs, and 20 GB disk space (dynamically allocated).
+1. For the new virtual machine, go to _Settings_ > _Storage_, then under _IDE controller_ select the item marked _Empty_. Then click the icon to load something into the virtual optical disk, then select the Ubuntu iso file.
+1. For the new virtual machine, go to _Settings_ > _Network_
+    1. On the _Adapter 1_ tab,
+        - make sure that the _Enable Network Adapter_ checkbox is checked
+        - set the _Attached to_ dropdown menu to _NAT_
+        - Click _Advanced_, then _Port Forwarding_
+        - Add a new rule, with _Protocol_ TCP, _HostIP_ 127.0.0.1, _Host Port_ 2222, leave _Guest IP_ empty, and _Guest Port_ 22
+1. Start the Virtual Machine for the first time.
+1. In Ubuntu's install wizard, call the user ``tester``
+1. In Ubuntu's install wizard, set the user's password to ``password``
 1. Update packages
 
     ```
@@ -27,7 +36,7 @@ You can keep the default settings for the new virtual machine or adjust it as yo
     sudo apt upgrade
     ```
 
-1. Configure a ssh-server (OpenSSH) for remote connection, check permissions on relevant files and directories
+1. Configure an SSH server (OpenSSH) for remote connection; check permissions on relevant files and directories:
 
     ```
     sudo apt install openssh-server
@@ -43,31 +52,7 @@ You can keep the default settings for the new virtual machine or adjust it as yo
 
     ```shell
     stat -c "%a %n" <filename>
-    stat -c "%a %n" `ls -1`
     ```
-
-1. Configure port forwarding
-
-    1. Get the IP address of the VM
-
-        ```shell
-        sudo apt install net-tools
-        ```
-
-        In the VM, open a terminal and type ``ifconfig``. Look for an entry that has an ``inet`` value starting with ``10.`` (mine is ``10.0.2.15``). We will use this value as Guest IP later.
-
-    1. In VirtualBox, change the port forwarding settings, as follows:
-        1. Go to menu item ``Machine``
-        1. Go to ``Settings``
-        1. Go to ``Network``
-        1. On tab ``Adaptor 1``, go to ``Advanced``, click on ``Port Forwarding``
-        1. Click the ``plus`` icon to add a rule
-            1. Under ``protocol`` fill in ``TCP``
-            1. Under ``Host IP`` fill in ``127.0.0.1``
-            1. Under ``Host Port`` fill in ``2222``
-            1. Under ``Guest IP`` fill in the value we got from ``ifconfig``
-            1. Under ``Guest Port`` fill in ``22``
-
 
 ## Client side configuration
 
@@ -80,7 +65,7 @@ You can keep the default settings for the new virtual machine or adjust it as yo
     $ sudo apt install ansible
     ```
 
-    (Find the source [here](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu)).
+    (Find more information [here](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu)).
 
 1. Install OpenSSH client to be able to connect to remote machines via SSH
 
@@ -88,20 +73,37 @@ You can keep the default settings for the new virtual machine or adjust it as yo
     sudo apt install openssh-client
     ```
 
-1. Generate a key pair (files ``id_rsa`` and ``id_rsa.pub``) in directory ``linux-ubuntu-client-to-local-machine-via-virtualbox`` using RSA encryption:
+1. Generate a key pair (files ``id_rsa`` and ``id_rsa.pub``) in directory [``ubuntu-virtualbox``](/ubuntu-virtualbox) using RSA encryption:
+
+    **Note: ``id_rsa`` is the private half of the SSH key pair; don't share it with anybody else.**
 
     ```shell
-    cd linux-ubuntu-client-to-local-machine-via-virtualbox
+    cd ubuntu-virtualbox
     ssh-keygen -t rsa -f id_rsa -N ''
     ```
 
-1. Copy the public half of the key pair (i.e. ``id_rsa.pub``) to the server
+    Make sure that the permissions are set correctly:
+
+    ```
+    chmod 600 id_rsa
+    chmod 644 id_rsa.pub
+    ```
+
+    Note you can use ``stat``'s ``%a`` option to see a file's permissions as an octal number, e.g.
+
+    ```shell
+    stat -c "%a %n" <filename>
+    stat -c "%a %n" `ls -1`
+    ```
+
+
+1. Copy the public half of the key pair (i.e. ``id_rsa.pub``) to the server.
 
     ```shell
     ssh-copy-id -i id_rsa.pub -p 2222 tester@127.0.0.1
     ```
 
-1. Test if you can SSH into the server
+1. Test if you can SSH into the server using the other half of the key pair (i.e. ``id_rsa``)
 
     ```shell
     ssh -i id_rsa -p 2222 tester@127.0.0.1
@@ -111,6 +113,12 @@ You can keep the default settings for the new virtual machine or adjust it as yo
 
     ```shell
     exit
+    ```
+
+1. Update ``inventory`` with the IP address of the server. Here are the complete contents of my ``inventory``:
+
+    ```shell
+    127.0.0.1:2222
     ```
 
 1. Test 'hello ansible' playbook:
@@ -142,11 +150,10 @@ You can keep the default settings for the new virtual machine or adjust it as yo
 
 1. We're almost ready to use ``ansible-playbook`` to set up a GitHub Runner on your own server, but first we need to generate a token, as follows:
 
-    1. Go to ...
-    1. Then ...
-    1. and then ...
+    1. On GitHub, go to https://github.com/<org>/<repo>/settings/actions/add-new-runner
+    1. Copy the token (see section _Configure_)
 
-    Now, configure your server to be able to run continuous integration with:
+    Now, configure your server to be able to run continuous integration with the command below. Fill in your GitHub organization (or your name), your repository name, and the token when prompted:
 
     ```
     ansible-playbook --key-file id_rsa --inventory inventory -v playbook-set-up-runner.yml
