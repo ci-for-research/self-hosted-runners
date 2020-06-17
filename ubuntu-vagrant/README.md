@@ -106,6 +106,12 @@ vagrant ssh -- journalctl -u actions.runner.*
 
 ## Destroy VM
 
+First unregister runner with
+
+```shell
+ansible-playbook playbook.yml --tags uninstall
+```
+
 To get rid of VM use
 
 ```shell

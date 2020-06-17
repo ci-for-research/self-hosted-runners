@@ -6,9 +6,8 @@ vagrants:
     ansible_connection: ssh 
     ansible_host: 127.0.0.1 
     ansible_port: 2222 
-    ansible_ssh_private_key_file: .vagrant/machines/default/virtualbox/private_key 
+    ansible_ssh_private_key_file: .vagrant/machines/default/virtualbox/private_key
     ansible_python_interpreter: /usr/bin/python3
-    access_token: "{{ lookup('env','PAT') }}"
     # Please update with your GitHub account/organization
     github_account: sverhoeven
     # Please update with your GitHub repository
@@ -18,7 +17,5 @@ localhost:
   hosts:
     localhost:
   vars:
-    ansible_connection: local
-    ansible_python_interpreter: "{{ansible_playbook_python}}"  
     ansible_become: false
   

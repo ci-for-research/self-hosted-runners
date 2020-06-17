@@ -12,3 +12,7 @@
     - name: Setup GitHub actions runner
       include_role:
         name: monolithprojects.github_actions_runner
+      vars:
+        access_token: "{{ lookup('env','PAT') }}"
+      tags:
+        - uninstall
