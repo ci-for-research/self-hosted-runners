@@ -1,0 +1,2 @@
+[hpccloud]
+145.100.59.39 ansible_user=root ansible_port=22
