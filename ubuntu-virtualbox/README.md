@@ -150,8 +150,8 @@ suitable --choose whichever you're comfortable with.
 
 1. We're almost ready to use ``ansible-playbook`` to set up a GitHub Runner on your own server, but first we need to generate a token, as follows:
 
-    1. On GitHub, go to https://github.com/%3Corg%3E/%3Crepo%3E/settings/actions/add-new-runner
-    1. Copy the token (see section _Configure_). It should look something like ``ABCY2KDLTSPUY687UH7IJEK65OBKE`` and is valid for about an hour.
+    1. On GitHub, go to [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/settings/actions/add-new-runner](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions/add-new-runner)
+    1. Copy the token (see section _Configure_). It should look something like ``ABCY2KDLTSPUY687UH7IJEK65OBKE`` and is valid for an hour.
 
     Now, configure your server to be able to run continuous integration with the command below. Fill in the GitHub
     organization (or your name) and the repository name for which you want to run workflows on a self-hosted server, as
@@ -163,7 +163,7 @@ suitable --choose whichever you're comfortable with.
 
     The playbook should hang in the last task "Running the GitHub Action runner".
 
-    If you now go to GitHub https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions, you should see a
+    If you now go to GitHub [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/settings/actions](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions), you should see a
     self-hosted runner with status "Idle".
 
     Add the following simple workflow as ``.github/workflows/self_hosted_ci.yml`` in your repository:
@@ -186,4 +186,4 @@ suitable --choose whichever you're comfortable with.
 
     Now try making a change to one of the files in your repository to see if you can trigger running the simple workflow
     on your self-hosted server. If successful, the status will change to "Active" while the workflow is running. You can
-    get an overview of previous GitHub actions by navigating to https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/actions.
+    get an overview of previous GitHub actions by navigating to [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/actions](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/actions).
