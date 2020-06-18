@@ -29,6 +29,8 @@ To login to VM with ssh use
 vagrant ssh
 ```
 
+(If you get `Host key verification failed` error then clear previous key with `ssh-keygen -R "[127.0.0.1]:2222"` and try again)
+
 To use other ssh client get the ssh config with
 
 ```shell
