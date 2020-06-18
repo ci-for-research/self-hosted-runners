@@ -91,6 +91,8 @@ vagrant | SUCCESS => {
 }
 ```
 
+(If ping fails please check the connection configuration in `inventory.yml` file matches output of `vagrant ssh-config`)
+
 The playbook uses roles from [Ansible galaxy](https://galaxy.ansible.com/), they must be downloaded with
 
 ```shell
