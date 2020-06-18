@@ -1,0 +1,28 @@
+---
+- name: GitHub Actions Runner
+  hosts: vagrants
+  become: yes
+  vars:
+    - runner_user: runner
+  tasks:
+    - name: Runner User
+      user:
+        name: '{{ runner_user }}'
+        state: present
+    - name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600        
+    - name: Setup Docker engine
+      include_role:
+        name: nickjj.docker
+      vars:
+        docker__users:
+          - '{{ runner_user }}'
+    - name: Setup GitHub actions runner
+      include_role:
+        name: monolithprojects.github_actions_runner
+      vars:
+        access_token: "{{ lookup('env','PAT') }}"
+      tags:
+        - uninstall
