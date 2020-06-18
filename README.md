@@ -23,6 +23,8 @@ locally as well, through the use of virtualization (with VirtualBox) and contain
 For the client, we included instructions for Linux Ubuntu, Mac, and Windows; the server-side instructions all assume
 Linux Ubuntu.
 
+
+
 | client OS | server hardware | Link |
 | --- | --- | --- |
 | Linux Ubuntu | remote machine at [SURF HPC Cloud] | [link](ubuntu-surf-hpc-cloud/README.md) |
