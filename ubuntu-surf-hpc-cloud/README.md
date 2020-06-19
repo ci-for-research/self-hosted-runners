@@ -55,19 +55,17 @@ To install GitHub Action runner we use an Ansible playbook to provision the VM.
 Test that Ansible can ping server with
 
 ```shell
-ansible all -m ping -u ubuntu
+ansible all -m ping
 ```
 
 Should output something like
 
 ```shell
-vagrant | SUCCESS => {
+hpc | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
 ```
-
-(If ping fails please check the connection configuration in `hosts` file matches output of `vagrant ssh-config`)
 
 The playbook uses roles from [Ansible galaxy](https://galaxy.ansible.com/), they must be downloaded with
 
