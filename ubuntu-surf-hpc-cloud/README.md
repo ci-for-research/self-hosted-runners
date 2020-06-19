@@ -47,8 +47,8 @@ As a repository, you can use a clone of [https://github.com/ci-for-science/pytho
 The Ansible playbook uses Personal Access Token for GitHub account to register the runner.
 The token needs to have full admin rights for the repo. At the moment the checkbox that needs to be checked is called `repo          Full control of private repositories`. The token can be created [here](https://github.com/settings/tokens).
 
-![Token permissions](./token_permissions.png)
-Format: ![Required permission](url)
+![Token permission](token_permissions.png?raw=true "Title")
+
 
 The token should be set as the `PAT` environment variable.
 
