@@ -139,4 +139,4 @@ Cuda compilation tools, release 9.1, V9.1.85
 
 ### Example code
 
-See [gpu-houston](../gpu-houston/README.md) for a simple example code.
+See [gpu-houston](https://github.com/ci-for-science/example-gpu-houston) for a simple example code.
