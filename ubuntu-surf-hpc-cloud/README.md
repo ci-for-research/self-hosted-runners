@@ -1,4 +1,4 @@
-Examples
+Examples:
 
-- [simple](./simple)
-- [gpu example houston](./gpu-houston)
+- [Simple Python example](https://github.com/ci-for-science/python-example1)
+- [Simple GPU example](https://github.com/ci-for-science/example-gpu-houston)
