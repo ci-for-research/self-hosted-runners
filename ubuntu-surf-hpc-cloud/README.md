@@ -24,7 +24,7 @@ We will use a [Vagrant](https://www.vagrantup.com) to create a VM and an Ansible
 To login to VM with ssh use
 
 ```shell
-ssh -i $YOUR_KEY_PATH -p 22 ubuntu@hostname
+ssh -i $YOUR_KEY_PATH -p 22 $USER@$HOSTNAME
 ```
 
 ## Configure
@@ -36,8 +36,13 @@ cp hosts.example hosts
 ```
 
 Ansible must be configured for which GitHub account/organization and repository it should setup a runner for.
-The repository must be configured in `github_account` and `github_repo` fields in the `hosts` file.
-As a repository, you can use a clone of [https://github.com/ci-for-science/python-example1](https://github.com/ci-for-science/python-example1) or any repository which has a GitHub Action workflow that has `runs-on: self-hosted`.
+
+When Ansible command is executed, the Ansible playbook will ask for
+
+- the user or rganization name
+- the repository name
+
+As a repository, you can use a clone of [https://github.com/ci-for-science/python-example1](https://github.com/ci-for-science/python-example1) or any repository which has a GitHub Action workflow that has [`runs-on: self-hosted`](https://github.com/ci-for-science/python-example1/blob/4dea9c4f32a9bfcfcf166eb631c7aed3b2097d6c/.github/workflows/ci.yml#L15).
 
 The Ansible playbook uses Personal Access Token for GitHub account to register the runner.
 The token needs to have full admin rights for the repo. At the moment the checkbox that needs to be checked is called `repo          Full control of private repositories`. The token can be created [here](https://github.com/settings/tokens).
@@ -79,27 +84,19 @@ To provision VM use
 ansible-playbook playbook.yml
 ```
 
-The log of the runner can be viewed with
+The log of the runner, ssh to the server and run
 
 ```shell
-vagrant ssh -- journalctl -u actions.runner.*
+journalctl -u actions.runner.*
 ```
 
-## Destroy VM
+## Uninstalling the runner
 
 First unregister runner with
 
 ```shell
 ansible-playbook playbook.yml --tags uninstall
 ```
-
-To get rid of VM use
-
-```shell
-vagrant destroy
-```
-
-
 
 
 ## Examples:
