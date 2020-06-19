@@ -5,6 +5,7 @@
   vars:
     - runner_version: "2.165.2"
     - runner_user: runner
+    - hide_sensitive_logs: yes
   vars_prompt:
     - name: "github_account"
       prompt: "What is your GitHub account/organization?"
