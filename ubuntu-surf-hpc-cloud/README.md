@@ -27,7 +27,9 @@ To login to VM with ssh use
 ssh -i $YOUR_KEY_PATH -p 22 $USER@$HOSTNAME
 ```
 
-## Configure
+## Configuration
+
+### Step-1 Creating the Ansible inventory file
 
 To use Ansible you need an [inventory file](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html). An example inventory file called `hosts.example` should be copied to `hosts` and updated to reflect your situation.
 
@@ -44,13 +46,16 @@ When Ansible command is executed, the Ansible playbook will ask for
 
 As a repository, you can use a clone of [https://github.com/ci-for-science/python-example1](https://github.com/ci-for-science/python-example1) or any repository which has a GitHub Action workflow that has [`runs-on: self-hosted`](https://github.com/ci-for-science/python-example1/blob/4dea9c4f32a9bfcfcf166eb631c7aed3b2097d6c/.github/workflows/ci.yml#L15).
 
+### Step-2 Generating a Github Personal Access Token
+
 The Ansible playbook uses Personal Access Token for GitHub account to register the runner.
-The token needs to have full admin rights for the repo. At the moment the checkbox that needs to be checked is called `repo          Full control of private repositories`. The token can be created [here](https://github.com/settings/tokens).
+The token needs to have full admin rights for the repo. The only scope needed is `repo          Full control of private repositories`.
 
 [![Token permissions](images/token_permissions.png)](https://github.com/settings/tokens)
 
+ The token can be created [here](https://github.com/settings/tokens).
 
-The token should be set as the `PAT` environment variable.
+The generated token should be set as the `PAT` environment variable.
 
 ```shell
 export PAT=xxxxxxxxxxxxxxx
@@ -58,15 +63,16 @@ export PAT=xxxxxxxxxxxxxxx
 
 ## Install GitHub Action runner
 
+### Step 1- Testing the connection with the server
 To install GitHub Action runner we use an Ansible playbook to provision the VM.
 
-Test that Ansible can ping server with
+To test the connection with the server, Ansible can run ping command.
 
 ```shell
 ansible all -m ping
 ```
 
-Should output something like
+If it successfully connects to the server, the output should be something like
 
 ```shell
 hpc | SUCCESS => {
@@ -75,11 +81,15 @@ hpc | SUCCESS => {
 }
 ```
 
+### Step 2- Installing required Ansible dependencies
+
 The playbook uses roles from [Ansible galaxy](https://galaxy.ansible.com/), they must be downloaded with
 
 ```shell
 ansible-galaxy install -r requirements.yml
 ```
+
+### Step 3- Provisioning (installation on the server)
 
 To provision VM use
 
@@ -87,7 +97,7 @@ To provision VM use
 ansible-playbook playbook.yml
 ```
 
-The log of the runner, ssh to the server and run
+To view the log of the runner, you can connect to the server via ssh and run
 
 ```shell
 journalctl -u actions.runner.*
