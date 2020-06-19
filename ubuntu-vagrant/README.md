@@ -60,8 +60,15 @@ ssh -i .vagrant/machines/default/virtualbox/private_key -p 2222 vagrant@127.0.0.
 
 ## Configure
 
+To use Ansible you need an [inventory file](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html). An example inventory file called `hosts.example` should be copied to `hosts` and updated to reflect your situation.
+
+```shell
+cp hosts.example hosts
+```
+
 Ansible must be configured for which GitHub account/organization and repository it should setup a runner for.
-Edit the `inventory.yml` file and set `github_account` key and repository `github_repo` key.
+The repository must be configured in `github_account` and `github_repo` fields in the `hosts` file.
+As a repository, you can use a clone of [https://github.com/ci-for-science/python-example1](https://github.com/ci-for-science/python-example1) or any repository which has a GitHub Action workflow that has `runs-on: self-hosted`.
 
 The Ansible playbook uses Personal Access Token for GitHub account to register the runner.
 The token needs to have full admin rights for the repo. At the moment the checkbox that needs to be checked is called `repo          Full control of private repositories`. The token can be created [here](https://github.com/settings/tokens).
@@ -91,7 +98,7 @@ vagrant | SUCCESS => {
 }
 ```
 
-(If ping fails please check the connection configuration in `inventory.yml` file matches output of `vagrant ssh-config`)
+(If ping fails please check the connection configuration in `hosts` file matches output of `vagrant ssh-config`)
 
 The playbook uses roles from [Ansible galaxy](https://galaxy.ansible.com/), they must be downloaded with
 

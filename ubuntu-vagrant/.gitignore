@@ -3,3 +3,4 @@
 poetry.lock
 pyproject.toml
 actions-runner-linux-*tar.gz
+hosts
