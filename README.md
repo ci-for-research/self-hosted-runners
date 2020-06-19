@@ -33,8 +33,7 @@ Linux Ubuntu.
 | Mac          | local machine via VirtualBox       | - |
 | Windows      | remote machine at [SURF HPC Cloud] | - |
 | Windows      | local machine via Docker           | - |
-| Windows      | local machine via VirtualBox       | - |
-
+| Windows      | local machine via VirtualBox       | - |\
 
 A warning from GitHub for self-hosted runners in combination with public repositories is shown [here](https://help.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners#self-hosted-runner-security-with-public-repositories). Please take this seriously. It basically means that the combination of a self-hosted runner and a public GitHub repository is unsafe. However, there was a [recent discussion](https://github.com/actions/runner/issues/494) indicating that GitHub may add features to make this combination safe in the near future.
 
