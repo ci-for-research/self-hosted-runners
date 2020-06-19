@@ -5,6 +5,15 @@
   vars:
     - runner_version: "2.165.2"
     - runner_user: runner
+  vars_prompt:
+    - name: "github_account"
+      prompt: "What is your GitHub account/organization?"
+      default: ci-for-science
+      private: no
+    - name: "github_repo"
+      prompt: "What is your GitHub repository?"
+      default: python-example1
+      private: no
   tasks:
     - name: Runner User
       user:
