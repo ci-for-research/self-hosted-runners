@@ -5,19 +5,19 @@ vagrants:
     ansible_user: vagrant 
     ansible_connection: ssh 
     ansible_host: 127.0.0.1 
-    ansible_port: 2200
+    ansible_port: 2222
     ansible_ssh_private_key_file: .vagrant/machines/default/virtualbox/private_key
     # Newer Ansible expect python to be v3, while in Ubuntu 18.04 it is still v2
     ansible_python_interpreter: /usr/bin/python3
     # Please update with your GitHub account/organization
-    github_account: sverhoeven
+    github_account: ci-for-science
     # Please update with your GitHub repository
-    github_repo: justatest
-# Set localhost to not use become, otherwise actions-runner role fails
-localhost:
+    github_repo: python-example1
+ungrouped:
   hosts:
     localhost:
   vars:
-    ansible_become: false
-    # Newer Ansible expect python to be v3, while in Ubuntu 18.04 it is still v2
-    ansible_python_interpreter: /usr/bin/python3 
+      # Set localhost to not use become, otherwise actions-runner role fails
+      ansible_become: false
+      # Newer Ansible expect python to be v3, while in Ubuntu 18.04 it is still v2
+      ansible_python_interpreter: /usr/bin/python3 
