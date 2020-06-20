@@ -26,6 +26,15 @@
         groups: sudo,adm
         state: present
 
+    - name: Add user "runner" to sudo
+      lineinfile:
+        path: /etc/sudoers.d/runner
+        line: 'runner ALL=(ALL) NOPASSWD: ALL'
+        state: present
+        mode: 0440
+        create: yes
+        validate: 'visudo -cf %s'
+
     - name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
       apt:
         update_cache: yes
