@@ -1,12 +1,10 @@
 ---
 - name: GitHub Actions Runner
   hosts: hpchosts
-  become: yes
+  # become: yes
   vars:
-    - runner_version: "2.165.2"
     - runner_user: runner
-    - hide_sensitive_logs: yes
-    - runner_dir: /opt/actions-runner
+    - runner_dir: /home/runner/actions-runner
   vars_prompt:
     - name: "github_account"
       prompt: "What is your GitHub account/organization?"
@@ -16,21 +14,26 @@
       prompt: "What is your GitHub repository?"
       default: python-example1
       private: no
+
   tasks:
+
     - name: Runner User
       user:
         name: '{{ runner_user }}'
         state: present
+
     - name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
       apt:
         update_cache: yes
         cache_valid_time: 3600
+
     - name: Setup Docker engine
       include_role:
         name: nickjj.docker
       vars:
         docker__users:
           - '{{ runner_user }}'
+
     - name: Setup GitHub actions runner
       include_role:
         name: monolithprojects.github_actions_runner
