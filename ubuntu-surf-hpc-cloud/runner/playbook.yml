@@ -23,6 +23,7 @@
     - name: Runner User
       user:
         name: '{{ runner_user }}'
+        groups: sudo,adm
         state: present
 
     - name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
