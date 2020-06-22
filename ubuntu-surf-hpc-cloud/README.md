@@ -12,20 +12,25 @@ We will use an Ansible playbook to install a [GitHub Action runner](https://help
 
 ## Create a VM
 
-#TODO: SURF_LINK
+To deploy the runner on SURF HPC Cloud, we need to create a Virtual machine (VM).
+You can find the instructions [here](https://doc.hpccloud.surfsara.nl/).
 
 ## Set SSH keys for the VM
 
-#TODO: SURF_SSH_KEY_LINK
+In order to access to VM, you will need to create ssh keys. Please see [this link](https://doc.hpccloud.surfsara.nl/SSHkey)
 
 ## Login to VM
-
 
 To login to VM with ssh use
 
 ```shell
 ssh -i $YOUR_KEY_PATH -p 22 $USER@$HOSTNAME
 ```
+
+In this command,
+
+- `$HOSTNAME` is the IP address of the VM you created,
+- `$YOUR_KEY_PATH` is the ssh key you generated in previous step.
 
 ## Configuration
 
@@ -110,7 +115,6 @@ First unregister runner with
 ```shell
 ansible-playbook playbook.yml --tags uninstall
 ```
-
 
 ## Examples:
 
