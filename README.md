@@ -1,7 +1,7 @@
 | Five recommendations for fair software from [fair-software.nl](https://fair-software.nl) | Badges |
 | --- | --- |
-| 1. Code repository | [![GitHub badge](https://img.shields.io/badge/github-repo-000.svg?logo=github&labelColor=gray&color=blue)](https://github.com/NLESC-JCER/linux_actions_runner/) |
-| 2. License | [![License badge](https://img.shields.io/github/license/NLESC-JCER/linux_actions_runner)](https://github.com/NLESC-JCER/linux_actions_runner/) |
+| 1. Code repository | [![GitHub badge](https://img.shields.io/badge/github-repo-000.svg?logo=github&labelColor=gray&color=blue)](https://github.com/ci-for-science/self-hosted-runners/) |
+| 2. License | [![License badge](https://img.shields.io/github/license/ci-for-science/self-hosted-runners)](https://github.com/ci-for-science/self-hosted-runners/) |
 | 3. Community registry | [![Ansible Galaxy badge](https://img.shields.io/badge/galaxy-fixme.fixme-660198.svg)](https://galaxy.ansible.com/fixme/fixme) |
 | 4. Enable citation | [![DOI](https://zenodo.org/badge/DOI/10.0000/FIXME.svg)](https://doi.org/10.0000/FIXME) |
 | 5. Checklist | ? |
