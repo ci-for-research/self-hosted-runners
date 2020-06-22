@@ -3,11 +3,9 @@
   hosts: hpchosts
   # become: yes
   vars:
-    - runner_version: "2.263.0"
+    - runner_version: "2.165.0"
     - runner_user: runner
-    # - hide_sensitive_logs: yes
-    # - runner_dir: /opt/actions-runner
-    - runner_dir: /home/runner/actions-runner
+    - hide_sensitive_logs: yes
   vars_prompt:
     - name: "github_account"
       prompt: "What is your GitHub account/organization?"
@@ -52,5 +50,6 @@
         name: monolithprojects.github_actions_runner
       vars:
         access_token: "{{ lookup('env','PAT') }}"
+        runner_dir: /opt/actions-runner/{{ github_account }}/{{ github_repo }}
       tags:
         - uninstall
