@@ -42,7 +42,7 @@ To use Ansible you need an [inventory file](https://docs.ansible.com/ansible/lat
 cp hosts.example hosts
 ```
 
-Ansible must be configured for which GitHub account/organization and repository it should setup a runner for.
+Ansible playbook will ask for which GitHub account/organization and repository it should setup a runner for.
 
 When Ansible command is executed, the Ansible playbook will ask for
 
