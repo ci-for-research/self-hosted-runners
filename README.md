@@ -32,7 +32,7 @@ Linux Ubuntu.
 | Mac          | remote machine at [SURF HPC Cloud] | - |
 | Mac          | local machine via Docker           | - |
 | Mac          | local machine via VirtualBox       | - |
-| Windows      | remote machine at [SURF HPC Cloud] | - |
+| Windows      | remote machine at [SURF HPC Cloud] | [link](windows-surf-hpc-cloud/README.md) |
 | Windows      | local machine via Docker           | - |
 | Windows      | local machine via VirtualBox       | - |
 
