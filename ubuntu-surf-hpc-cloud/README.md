@@ -31,6 +31,7 @@ In this command,
 
 - `$HOSTNAME` is the IP address of the VM you created,
 - `$YOUR_KEY_PATH` is the ssh key you generated in previous step.
+- `$USER` is the posix user on the vm associated with the ssh key.
 
 ## Configuration
 
