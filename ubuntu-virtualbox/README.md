@@ -153,18 +153,17 @@ suitable --choose whichever you're comfortable with.
     1. On GitHub, go to [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/settings/actions/add-new-runner](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions/add-new-runner)
     1. Copy the token (see section _Configure_). It should look something like ``ABCY2KDLTSPUY687UH7IJEK65OBKE`` and is valid for an hour.
 
-    Now, configure your server to be able to run continuous integration with the command below. Fill in the GitHub
-    organization (or your name) and the repository name for which you want to run workflows on a self-hosted server, as
-    well as the token when prompted:
+    Now, configure your server to be able to run continuous integration with the command below. Fill in the password
+    ``password`` to become sudo in the server when asked. Next, fill in the GitHub organization (which might be simply
+    your GitHub user name) and the repository name for which you want to run workflows on a self-hosted server, as well
+    as the token when prompted:
 
     ```
-    ansible-playbook --key-file id_rsa --inventory hosts -v playbook-set-up-runner.yml
+    ansible-playbook --key-file id_rsa --inventory hosts --ask-become-pass -v playbook-set-up-runner.yml
     ```
 
-    The playbook should hang in the last task "Running the GitHub Action runner".
-
-    If you now go to GitHub [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/settings/actions](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions), you should see a
-    self-hosted runner with status "Idle".
+    If you now go to GitHub [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/settings/actions](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions),
+    you should see a self-hosted runner with status "Idle".
 
     Add the following simple workflow as ``.github/workflows/self_hosted_ci.yml`` in your repository:
 
