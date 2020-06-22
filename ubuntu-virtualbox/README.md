@@ -8,7 +8,7 @@ physical machine. For guides on how to configure alternative setups, go [here](/
 
 1. create a virtual machine with an SSH server
 1. enable access to the server via SSH keys
-1. ``ansible-playbook --key-file id_rsa --inventory inventory -v playbook-set-up-runner.yml``
+1. ``ansible-playbook --key-file id_rsa --inventory hosts -v playbook-set-up-runner.yml``
 
 ## Prerequisites
 
@@ -115,7 +115,7 @@ suitable --choose whichever you're comfortable with.
     exit
     ```
 
-1. Update ``inventory`` with the IP address of the server. Here are the complete contents of my ``inventory``:
+1. Update ``hosts`` with the IP address of the server. Here are the complete contents of my ``hosts``:
 
     ```shell
     127.0.0.1:2222
@@ -124,19 +124,19 @@ suitable --choose whichever you're comfortable with.
 1. Test 'hello ansible' playbook:
 
     ```
-    ansible-playbook --key-file id_rsa --inventory inventory playbook-hello-ansible.yml
+    ansible-playbook --key-file id_rsa --inventory hosts playbook-hello-ansible.yml
     ```
 
 1. Test playbook that needs sudo permissions:
 
     ```
-    ansible-playbook --key-file id_rsa --inventory inventory --ask-become-pass playbook-install-nano.yml
+    ansible-playbook --key-file id_rsa --inventory hosts --ask-become-pass playbook-install-nano.yml
     ```
 
 1. Use ``ansible-playbook``'s verbosity flag ``-v`` to see the directory listing result:
 
     ```
-    ansible-playbook --key-file id_rsa --inventory inventory --ask-become-pass -v playbook-install-nano.yml
+    ansible-playbook --key-file id_rsa --inventory hosts --ask-become-pass -v playbook-install-nano.yml
     ```
 
 1. Sometimes, the Ansible output can be a bit difficult to read. You can enable pretty-printing Ansible's stdout by
@@ -158,7 +158,7 @@ suitable --choose whichever you're comfortable with.
     well as the token when prompted:
 
     ```
-    ansible-playbook --key-file id_rsa --inventory inventory -v playbook-set-up-runner.yml
+    ansible-playbook --key-file id_rsa --inventory hosts -v playbook-set-up-runner.yml
     ```
 
     The playbook should hang in the last task "Running the GitHub Action runner".
