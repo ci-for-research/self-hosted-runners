@@ -3,7 +3,7 @@
   hosts: hpchosts
   # become: yes
   vars:
-    - runner_version: "2.165.0"
+    - runner_version: "2.263.0"
     - runner_user: runner
     - hide_sensitive_logs: yes
   vars_prompt:
