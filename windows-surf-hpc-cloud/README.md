@@ -5,3 +5,4 @@ Most of the steps in [../ubuntu-surf-hpc-cloud/README.md](../ubuntu-surf-hpc-clo
 Ansible can not be initiated from Windows powershell or command prompt.
 You will need to install Ansible in [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/).
 
+For installing Ansible on Windows see [../windows-vagrant/README.md](../windows-vagrant/README.md).
