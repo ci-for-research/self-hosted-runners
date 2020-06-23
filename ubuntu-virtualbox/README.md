@@ -8,7 +8,7 @@ physical machine. For guides on how to configure alternative setups, go [here](/
 
 1. create a virtual machine with an SSH server
 1. enable access to the server via SSH keys
-1. ``ansible-playbook --key-file id_rsa --inventory inventory -v playbook-set-up-runner.yml``
+1. ``ansible-playbook --key-file id_rsa --inventory hosts -v playbook-set-up-runner.yml``
 
 ## Prerequisites
 
@@ -45,7 +45,7 @@ suitable --choose whichever you're comfortable with.
     chmod 700 /home/tester/.ssh
     touch /home/tester/.ssh/known_hosts && chmod 644 /home/tester/.ssh/known_hosts
     touch /home/tester/.ssh/config      && chmod 600 /home/tester/.ssh/config
-    chown -R tester:tester /home/.ssh
+    chown -R tester:tester /home/tester/.ssh
     ```
 
     Note you can use ``stat``'s ``%a`` option to see a file's permissions as an octal number, e.g.
@@ -115,7 +115,7 @@ suitable --choose whichever you're comfortable with.
     exit
     ```
 
-1. Update ``inventory`` with the IP address of the server. Here are the complete contents of my ``inventory``:
+1. Update ``hosts`` with the IP address of the server. Here are the complete contents of my ``hosts``:
 
     ```shell
     127.0.0.1:2222
@@ -124,19 +124,19 @@ suitable --choose whichever you're comfortable with.
 1. Test 'hello ansible' playbook:
 
     ```
-    ansible-playbook --key-file id_rsa --inventory inventory playbook-hello-ansible.yml
+    ansible-playbook --key-file id_rsa --inventory hosts playbook-hello-ansible.yml
     ```
 
 1. Test playbook that needs sudo permissions:
 
     ```
-    ansible-playbook --key-file id_rsa --inventory inventory --ask-become-pass playbook-install-nano.yml
+    ansible-playbook --key-file id_rsa --inventory hosts --ask-become-pass playbook-install-nano.yml
     ```
 
 1. Use ``ansible-playbook``'s verbosity flag ``-v`` to see the directory listing result:
 
     ```
-    ansible-playbook --key-file id_rsa --inventory inventory --ask-become-pass -v playbook-install-nano.yml
+    ansible-playbook --key-file id_rsa --inventory hosts --ask-become-pass -v playbook-install-nano.yml
     ```
 
 1. Sometimes, the Ansible output can be a bit difficult to read. You can enable pretty-printing Ansible's stdout by
@@ -153,18 +153,17 @@ suitable --choose whichever you're comfortable with.
     1. On GitHub, go to [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/settings/actions/add-new-runner](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions/add-new-runner)
     1. Copy the token (see section _Configure_). It should look something like ``ABCY2KDLTSPUY687UH7IJEK65OBKE`` and is valid for an hour.
 
-    Now, configure your server to be able to run continuous integration with the command below. Fill in the GitHub
-    organization (or your name) and the repository name for which you want to run workflows on a self-hosted server, as
-    well as the token when prompted:
+    Now, configure your server to be able to run continuous integration with the command below. Fill in the password
+    ``password`` to become sudo in the server when asked. Next, fill in the GitHub organization (which might be simply
+    your GitHub user name) and the repository name for which you want to run workflows on a self-hosted server, as well
+    as the token when prompted:
 
     ```
-    ansible-playbook --key-file id_rsa --inventory inventory -v playbook-set-up-runner.yml
+    ansible-playbook --key-file id_rsa --inventory hosts --ask-become-pass -v playbook-set-up-runner.yml
     ```
 
-    The playbook should hang in the last task "Running the GitHub Action runner".
-
-    If you now go to GitHub [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/settings/actions](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions), you should see a
-    self-hosted runner with status "Idle".
+    If you now go to GitHub [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/settings/actions](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions),
+    you should see a self-hosted runner with status "Idle".
 
     Add the following simple workflow as ``.github/workflows/self_hosted_ci.yml`` in your repository:
 
