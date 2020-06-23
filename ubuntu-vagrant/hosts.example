@@ -12,7 +12,7 @@ vagrants:
     # Please update with your GitHub account/organization
     github_account: ci-for-science
     # Please update with your GitHub repository
-    github_repo: python-example1
+    github_repo: example-python-1
 ungrouped:
   hosts:
     localhost:

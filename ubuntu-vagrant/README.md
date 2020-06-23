@@ -68,7 +68,7 @@ cp hosts.example hosts
 
 Ansible must be configured for which GitHub account/organization and repository it should setup a runner for.
 The repository must be configured in `github_account` and `github_repo` fields in the `hosts` file.
-As a repository, you can use a clone of [https://github.com/ci-for-science/python-example1](https://github.com/ci-for-science/python-example1) or any repository which has a GitHub Action workflow that has `runs-on: self-hosted`.
+As a repository, you can use a duplicate of [https://github.com/ci-for-science/example-python-1](https://github.com/ci-for-science/example-python-1) repository which has a workflow that runs on a self-hosted runner or any repository which has a GitHub Action workflow that has `runs-on: self-hosted`.
 
 The Ansible playbook uses Personal Access Token for GitHub account to register the runner.
 The token needs to have full admin rights for the repo. At the moment the checkbox that needs to be checked is called `repo          Full control of private repositories`. The token can be created [here](https://github.com/settings/tokens).
