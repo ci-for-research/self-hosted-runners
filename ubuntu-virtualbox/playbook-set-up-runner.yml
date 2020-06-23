@@ -4,36 +4,45 @@
     RUNNER_VERSION: 2.169.1
   vars_prompt:
     - name: "ORG"
-      prompt: "What is the GitHub organization?"
+      prompt: "What is the GitHub organization for which you want to enable this self-hosted runner?"
       private: no
     - name: "REPO"
-      prompt: "What is the GitHub repository?"
+      prompt: "What is the GitHub repository for which you want to enable this self-hosted runner?"
       private: no
     - name: "TOKEN"
       prompt: "Please enter the GitHub Actions token for this workflow. Go to https://github.com/<org>/<repo>/settings/actions/add-new-runner and copy it from the 'Configure' section."
       private: no
   remote_user: tester
-  become: no
   tasks:
-
     - name: Showing the input variables
       debug:
         msg: "Setting up a GitHub runner for repository: https://github.com/{{ ORG }}/{{ REPO }}"
 
     - name: Creating a directory for the runner
       file:
-        path: ${HOME}/tmp/actions-runner
+        path: /home/tester/opt/actions-runner
         state: directory
 
     - name: Downloading and extracting the runner
       unarchive:
         src: https://github.com/actions/runner/releases/download/v{{ RUNNER_VERSION }}/actions-runner-linux-x64-{{ RUNNER_VERSION }}.tar.gz
-        dest: ${HOME}/tmp/actions-runner/
-        creates: ${HOME}/tmp/actions-runner/config.sh
+        dest: /home/tester/opt/actions-runner/
+        creates: /home/tester/opt/actions-runner/config.sh
         remote_src: yes
 
     - name: Configuring the GitHub Action runner
-      command: chdir=${HOME}/tmp/actions-runner ./config.sh --unattended --url https://github.com/{{ ORG }}/{{ REPO }} --token {{ TOKEN }} --replace
+      command: chdir=/home/tester/opt/actions-runner ./config.sh --unattended --url https://github.com/{{ ORG }}/{{ REPO }} --token {{ TOKEN }} --replace
 
-    - name: Running the GitHub Action runner
-      shell: ${HOME}/tmp/actions-runner/run.sh
+    - name: Install the GitHub Action runner as a service
+      become: true
+      shell:
+        chdir: /home/tester/opt/actions-runner
+        cmd: ./svc.sh install
+
+    - name: Enable starting the runner service when the machine starts
+      become: true
+      shell: systemctl enable actions.runner.{{ ORG }}-{{ REPO }}.{{ ansible_hostname }}.service
+
+    - name: Starting the runner service
+      become: true
+      shell: systemctl start actions.runner.{{ ORG }}-{{ REPO }}.{{ ansible_hostname }}.service

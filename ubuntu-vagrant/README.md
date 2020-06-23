@@ -21,13 +21,15 @@ vagrant up
 
 This will have started a Ubuntu 18.04 virtual machine in VirtualBox.
 
-## Login to VM
+## Test ssh connection to VM
 
-To login to VM with ssh use
+Login with vagrant ssh and get the hostname with
 
 ```shell
-vagrant ssh
+vagrant ssh -c hostname
 ```
+
+This should output `vagrant`, which is the hostname of the VM.
 
 (If you get `Host key verification failed` error then clear previous key with `ssh-keygen -R "[127.0.0.1]:2222"` and try again)
 
@@ -52,11 +54,13 @@ Host default
   LogLevel FATAL
 ```
 
-So to login with ssh use
+So to login with ssh client and to get hostname use
 
 ```shell
-ssh -i .vagrant/machines/default/virtualbox/private_key -p 2222 vagrant@127.0.0.1
+ssh -i .vagrant/machines/default/virtualbox/private_key -p 2222 vagrant@127.0.0.1 hostname
 ```
+
+It should output `vagrant`, which is the hostname of the VM.
 
 ## Configure
 
@@ -68,7 +72,7 @@ cp hosts.example hosts
 
 Ansible must be configured for which GitHub account/organization and repository it should setup a runner for.
 The repository must be configured in `github_account` and `github_repo` fields in the `hosts` file.
-As a repository, you can use a clone of [https://github.com/ci-for-science/python-example1](https://github.com/ci-for-science/python-example1) or any repository which has a GitHub Action workflow that has `runs-on: self-hosted`.
+As a repository, you can use a duplicate of [https://github.com/ci-for-science/example-python-1](https://github.com/ci-for-science/example-python-1) repository which has a workflow that runs on a self-hosted runner or any repository which has a GitHub Action workflow that has `runs-on: self-hosted`.
 
 The Ansible playbook uses Personal Access Token for GitHub account to register the runner.
 The token needs to have full admin rights for the repo. At the moment the checkbox that needs to be checked is called `repo          Full control of private repositories`. The token can be created [here](https://github.com/settings/tokens).
