@@ -1,0 +1,56 @@
+---
+- name: GitHub Actions Runner
+  hosts: hpchosts
+  # become: yes
+  vars:
+    # you can pin the runner version otherwise the latest version will be used
+    # - runner_version: "2.263.0"
+    - runner_user: runner
+    - hide_sensitive_logs: yes
+  vars_prompt:
+    - name: "github_account"
+      prompt: "What is your GitHub account/organization?"
+      default: ci-for-science
+      private: no
+    - name: "github_repo"
+      prompt: "What is your GitHub repository?"
+      default: python-example1
+      private: no
+
+  tasks:
+
+    - name: Runner User
+      user:
+        name: '{{ runner_user }}'
+        groups: sudo,adm
+        state: present
+
+    - name: Add user "runner" to sudo
+      lineinfile:
+        path: /etc/sudoers.d/runner
+        line: 'runner ALL=(ALL) NOPASSWD: ALL'
+        state: present
+        mode: 0440
+        create: yes
+        validate: 'visudo -cf %s'
+
+    - name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Setup Docker engine
+      include_role:
+        name: nickjj.docker
+      vars:
+        docker__users:
+          - '{{ runner_user }}'
+
+    - name: Setup GitHub actions runner
+      include_role:
+        name: monolithprojects.github_actions_runner
+      vars:
+        access_token: "{{ lookup('env','PAT') }}"
+        runner_dir: /opt/actions-runner/{{ github_account }}/{{ github_repo }}
+      tags:
+        - uninstall

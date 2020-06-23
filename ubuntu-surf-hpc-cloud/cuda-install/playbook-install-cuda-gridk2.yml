@@ -15,6 +15,7 @@
       - g++-5
       - make
       - perl
+      - g++
 
   - name: Set deafult gcc
     command: update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 10

@@ -1,9 +1,0 @@
----
-- hosts: all
-  remote_user: tester
-  tasks:
-  - name: Say hello from server side
-    debug:
-      msg: Hello Ansible
-  - name: List user's directory contents
-    command: ls -la ${HOME}
