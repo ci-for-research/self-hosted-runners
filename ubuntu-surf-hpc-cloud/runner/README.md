@@ -19,9 +19,9 @@ You can find the instructions [here](https://doc.hpccloud.surfsara.nl/).
 
 In order to access to VM, you will need to create ssh keys. Please see [this link](https://doc.hpccloud.surfsara.nl/SSHkey)
 
-## Login to VM
+## Login to VM (optional)
 
-To login to VM with ssh use
+If you want to test the connection with the VM, you can use the command below
 
 ```shell
 ssh -i $YOUR_KEY_PATH -p 22 $USER@$HOSTNAME
