@@ -21,13 +21,15 @@ vagrant up
 
 This will have started a Ubuntu 18.04 virtual machine in VirtualBox.
 
-## Login to VM
+## Test ssh connection to VM
 
-To login to VM with ssh use
+Login with vagrant ssh and get the hostname with
 
 ```shell
-vagrant ssh
+vagrant ssh -c hostname
 ```
+
+This should output `vagrant`, which is the hostname of the VM.
 
 (If you get `Host key verification failed` error then clear previous key with `ssh-keygen -R "[127.0.0.1]:2222"` and try again)
 
@@ -52,11 +54,13 @@ Host default
   LogLevel FATAL
 ```
 
-So to login with ssh use
+So to login with ssh client and to get hostname use
 
 ```shell
-ssh -i .vagrant/machines/default/virtualbox/private_key -p 2222 vagrant@127.0.0.1
+ssh -i .vagrant/machines/default/virtualbox/private_key -p 2222 vagrant@127.0.0.1 hostname
 ```
+
+It should output `vagrant`, which is the hostname of the VM.
 
 ## Configure
 
