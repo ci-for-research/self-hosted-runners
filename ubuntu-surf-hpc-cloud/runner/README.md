@@ -50,7 +50,7 @@ When Ansible command is executed, the Ansible playbook will ask for
 - the user or rganization name
 - the repository name
 
-As a repository, you can use a clone of [https://github.com/ci-for-science/python-example1](https://github.com/ci-for-science/python-example1) or any repository which has a GitHub Action workflow that has [`runs-on: self-hosted`](https://github.com/ci-for-science/python-example1/blob/4dea9c4f32a9bfcfcf166eb631c7aed3b2097d6c/.github/workflows/ci.yml#L15).
+As a repository, you can use a clone of [https://github.com/ci-for-science/example-python-1](https://github.com/ci-for-science/example-python-1) or any repository which has a GitHub Action workflow that has [`runs-on: self-hosted`](https://github.com/ci-for-science/example-python-1/blob/4dea9c4f32a9bfcfcf166eb631c7aed3b2097d6c/.github/workflows/ci.yml#L15).
 
 ### Step-2 Generating a Github Personal Access Token
 
