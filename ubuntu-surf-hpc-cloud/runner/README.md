@@ -7,8 +7,14 @@ We will use an Ansible playbook to install a [GitHub Action runner](https://help
 ## Prerequisites
 
 * VM running on SURF HPC Cloud
-* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html),
-    I suggest using a Python virtual environment and `pip install ansible`.
+* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) version 2.9.10 or later
+  * Option 1 - Using a Python virtual environment and 
+    `pip install ansible`.
+  * Option 2 - Using package manager (tested on Ubuntu 20.04)
+    ```shell
+        sudo apt update
+        sudo apt install ansible
+    ```
 
 ## Create a VM
 
