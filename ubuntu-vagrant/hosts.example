@@ -20,6 +20,4 @@ ungrouped:
       # Set localhost to not use become, otherwise actions-runner role fails
       ansible_become: false
       # Newer Ansible expect python to be v3, while in Ubuntu 18.04 it is still v2
-      ansible_python_interpreter: /usr/bin/python3
-      # Set localhost to use local connection, otherwise actions-runner role fails
-      ansible_connection: local
+      ansible_python_interpreter: /usr/bin/python3 
