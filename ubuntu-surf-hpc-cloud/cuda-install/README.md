@@ -10,11 +10,17 @@ We have 2 methods to install Nvidia drivers and Cuda.
 
 The command below runs the ansible-playbook and installs all necassary software. This ansible-playbook is specifically written for SURF HPC Cloud platform and GRID K2 hardware. However, it can easily be adapted for different platforms and graphics cards.
 
+Copy example hosts file and make necassary changes.
+
 ```shell
-ANSIBLE_HOST_KEY_CHECKING=False  docker run --rm -ti -v $PWD:/nlesc -v $YOUR_PRIVATE_KEY:/nlesc/id_rsa_ci_sprint  ansible/ansible-runner  ansible-playbook --become-user=ubuntu --inventory-file /nlesc/hosts /nlesc/playbook-install-cuda-gridk2.yml --private-key=/nlesc/id_rsa_ci_sprint --verbose
+cp hosts.example hosts
 ```
 
-You will need to change ``$YOUR_PRIVATE_KEY`` with full path of your private key and ``hosts`` file which has to connection details of the server.
+```shell
+docker run --rm -ti -v $PWD:/data --workdir=/data ansible/ansible-runner ansible-playbook playbook-install-cuda-gridk2.yml
+```
+
+``id_rsa`` is your rivate ssh key and ``hosts`` is the file which has the connection details of the server.
 
 ## 2- Manual installation
 
