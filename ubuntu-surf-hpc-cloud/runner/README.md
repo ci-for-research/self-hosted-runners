@@ -119,6 +119,6 @@ ansible-playbook playbook.yml --tags uninstall
 
 ## Examples:
 
-- [Simple Python example](https://github.com/ci-for-science/python-example1)
+- [Simple Python example](https://github.com/ci-for-science/example-python-1)
 
 - [Simple GPU example](https://github.com/ci-for-science/example-gpu-houston)
