@@ -45,7 +45,7 @@ suitable --choose whichever you're comfortable with.
     chmod 700 /home/tester/.ssh
     touch /home/tester/.ssh/known_hosts && chmod 644 /home/tester/.ssh/known_hosts
     touch /home/tester/.ssh/config      && chmod 600 /home/tester/.ssh/config
-    chown -R tester:tester /home/.ssh
+    chown -R tester:tester /home/tester/.ssh
     ```
 
     Note you can use ``stat``'s ``%a`` option to see a file's permissions as an octal number, e.g.
