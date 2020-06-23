@@ -1,6 +1,6 @@
 # Setup GitHub Action runner on a VM on SURF HPC Cloud from Windows
 
-Most of the steps in [../ubuntu-surf-hpc-cloud/runner/README.md](../ubuntu-surf-hpc-cloud/README.md) can be reused except for installing Ansible.
+Most of the steps in [../ubuntu-surf-hpc-cloud/runner/README.md](../ubuntu-surf-hpc-cloud/runner/README.md) can be reused except for installing Ansible.
 
 Ansible can not be initiated from Windows powershell or command prompt.
 You will need to install Ansible in [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/) using any of the [WSL OS choices](https://docs.microsoft.com/en-us/windows/wsl/install-win10#install-your-linux-distribution-of-choice) that [Ansible supports](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) like Ubuntu 20.04.
@@ -18,7 +18,9 @@ I was using Ubuntu 20.04 on WSL1 with Python 3.8.2 and Ansible v2.9.10.
 
 I [duplicated](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/duplicating-a-repository) the [https://github.com/ci-for-science/example-gpu-houston](https://github.com/ci-for-science/example-gpu-houston) repo to my own account and made it private.
 
-I changed dir to `../ubuntu-surf-hpc-cloud/runner/`, because the playbook and other files are there.
+I cloned [https://github.com/ci-for-science/self-hosted-runners/](https://github.com/ci-for-science/self-hosted-runners/) repo locally.
+
+I changed dir to `ubuntu-surf-hpc-cloud/runner/`, because the playbook and other files are there.
 
 I copied `hosts.example` to `hosts` and updated it to connect to the VM.
 
