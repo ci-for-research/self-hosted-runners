@@ -8,12 +8,13 @@ We will use a [Vagrant](https://www.vagrantup.com) to create a VM and an Ansible
 
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 * [Vagrant](https://www.vagrantup.com/downloads)
-* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html),
+* [Windows subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+* [Ansible installed within WSL](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html),
     I suggest using a Python virtual environment and `pip install ansible`.
 
 ## Start VM
 
-Virtual machine can be started from this (/ubuntu-vagrant) directory with
+Virtual machine can be started from this (/window-vagrant) directory with
 
 ```shell
 vagrant up
@@ -50,6 +51,7 @@ Host default
   LogLevel FATAL
 ```
 
+**We will use Windows Subsystem for Linux (WSL) from from here on.**
 So to login with ssh use
 
 ```shell
@@ -58,6 +60,7 @@ ssh -i .vagrant/machines/default/virtualbox/private_key -p 2222 vagrant@127.0.0.
 
 ## Configure
 
+Ansible does not support Windows. 
 Ansible must be configured for which GitHub account/organization and repository it should setup a runner.
 Edit the `inventory.yml` file and set `github_account` key and repository `github_repo` key.
 
