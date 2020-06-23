@@ -23,7 +23,7 @@ This will have started a Ubuntu 18.04 virtual machine in VirtualBox.
 
 ## Test ssh connection to VM
 
-Login with ssh and get the hostname with
+Login with vagrant ssh and get the hostname with
 
 ```shell
 vagrant ssh -c hostname
