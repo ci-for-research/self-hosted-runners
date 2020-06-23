@@ -25,7 +25,7 @@ Linux Ubuntu.
 
 | client OS | server hardware | Link |
 | --- | --- | --- |
-| Linux Ubuntu | remote machine at [SURF HPC Cloud] | [link](ubuntu-surf-hpc-cloud/README.md) |
+| Linux Ubuntu | remote machine at [SURF HPC Cloud] | [link](ubuntu-surf-hpc-cloud/runner/README.md) |
 | Linux Ubuntu | local machine via Docker           | [link](ubuntu-docker/README.md) |
 | Linux Ubuntu | local machine via VirtualBox       | [link](ubuntu-virtualbox/README.md) |
 | Linux Ubuntu | local machine via Vagrant          | [link](ubuntu-vagrant/README.md) |
