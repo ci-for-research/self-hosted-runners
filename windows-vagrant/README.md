@@ -10,7 +10,7 @@ We will use a [Vagrant](https://www.vagrantup.com) to create a VM and an Ansible
 * [Vagrant](https://www.vagrantup.com/downloads)
 * [Windows subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
 * [Ansible installed within WSL](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html),
-    I suggest using a Python virtual environment and `pip install ansible`.
+    I suggest using a Python virtual environment within WSL and `pip install ansible`.
 
 ## Start VM
 
@@ -60,7 +60,10 @@ ssh -i .vagrant/machines/default/virtualbox/private_key -p 2222 vagrant@127.0.0.
 
 ## Configure
 
-Ansible does not support Windows. 
+Ansible does not support Windows. We assume ansible was installed within WSL.
+
+Clone the repo again, this time within the disk space managed by WSL. Because of specific file permissions required, it is easier to work from the disk space with posix permissions, than to use the existing clone on the mounted Windows drive.
+
 Ansible must be configured for which GitHub account/organization and repository it should setup a runner.
 Edit the `inventory.yml` file and set `github_account` key and repository `github_repo` key.
 
