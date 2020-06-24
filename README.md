@@ -33,6 +33,7 @@ Linux Ubuntu.
 | Windows      | remote machine at [SURF HPC Cloud] | - |
 | Windows      | local machine via Docker           | - |
 | Windows      | local machine via VirtualBox       | - |
+| Windows      | local machine via Vagrant          | [link](windows-vagrant/README.md) |
 
 
 [SURF HPC Cloud]: https://userinfo.surfsara.nl/systems/hpc-cloud
