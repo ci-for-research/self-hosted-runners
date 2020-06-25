@@ -144,3 +144,11 @@ ansible-playbook playbook.yml --tags uninstall
 
 Find instructions for provisioning additional functionality [here](../README.md).
 
+
+# TODO
+
+- starting the runner
+- check that the runner comes online with the machine
+- repo side: offline/idle/active
+
+
