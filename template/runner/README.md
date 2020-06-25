@@ -59,6 +59,11 @@ e.g.
 ssh -i <keyfile> -p <port> <username>@<hostname>
 ```
 
+### Troubleshooting SSH
+
+Getting SSH connections to work can be tricky. Check out [this document](/troubleshooting-ssh.md) if you're experiencing
+difficulties.
+
 ### The inventory file
 
 TODO: Explain what ``hosts`` is, why you need it, what the options are for (see below)
