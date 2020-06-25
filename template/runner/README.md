@@ -61,7 +61,7 @@ ssh -i <keyfile> -p <port> <username>@<hostname>
 
 ### Troubleshooting SSH
 
-Getting SSH connections to work can be tricky. Check out [this document](/troubleshooting-ssh.md) if you're experiencing
+Getting SSH connections to work can be tricky. Check out [this document](/docs/troubleshooting-ssh.md) if you're experiencing
 difficulties.
 
 ### The inventory file
