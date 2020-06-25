@@ -99,8 +99,9 @@ ansible all -m ping
 
 ### Install the runner using the playbook
 
-- Introduce concept of ansible requirements file
+- Introduce concept of an ansible playbook, and of ``ansible-playbook``
 - Introduce concept of what is a role
+- Introduce concept of ansible requirements file
 - Explain why the playbook asks for REPO, ORG and TOKEN
 
 ```shell
