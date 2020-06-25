@@ -27,16 +27,18 @@ Linux Ubuntu.
 
 | Client OS | Server hardware | Runner | Additional functionality |
 | --- | --- | --- | --- |
-| Linux Ubuntu | remote machine at [SURF HPC Cloud] | [link](/ubuntu-surf-hpc-cloud/runner/README.md)  | [CUDA](/ubuntu-surf-hpc-cloud/with-cuda/README.md), ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
 | Linux Ubuntu | local machine via Docker           | [link](/ubuntu-docker/runner/README.md)          | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
-| Linux Ubuntu | local machine via VirtualBox       | [link](/ubuntu-virtualbox/runner/README.md)      | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
 | Linux Ubuntu | local machine via Vagrant          | [link](/ubuntu-vagrant/runner/README.md)         | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
-| Mac          | remote machine at [SURF HPC Cloud] | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
-| Mac          | local machine via VirtualBox       | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
+| Linux Ubuntu | local machine via VirtualBox       | [link](/ubuntu-virtualbox/runner/README.md)      | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
+| Linux Ubuntu | remote machine at [SURF HPC Cloud] | [link](/ubuntu-surf-hpc-cloud/runner/README.md)  | [CUDA](/ubuntu-surf-hpc-cloud/with-cuda/README.md), ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
 | Mac          | local machine via Docker           | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
-| Windows      | remote machine at [SURF HPC Cloud] | [link](/windows-surf-hpc-cloud/runner/README.md) | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
+| Mac          | local machine via Vagrant          | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
+| Mac          | local machine via VirtualBox       | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
+| Mac          | remote machine at [SURF HPC Cloud] | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
 | Windows      | local machine via Docker           | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
+| Windows      | local machine via Vagrant          | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
 | Windows      | local machine via VirtualBox       | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
+| Windows      | remote machine at [SURF HPC Cloud] | [link](/windows-surf-hpc-cloud/runner/README.md) | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
 
 # Security
 
