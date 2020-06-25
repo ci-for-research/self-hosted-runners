@@ -114,7 +114,7 @@ ansible all -m ping
 ansible-playbook playbook.yml
 ```
 
-### Monitoring the service logs
+### Monitoring the runner service's logs
 
 The log of the runner can be viewed with
 
