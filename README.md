@@ -1,4 +1,4 @@
-Open MPI| Five recommendations for fair software from [fair-software.nl](https://fair-software.nl) | Badges |
+| Five recommendations for fair software from [fair-software.nl](https://fair-software.nl) | Badges |
 | --- | --- |
 | 1. Code repository | [![GitHub badge](https://img.shields.io/badge/github-repo-000.svg?logo=github&labelColor=gray&color=blue)](https://github.com/ci-for-science/self-hosted-runners/) |
 | 2. License | [![License badge](https://img.shields.io/github/license/ci-for-science/self-hosted-runners)](https://github.com/ci-for-science/self-hosted-runners/) |
