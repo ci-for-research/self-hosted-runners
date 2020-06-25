@@ -102,6 +102,7 @@ ansible all -m ping
 - Introduce concept of an ansible playbook, and of ``ansible-playbook``
 - Introduce concept of what is a role
 - Introduce concept of ansible requirements file
+- Get a personal access token from GitHub
 - Explain why the playbook asks for REPO, ORG and TOKEN
 
 ```shell
