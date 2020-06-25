@@ -18,7 +18,7 @@ _Describe things that users need to install on their system to follow the guide.
 
 ## Server side configuration
 
-TODO
+E.g. how to configure VirtualBox, how to run docker container, how to configure HPC cloud machine
 
 ## Client side configuration
 
