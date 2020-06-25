@@ -112,7 +112,12 @@ The log of the runner can be viewed with
 
 ```shell
 ssh -i <keyfile> -p <port> <username>@<hostname>
-<hostname> $ journalctl -u actions.runner.*
+```
+
+Then
+
+```shell
+journalctl -u actions.runner.*
 ```
 
 ### Managing the runner service through the playbook
@@ -124,7 +129,6 @@ ansible-playbook playbook.yml --tags restart
 ansible-playbook playbook.yml --tags status
 ansible-playbook playbook.yml --tags enable
 ansible-playbook playbook.yml --tags disable
-ansible-playbook playbook.yml --tags uninstall
 ```
 
 ### Uninstalling the runner
@@ -132,7 +136,6 @@ ansible-playbook playbook.yml --tags uninstall
 ```shell
 ansible-playbook playbook.yml --tags uninstall
 ```
-
 
 ### What's next
 
