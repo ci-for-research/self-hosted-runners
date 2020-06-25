@@ -152,7 +152,7 @@ Uninstalling the runner
 ansible-playbook playbook.yml --tags uninstall
 ```
 
-### Verify that Pull Requests trigger your newly configured runner
+### Verify that your newly configured runner is triggered on new Pull Requests and new commits
 
 Add the following simple workflow as ``.github/workflows/self_hosted_ci.yml`` in your repository https://github.com/ORG/REPO:
 
