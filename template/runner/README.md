@@ -2,13 +2,14 @@
 
 Title format:
 
-- Set up a server for a GitHub Action runner with [Docker|Virtualbox|Vagrant] from [Linux Ubuntu|MacOS|Windows]
-- Set up a server for a GitHub Action runner on [HPC Cloud|other hardware] from [Linux Ubuntu|MacOS|Windows]
+- Setting up a CI server for a GitHub Action runner with [Docker|Virtualbox|Vagrant] from [Linux Ubuntu|MacOS|Windows]
+- Setting up a CI server for a GitHub Action runner on [HPC Cloud|other hardware] from [Linux Ubuntu|MacOS|Windows]
 
 _Describe the plan, what will be the outcome of this guide_
 
 This guide distinguishes between the _client_ and the _server_; the client is your own machine; the server is whichever
-machine runs the tests. This document describes the case where the server is ... For guides on how to configure alternative setups, go [here](/README.md).
+machine will run the tests. This document describes the case where the server is <something something, e.g. a HPC cloud machine, a VirtualBox Vm running on localhost, etc.>.
+For guides on how to configure alternative setups, go [here](/README.md).
 
 ## Prerequisites
 
