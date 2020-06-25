@@ -123,6 +123,18 @@ Then
 journalctl -u actions.runner.*
 ```
 
+### Start the runner each time the machine boots
+
+```shell
+ansible-playbook playbook.yml --tags enable
+```
+
+### Start the runner
+
+```shell
+ansible-playbook playbook.yml --tags start
+```
+
 ### Managing the runner service through the playbook
 
 ```shell
@@ -134,21 +146,37 @@ ansible-playbook playbook.yml --tags enable
 ansible-playbook playbook.yml --tags disable
 ```
 
-### Uninstalling the runner
+Uninstalling the runner
 
 ```shell
 ansible-playbook playbook.yml --tags uninstall
 ```
 
+### Verify that Pull Requests trigger your newly configured runner
+
+Add the following simple workflow as ``.github/workflows/self_hosted_ci.yml`` in your repository https://github.com/ORG/REPO:
+
+```yaml
+name: Self-hosted CI example
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: test
+    runs-on: self-hosted
+    steps:
+      - name: Show directory listing
+        shell: bash -l {0}
+        run: |
+          ls -la
+```
+
+With this workflow in place, new pushes and new pull requests should trigger your self-hosted server. You can see a
+record of past and current GitHub Actions by pointing your browser to
+https://github.com/ORG/REPO/actions?query=workflow%3A%22Self-hosted+CI+example%22.
+
+
 ### What's next
 
 Find instructions for provisioning additional functionality [here](../README.md).
-
-
-# TODO
-
-- starting the runner
-- check that the runner comes online with the machine
-- repo side: offline/idle/active
-
-
