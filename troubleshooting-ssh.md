@@ -29,7 +29,7 @@ All files and directories under `~/.ssh`, as well as `~/.ssh` itself, should be 
 chown -R $(id -u):$(id -g) ~/.ssh
 ```
 
-# Verbosity
+## Verbosity
 
 Increase ``ssh``'s verbosity using the ``-vvvv`` option (more ``v``'s means higher verbosity), e.g.
 
