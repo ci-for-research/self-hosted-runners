@@ -2,7 +2,7 @@
 
 This short guide shows how to install Nvidia drivers and CUDA for GRID K2 hardware. For more information about GPUs on SURF HPC Cloud please visit [SURF HPC Documentation](https://doc.hpccloud.surfsara.nl/gpu-attach).
 
-We have 2 methods to install Nvidia drivers and Cuda.
+We have 2 methods to install Nvidia drivers and CUDA.
 - Using ansible playbook
 - Following the steps and installing manually
 
@@ -26,7 +26,7 @@ docker run --rm -ti -v $PWD:/data --workdir=/data ansible/ansible-runner ansible
 
 ## Requirements
 
-Cuda currently officially supports only two versions of Ubuntu: 18.04 and 16.04. This instructions were tested on Ubuntu 18.04.
+CUDA currently officially supports only two versions of Ubuntu: 18.04 and 16.04. This instructions were tested on Ubuntu 18.04.
 
 ## System info
 
@@ -57,9 +57,9 @@ lspci | grep -i nvidia
 
 ## Pre install
 
-For Grid K2 card we will need Cuda 8.0. Cuda 8.0 only works with only gcc 5.0 so it should be installed before.
+For Grid K2 card we will need CUDA 8.0. CUDA 8.0 only works with only gcc 5.0 so it should be installed before.
 
-To decide what version of cuda and Nvidia drivers you need, please check the links below.
+To decide what version of CUDA and Nvidia drivers you need, please check the links below.
 
 See what drivers you need:
 https://www.nvidia.com/Download/index.aspx?lang=en-us
@@ -82,9 +82,9 @@ wget http://us.download.nvidia.com/XFree86/Linux-x86_64/367.134/NVIDIA-Linux-x86
 sh ./NVIDIA-Linux-x86_64-367.134.run --accept-license  -s
 ```
 
-### Install Cuda
+### Install CUDA
 
-Download Cuda 8.0 installer
+Download CUDA 8.0 installer
 ```
 # wget https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda_8.0.61_375.26_linux-run
 ```
@@ -97,7 +97,7 @@ wget https://developer.nvidia.com/compute/cuda/8.0/Prod2/patches/2/cuda_8.0.61.2
 
 ### Fix Perl issue
 
-While installing Cuda, we had some issues related to Perl scripts.
+While installing CUDA, we had some issues related to Perl scripts.
 See: https://forums.developer.nvidia.com/t/cant-locate-installutils-pm-in-inc/46952/10
 
 
@@ -110,9 +110,9 @@ export $PERL5LIB
 rm -rf InstallUtils.pm cuda-installer.pl run_files uninstall_cuda.pl
 ```
 
-### Install Cuda
+### Install CUDA
 
-After fixing the Perl issue, we can install Cuda.
+After fixing the Perl issue, we can install CUDA.
 
 ```shell
 sh ./cuda_8.0.61_375.26_linux-run --silent --samples --toolkit --override --verbose
@@ -120,7 +120,7 @@ sh ./cuda_8.0.61_375.26_linux-run --silent --samples --toolkit --override --verb
 
 ### Environment variables
 
-In order to be able to use Cuda, we need to change our environment variables.
+In order to be able to use CUDA, we need to change our environment variables.
 
 Add the lines below to .profile file.
 
@@ -131,9 +131,9 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-8.0/lib64
 
 ## Test the installation
 
-### Cuda compiler
+### CUDA compiler
 
-Check the cuda compiler version.
+Check the CUDA compiler version.
 
 ```shell
 nvcc --version

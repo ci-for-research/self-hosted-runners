@@ -1,5 +1,5 @@
 ---
-- name: Install Nvidia drivers and Cuda for Grid K2
+- name: Install Nvidia drivers and CUDA for Grid K2
   hosts: all
   vars:
     download_path: "/tmp/installers"
@@ -47,7 +47,7 @@
     args:
       chdir: /tmp/installers/
 
-  - name: Download Cuda
+  - name: Download CUDA
     get_url:
       url: https://developer.nvidia.com/compute/cuda/{{cuda_version_major}}/Prod2/local_installers/cuda_{{cuda_version_major}}.{{cuda_version_minor}}_linux-run
       dest: /tmp/installers/cuda_{{cuda_version_major}}.{{cuda_version_minor}}_linux-run
@@ -72,12 +72,12 @@
       chdir: /tmp/installers/
       removes: /tmp/installers/InstallUtils.pm
 
-  - name: Install Cuda
+  - name: Install CUDA
     command: sh ./cuda_8.0.61_375.26_linux-run --silent --samples --toolkit --override --verbose
     args:
       chdir: /tmp/installers/
 
-  - name: Make gcc-5 default compiler for Cuda
+  - name: Make gcc-5 default compiler for CUDA
     command: ln -s /usr/bin/"{{ item.name }}" /usr/local/cuda/bin/"{{ item.dest }}"
     loop:
       - { name: 'gcc-5', dest: 'gcc' }
