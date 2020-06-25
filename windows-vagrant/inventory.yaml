@@ -12,7 +12,7 @@ vagrants:
     # Please update with your GitHub account/organization
     github_account: ci-for-science
     # Please update with your GitHub repository
-    github_repo: justatest
+    github_repo: example-python-1
 # Set localhost to not use become, otherwise actions-runner role fails
 localhost:
   hosts:
