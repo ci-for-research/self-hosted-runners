@@ -6,6 +6,8 @@
 | 4. Enable citation | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3904265.svg)](https://doi.org/10.5281/zenodo.3904265) |
 | 5. Checklist | N/A |
 
+# How to set up GitHub Action runners on self-hosted infrastructure
+
 This repository explains how to set up a server for running continuous integration tests on other hardware than what
 GitHub provides. This can be useful when the code you want to test has special requirements, for example if
 
@@ -23,23 +25,23 @@ locally as well, through the use of virtualization (with VirtualBox) and contain
 For the client, we included instructions for Linux Ubuntu, Mac, and Windows; the server-side instructions all assume
 Linux Ubuntu.
 
-| client OS | server hardware | Link |
-| --- | --- | --- |
-| Linux Ubuntu | remote machine at [SURF HPC Cloud] | [link](ubuntu-surf-hpc-cloud/runner/README.md) |
-| Linux Ubuntu | local machine via Docker           | [link](ubuntu-docker/README.md) |
-| Linux Ubuntu | local machine via VirtualBox       | [link](ubuntu-virtualbox/README.md) |
-| Linux Ubuntu | local machine via Vagrant          | [link](ubuntu-vagrant/README.md) |
-| Mac          | remote machine at [SURF HPC Cloud] | - |
-| Mac          | local machine via Docker           | - |
-| Mac          | local machine via VirtualBox       | - |
-| Windows      | remote machine at [SURF HPC Cloud] | [link](windows-surf-hpc-cloud/README.md) |
-| Windows      | local machine via Docker           | - |
-| Windows      | local machine via VirtualBox       | - |
+| Client OS | Server hardware | Runner | Additional functionality |
+| --- | --- | --- | --- |
+| Linux Ubuntu | local machine via Docker           | [link](/ubuntu-docker/runner/README.md)          | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
+| Linux Ubuntu | local machine via Vagrant          | [link](/ubuntu-vagrant/runner/README.md)         | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
+| Linux Ubuntu | local machine via VirtualBox       | [link](/ubuntu-virtualbox/runner/README.md)      | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
+| Linux Ubuntu | remote machine at [SURF HPC Cloud] | [link](/ubuntu-surf-hpc-cloud/runner/README.md)  | [CUDA](/ubuntu-surf-hpc-cloud/with-cuda/README.md), ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
+| Mac          | local machine via Docker           | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
+| Mac          | local machine via Vagrant          | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
+| Mac          | local machine via VirtualBox       | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
+| Mac          | remote machine at [SURF HPC Cloud] | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
+| Windows      | local machine via Docker           | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
+| Windows      | local machine via Vagrant          | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
+| Windows      | local machine via VirtualBox       | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
+| Windows      | remote machine at [SURF HPC Cloud] | [link](/windows-surf-hpc-cloud/runner/README.md) | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
 
-<br/><br/> 
+# Security
 
 **A warning from GitHub for self-hosted runners in combination with public repositories is shown [here](https://help.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners#self-hosted-runner-security-with-public-repositories). Please take this seriously. It basically means that the combination of a self-hosted runner and a public GitHub repository is unsafe. However, there was a [recent discussion](https://github.com/actions/runner/issues/494) indicating that GitHub may add features to make this combination safe in the near future.**
 
 [SURF HPC Cloud]: https://userinfo.surfsara.nl/systems/hpc-cloud
-
-   
