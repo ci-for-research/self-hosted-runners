@@ -1,0 +1,17 @@
+name: GitHub-hosted CI example
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show directory listing
+        shell: bash -l {0}
+        run: |
+          ls -la
+      - name: Lint Ansible Playbook
+        uses: ansible/ansible-lint-action@v4.1.0
+        with:
+          args: "self-hosted-runners/ubuntu-vagrant/playbook.yml"
