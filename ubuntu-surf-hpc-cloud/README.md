@@ -1,19 +1,5 @@
-# Linux Ubuntu client to remote machine at SURF HPC Cloud
+This folder contains SURF HPC Cloud related guides on how to set up runner and install CUDA.
 
-Describe general layout of the approach
+[runner](./runner/README.d) shows how you can set up a runner on SURF HPC Cloud.
 
-## prerequisites
-
-- account
-- url to HPC Cloud frontend for managing VMs
- 
-## server side configuration
-
-## client side configuration
-
-- install ansible from PPA (mind the version)
-- install openssh
-- generate key pair
-- copy key pair to server
-- test ssh -i keyfile -p 2222 username@127.0.0.1|localhost
-- test hello world playbook
+In case you need to install CUDA on HPC cloud, you can follow [these instructions](./with-cuda/README.md).
