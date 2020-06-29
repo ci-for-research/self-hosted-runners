@@ -36,7 +36,7 @@ Linux Ubuntu.
 | Mac          | local machine via VirtualBox       | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
 | Mac          | remote machine at [SURF HPC Cloud] | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
 | Windows      | local machine via Docker           | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
-| Windows      | local machine via Vagrant          | [link](windows-vagrant/README.md)                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
+| Windows      | local machine via Vagrant          | [link](windows-vagrant/runner/README.md)         | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
 | Windows      | local machine via VirtualBox       | -                                                | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
 | Windows      | remote machine at [SURF HPC Cloud] | [link](/windows-surf-hpc-cloud/runner/README.md) | CUDA, ifort, Open MPI, OpenCL, OpenCV, OpenMP, Slurm |
 
