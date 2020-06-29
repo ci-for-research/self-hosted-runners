@@ -52,7 +52,15 @@ Host default
 ```
 
 **We will use Windows Subsystem for Linux (WSL) from from here on.**
-So to login with ssh use
+Clone the repo again, this time within the disk space managed by WSL. Because of specific file permissions required, it is easier to work from the disk space with posix permissions, than to use the existing clone on the mounted Windows drive.
+
+To have access to the machine from WSL, the private key needs to be copied from Windows to the WSL repo. To do this, copy the `/window-vagrant/.vagrant` into WSL. Correct the permissions with chmod
+
+```
+chmod go-rwx .vagrant/machines/default/virtualbox/private_key
+```
+
+Whe this is done, login with ssh using
 
 ```shell
 ssh -i .vagrant/machines/default/virtualbox/private_key -p 2222 vagrant@127.0.0.1
@@ -61,8 +69,6 @@ ssh -i .vagrant/machines/default/virtualbox/private_key -p 2222 vagrant@127.0.0.
 ## Configure
 
 Ansible does not support Windows. We assume ansible was installed within WSL.
-
-Clone the repo again, this time within the disk space managed by WSL. Because of specific file permissions required, it is easier to work from the disk space with posix permissions, than to use the existing clone on the mounted Windows drive.
 
 Ansible must be configured for which GitHub account/organization and repository it should setup a runner.
 Edit the `inventory.yml` file and set `github_account` key and repository `github_repo` key.
