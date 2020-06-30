@@ -4,6 +4,3 @@
 # ignore ssh key files anywhere
 /**/*/*.pub
 /**/*/*id_rsa*
-
-# ignore ansible config files anywhere
-/**/*/ansible.cfg

@@ -1,14 +1,18 @@
-# Linux Ubuntu client to local machine via VirtualBox
+# Setting up a CI server for a GitHub Action runner with Virtualbox from Linux Ubuntu
+
+After following this guide, you'll have a simple GitHub action workflow on a GitHub repository of your choice. When new
+commits are made to your repository, the workflow delegates work to a server which runs in a Virtual Machine on your own
+computer.
 
 This guide distinguishes between the _client_ and the _server_; the client is your own machine; the server is whichever
 machine runs the tests. This document describes the case where the server is a virtual machine, running on your own
-physical machine. For guides on how to configure alternative setups, go [here](/README.md).
+physical machine. For guides on how to configure other features in addition to just the runner, go [here](/README.md).
 
 ## TL;DR
 
 1. create a virtual machine with an SSH server
 1. enable access to the server via SSH keys
-1. ``ansible-playbook --key-file id_rsa --inventory hosts -v playbook-set-up-runner.yml``
+1. ``ansible-playbook playbook.yml``
 
 ## Prerequisites
 
@@ -56,133 +60,229 @@ suitable --choose whichever you're comfortable with.
 
 ## Client side configuration
 
-1. Install Ansible (from PPA; the version you get from the Ubuntu repositories is too old).
+### Install Ansible
 
-    ```shell
-    $ sudo apt update
-    $ sudo apt install software-properties-common
-    $ sudo apt-add-repository --yes --update ppa:ansible/ansible
-    $ sudo apt install ansible
-    ```
+Ansible is a tool with which you can do so-called _provisioning_, i.e. automated system administration of remote
+machines. We'll use it to set up the GitHub Actions runner.
 
-    (Find more information [here](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu)).
+Install Ansible from Ubuntu's repositories:
 
-1. Install OpenSSH client to be able to connect to remote machines via SSH
+```shell
+sudo apt install ansible
+```
 
-    ```shell
-    sudo apt install openssh-client
-    ```
+Make sure your Ansible version is 2.9.9 or later with:
+```shell
+ansible --version
+```
 
-1. Generate a key pair (files ``id_rsa`` and ``id_rsa.pub``) in directory [``ubuntu-virtualbox``](/ubuntu-virtualbox) using RSA encryption:
+(Find more information [here](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu)).
 
-    **Note: ``id_rsa`` is the private half of the SSH key pair; don't share it with anybody else.**
+### Install SSH client
 
-    ```shell
-    cd ubuntu-virtualbox
-    ssh-keygen -t rsa -f id_rsa -N ''
-    ```
+To be able to connect to remote machines via SSH, we'll need an SSH client. We'll use OpenSSH. Install it from Ubuntu's
+repositories with:
 
-    Make sure that the permissions are set correctly:
+```shell
+sudo apt install openssh-client
+```
 
-    ```
-    chmod 600 id_rsa
-    chmod 644 id_rsa.pub
-    ```
+### Generate SSH key pair
 
-    Note you can use ``stat``'s ``%a`` option to see a file's permissions as an octal number, e.g.
+Generate a key pair (files ``id_rsa`` and ``id_rsa.pub``) in directory
+[``ubuntu-virtualbox/runner``](/ubuntu-virtualbox/runner) using RSA encryption:
 
-    ```shell
-    stat -c "%a %n" <filename>
-    stat -c "%a %n" `ls -1`
-    ```
+**Note: ``id_rsa`` is the private half of the SSH key pair; don't share it with anybody else.**
 
+```shell
+cd ubuntu-virtualbox/runner/
+ssh-keygen -t rsa -f id_rsa -N ''
+```
 
-1. Copy the public half of the key pair (i.e. ``id_rsa.pub``) to the server.
+Make sure that the permissions are set correctly:
 
-    ```shell
-    ssh-copy-id -i id_rsa.pub -p 2222 tester@127.0.0.1
-    ```
+```
+chmod 600 id_rsa
+chmod 644 id_rsa.pub
+```
 
-1. Test if you can SSH into the server using the other half of the key pair (i.e. ``id_rsa``)
+Note you can use ``stat``'s ``%a`` option to see a file's permissions as an octal number, e.g.
 
-    ```shell
-    ssh -i id_rsa -p 2222 tester@127.0.0.1
-    ```
+```shell
+stat -c "%a %n" <filename>
+stat -c "%a %n" `ls -1`
+```
 
-1. Log out of the server with
+### Copy the key pair to the server
 
-    ```shell
-    exit
-    ```
+Copy the public half of the key pair (i.e. ``id_rsa.pub``) to the server.
 
-1. Update ``hosts`` with the IP address of the server. Here are the complete contents of my ``hosts``:
+```shell
+ssh-copy-id -i id_rsa.pub -p 2222 tester@127.0.0.1
+```
 
-    ```shell
-    127.0.0.1:2222
-    ```
+### Test connection with server using ``ssh``
 
-1. Test 'hello ansible' playbook:
+Test if you can SSH into the server using the other half of the key pair (i.e. ``id_rsa``)
 
-    ```
-    ansible-playbook --key-file id_rsa --inventory hosts playbook-hello-ansible.yml
-    ```
+```shell
+ssh -i id_rsa -p 2222 tester@127.0.0.1
+```
 
-1. Test playbook that needs sudo permissions:
+Log out of the server with
 
-    ```
-    ansible-playbook --key-file id_rsa --inventory hosts --ask-become-pass playbook-install-nano.yml
-    ```
+```shell
+exit
+```
 
-1. Use ``ansible-playbook``'s verbosity flag ``-v`` to see the directory listing result:
+### Troubleshooting SSH
 
-    ```
-    ansible-playbook --key-file id_rsa --inventory hosts --ask-become-pass -v playbook-install-nano.yml
-    ```
+Getting SSH connections to work can be tricky. Check out [this document](/docs/troubleshooting-ssh.md) if you're
+experiencing difficulties.
 
-1. Sometimes, the Ansible output can be a bit difficult to read. You can enable pretty-printing Ansible's stdout by
-   creating a configuration file, ``ansible.cfg`` in the current directory, with the ``stdout_callback`` option.
+### The inventory file
 
-    ```
-    [defaults]
-    # Use a callback plugin to pretty print standard out.
-    stdout_callback = yaml
-    ```
+Ansible uses so-called _inventory_ files to define how to connect to remote machines. The inventory file is typically
+called  ``hosts``. The following inventory file is equivalent to the ``ssh`` command line we just used:
 
-1. We're almost ready to use ``ansible-playbook`` to set up a GitHub Runner on your own server, but first we need to generate a token, as follows:
+```yaml
+all:
+  hosts:
+    ci-server:
+      ansible_connection: ssh
+      ansible_host: 127.0.0.1
+      ansible_port: 2222
+      ansible_ssh_private_key_file: ./id_rsa
+      ansible_user: tester
+```
 
-    1. On GitHub, go to [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/settings/actions/add-new-runner](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions/add-new-runner)
-    1. Copy the token (see section _Configure_). It should look something like ``ABCY2KDLTSPUY687UH7IJEK65OBKE`` and is valid for an hour.
+This inventory file defines a group ``all`` with just one machine in it, which we labeled ``ci-server``. ``ci-server``
+has a bunch of variables that define how to connect to it. For more information on inventory files, read
+[Ansible's documentation](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html).
 
-    Now, configure your server to be able to run continuous integration with the command below. Fill in the password
-    ``password`` to become sudo in the server when asked. Next, fill in the GitHub organization (which might be simply
-    your GitHub user name) and the repository name for which you want to run workflows on a self-hosted server, as well
-    as the token when prompted:
+### The Ansible configuration file
 
-    ```
-    ansible-playbook --key-file id_rsa --inventory hosts --ask-become-pass -v playbook-set-up-runner.yml
-    ```
+In addition to the inventory file, it's often convenient to use a configuration file. The default filename for this file
+is ``ansible.cfg``, and it can be used to specify Ansible's behavior. The configuration option documentation can be
+found [here](https://docs.ansible.com/ansible/latest/reference_appendices/config.html#the-configuration-file).
 
-    If you now go to GitHub [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/settings/actions](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions),
-    you should see a self-hosted runner with status "Idle".
+### Test connection with server using ``ansible``
 
-    Add the following simple workflow as ``.github/workflows/self_hosted_ci.yml`` in your repository:
+We're about ready to test if we can connect to the server using Ansible. For this we will use the ``ping`` module, and
+we'll instruct Ansible to run the module on all hosts as defined in the inventory, as follows:
 
-    ```yaml
-    name: Self-hosted CI example
+```shell
+ansible all -m ping
+```
 
-    on: [push, pull_request]
+Which should return:
 
-    jobs:
-      test:
-        name: test
-        runs-on: self-hosted
-        steps:
-          - name: Show directory listing
-            shell: bash -l {0}
-            run: |
-              ls -la
-    ```
+```text
+ci-server | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+```
 
-    Now try making a change to one of the files in your repository to see if you can trigger running the simple workflow
-    on your self-hosted server. If successful, the status will change to "Active" while the workflow is running. You can
-    get an overview of previous GitHub actions by navigating to [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/actions](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/actions).
+### Install the runner using the playbook
+
+- Introduce concept of an ansible playbook, and of ``ansible-playbook``
+- Introduce concept of what is a role
+- Introduce concept of ansible requirements file
+- Get a personal access token from GitHub
+- Explain why the playbook asks for REPO, ORG and TOKEN
+- ansible-playbook -v
+- ansible-playbook --ask-become-pass
+
+We're almost ready to use ``ansible-playbook`` to set up a GitHub Runner on your own server, but first we need to
+generate a token, as follows:
+
+**TODO**
+
+Now, configure your server to be able to run continuous integration with the command below. Fill in the password
+``password`` to become sudo in the server when asked. Next, fill in the GitHub organization (which might be simply
+your GitHub user name) and the repository name for which you want to run workflows on a self-hosted server, as well
+as the token when prompted:
+
+```shell
+ansible-playbook playbook.yml --ask-become-pass -v
+```
+
+If you now go to GitHub [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/settings/actions](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions),
+you should see a self-hosted runner with status "Idle".
+
+### Monitoring the runner service's logs
+
+The log of the runner can be viewed with
+
+```shell
+ssh -i <keyfile> -p <port> <username>@<hostname>
+```
+
+Then
+
+```shell
+journalctl -u actions.runner.*
+```
+
+### Start the runner each time the machine boots
+
+```shell
+ansible-playbook playbook.yml --tags enable
+```
+
+### Start the runner
+
+```shell
+ansible-playbook playbook.yml --tags start
+```
+
+### Managing the runner service through the playbook
+
+```shell
+ansible-playbook playbook.yml --tags start
+ansible-playbook playbook.yml --tags stop
+ansible-playbook playbook.yml --tags restart
+ansible-playbook playbook.yml --tags status
+ansible-playbook playbook.yml --tags enable
+ansible-playbook playbook.yml --tags disable
+```
+
+Uninstalling the runner
+
+```shell
+ansible-playbook playbook.yml --tags uninstall
+```
+
+### Verify that your newly configured runner is triggered
+
+Add the following simple workflow as ``.github/workflows/self_hosted_ci.yml`` in your repository https://github.com/ORG/REPO:
+
+```yaml
+name: Self-hosted CI example
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: test
+    runs-on: self-hosted
+    steps:
+      - name: Show directory listing
+        shell: bash -l {0}
+        run: |
+          ls -la
+```
+
+With this workflow in place, new pushes and new pull requests should trigger your self-hosted server.
+Try making a change to one of the files in your repository to see if you can trigger running the simple workflow
+on your self-hosted server. If successful, the status will change to "Active" while the workflow is running.
+You can see a record of past and current GitHub Actions by pointing your browser to
+https://github.com/ORG/REPO/actions?query=workflow%3A%22Self-hosted+CI+example%22.
+
+### What's next
+
+Find instructions for provisioning additional functionality [here](../README.md).
