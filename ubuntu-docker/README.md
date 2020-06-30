@@ -1,3 +1,5 @@
+This is a guide about installing Github runner with Docker
+
 Find instructions for installing the runner [here](./runner).
 
 Then follow selected instructions depending on what your use case requires:
