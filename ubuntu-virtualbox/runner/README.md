@@ -198,14 +198,21 @@ ci-server | SUCCESS => {
 - ansible-playbook --ask-become-pass
 
 We're almost ready to use ``ansible-playbook`` to set up a GitHub Runner on your own server, but first we need to
-generate a token, as follows:
+generate an OAuth token, as follows:
 
-**TODO**
+1. Go to [https://github.com/settings/tokens](https://github.com/settings/tokens) and click the ``Generate new token`` button.
+1. Provide your GitHub password when prompted
+1. Fill in a description for the token, for example _GitHub runner for github.com/&lt;org&gt;/&lt;repo&gt;_
+1. Enable the ``repo`` scope and all of its checkboxes, like so:
+
+    ![Token permissions](/images/token_permissions.png)
+
+1. Click ``Generate`` at the bottom. Make sure to copy its value because we'll need it in the next step
 
 Now, configure your server to be able to run continuous integration with the command below. Fill in the password
-``password`` to become sudo in the server when asked. Next, fill in the GitHub organization (which might be simply
+``password`` to become sudo in the server when asked. When prompted, fill in the GitHub organization (which might be simply
 your GitHub user name) and the repository name for which you want to run workflows on a self-hosted server, as well
-as the token when prompted:
+as the token:
 
 ```shell
 ansible-playbook playbook.yml --ask-become-pass -v
