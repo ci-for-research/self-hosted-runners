@@ -8,7 +8,7 @@ We will use an Ansible playbook to install a [GitHub Action runner](https://help
 
 * VM running on SURF HPC Cloud
 * [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) version 2.9.10 or later
-  * Option 1 - Using a Python virtual environment and 
+  * Option 1 - Using a Python virtual environment and
     `pip install ansible`.
   * Option 2 - Using package manager (tested on Ubuntu 20.04)
     ```shell
@@ -63,9 +63,9 @@ As a repository, you can use a clone of [https://github.com/ci-for-science/examp
 The Ansible playbook uses Personal Access Token for GitHub account to register the runner.
 The token needs to have full admin rights for the repo. The only scope needed is `repo          Full control of private repositories`.
 
-[![Token permissions](images/token_permissions.png)](https://github.com/settings/tokens)
+![Token permissions](/images/token_permissions.png)
 
- The token can be created [here](https://github.com/settings/tokens).
+The token can be created [here](https://github.com/settings/tokens).
 
 The generated token should be set as the `PAT` environment variable.
 
