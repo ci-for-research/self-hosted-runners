@@ -192,7 +192,9 @@ ansible-playbook playbook.yml --ask-become-pass
 ```
 
 If you now go to GitHub [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/settings/actions](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions),
-you should see a self-hosted runner with status "Idle".
+you should see a self-hosted runner with status "Idle":
+
+![Self hosted runner status is Idle](/images/github-self-hosted-runners-status-idle.png)
 
 Add the following simple workflow as ``.github/workflows/self_hosted_ci.yml`` in your repository:
 
