@@ -13,3 +13,7 @@ charset = utf-8
 [*.{yml,yaml}]
 indent_style = space
 indent_size = 2
+
+[*/**/hosts]
+indent_style = space
+indent_size = 2
