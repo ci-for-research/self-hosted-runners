@@ -152,6 +152,7 @@ all:
       ansible_connection: ssh
       ansible_host: 127.0.0.1
       ansible_port: 2222
+      ansible_python_interpreter: /usr/bin/python3
       ansible_ssh_private_key_file: ./id_rsa
       ansible_user: tester
 ```
