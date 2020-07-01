@@ -1,4 +1,4 @@
-# Setting up a CI server for a GitHub Action runner using VirtualBox from Linux Ubuntu
+# Setting up a CI server for a GitHub Action runner using VirtualBox, from Linux Ubuntu
 
 After following this guide, you'll have a simple GitHub action workflow on a GitHub repository of your choice. When new
 commits are made to your repository, the workflow delegates work to a server which runs in a Virtual Machine on your own
