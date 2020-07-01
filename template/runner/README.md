@@ -170,9 +170,20 @@ ci-server | SUCCESS => {
 - Explain why the playbook asks for REPO, ORG and TOKEN
 
 We're almost ready to use ``ansible-playbook`` to set up a GitHub Runner on your own server, but first we need to
-generate a token, as follows:
+generate an OAuth token, as follows:
 
-**TODO**
+1. Go to [https://github.com/settings/tokens](https://github.com/settings/tokens) and click the ``Generate new token`` button.
+1. Provide your GitHub password when prompted
+1. Fill in a description for the token, for example _GitHub runner for github.com/&lt;org&gt;/&lt;repo&gt;_
+1. Enable the ``repo`` scope and all of its checkboxes, like so:
+
+    ![Token permissions](/images/token_permissions.png)
+
+1. Click ``Generate`` at the bottom, and make sure to store the token as the ``PAT`` environment variable.
+
+    ```shell
+    export PAT=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    ```
 
 Now, configure your server to be able to run continuous integration with the command below. Fill in the password
 ``password`` to become sudo in the server when asked. Next, fill in the GitHub organization (which might be simply
