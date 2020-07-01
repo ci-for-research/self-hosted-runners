@@ -179,16 +179,12 @@ generate an OAuth token, as follows:
 
     ![Token permissions](/images/token_permissions.png)
 
-1. Click ``Generate`` at the bottom, and make sure to store the token as the ``PAT`` environment variable.
-
-    ```shell
-    export PAT=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    ```
+1. Click ``Generate`` at the bottom. Make sure to copy its value because we'll need it in the next step
 
 Now, configure your server to be able to run continuous integration with the command below. Fill in the password
-``password`` to become sudo in the server when asked. Next, fill in the GitHub organization (which might be simply
+``password`` to become sudo in the server when asked. When prompted, fill in the GitHub organization (which might be simply
 your GitHub user name) and the repository name for which you want to run workflows on a self-hosted server, as well
-as the token when prompted:
+as the token:
 
 ```shell
 ansible-playbook playbook.yml --ask-become-pass -v
