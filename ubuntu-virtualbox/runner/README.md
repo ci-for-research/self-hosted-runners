@@ -96,7 +96,7 @@ Generate a key pair (files ``id_rsa`` and ``id_rsa.pub``) in directory
 
 ```shell
 cd ubuntu-virtualbox/runner/
-ssh-keygen -t rsa -f id_rsa -N ''
+ssh-keygen -t rsa -f ./id_rsa -N ''
 ```
 
 Make sure that the permissions are set correctly:
@@ -118,7 +118,7 @@ stat -c "%a %n" `ls -1`
 Copy the public half of the key pair (i.e. ``id_rsa.pub``) to the server.
 
 ```shell
-ssh-copy-id -i id_rsa.pub -p 2222 tester@127.0.0.1
+ssh-copy-id -i ./id_rsa.pub -p 2222 tester@127.0.0.1
 ```
 
 ### Test connection with server using ``ssh``
@@ -126,7 +126,7 @@ ssh-copy-id -i id_rsa.pub -p 2222 tester@127.0.0.1
 Test if you can SSH into the server using the other half of the key pair (i.e. ``id_rsa``)
 
 ```shell
-ssh -i id_rsa -p 2222 tester@127.0.0.1
+ssh -i ./id_rsa -p 2222 tester@127.0.0.1
 ```
 
 Log out of the server with
