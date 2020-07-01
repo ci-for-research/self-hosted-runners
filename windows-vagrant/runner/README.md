@@ -60,7 +60,7 @@ To have access to the machine from WSL, the private key needs to be copied from 
 chmod go-rwx .vagrant/machines/default/virtualbox/private_key
 ```
 
-Whe this is done, login with ssh using
+When this is done, login with ssh using
 
 ```shell
 ssh -i .vagrant/machines/default/virtualbox/private_key -p 2222 vagrant@127.0.0.1
@@ -70,8 +70,14 @@ ssh -i .vagrant/machines/default/virtualbox/private_key -p 2222 vagrant@127.0.0.
 
 Ansible does not support Windows. We assume ansible was installed within WSL.
 
+An example inventory file called `hosts.example` should be copied to `hosts` and updated to reflect your situation.
+
+```shell
+cp hosts.example hosts
+```
+
 Ansible must be configured for which GitHub account/organization and repository it should setup a runner.
-Edit the `inventory.yml` file and set `github_account` key and repository `github_repo` key.
+Edit the `hosts` file and set `github_account` key and repository `github_repo` key.
 
 The Ansible playbook uses personal Access Token for GitHub account to register the runner.
 The token has to have admin rights for the repo.
