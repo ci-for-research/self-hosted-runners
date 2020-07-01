@@ -20,23 +20,23 @@
 
     - name: Creating a directory for the runner
       file:
-        path: /home/tester/opt/actions-runner
+        path: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}
         state: directory
 
     - name: Downloading and extracting the runner
       unarchive:
         src: https://github.com/actions/runner/releases/download/v{{ RUNNER_VERSION }}/actions-runner-linux-x64-{{ RUNNER_VERSION }}.tar.gz
-        dest: /home/tester/opt/actions-runner/
-        creates: /home/tester/opt/actions-runner/config.sh
+        dest: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}
+        creates: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/config.sh
         remote_src: yes
 
     - name: Configuring the GitHub Action runner
-      command: chdir=/home/tester/opt/actions-runner ./config.sh --unattended --url https://github.com/{{ ORG }}/{{ REPO }} --token {{ TOKEN }} --replace
+      command: chdir=/home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }} ./config.sh --unattended --url https://github.com/{{ ORG }}/{{ REPO }} --token {{ TOKEN }} --replace
 
     - name: Install the GitHub Action runner as a service
       become: true
       shell:
-        chdir: /home/tester/opt/actions-runner
+        chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}
         cmd: ./svc.sh install
 
     - name: Enable starting the runner service when the machine starts
