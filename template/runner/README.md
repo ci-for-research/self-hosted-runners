@@ -65,7 +65,7 @@ Generate a key pair (files ``id_rsa`` and ``id_rsa.pub``) in directory
 
 ```shell
 cd something/something/
-ssh-keygen -t rsa -f id_rsa -N ''
+ssh-keygen -t rsa -f ./id_rsa -N ''
 ```
 Make sure that the permissions are set correctly:
 
@@ -89,7 +89,7 @@ Copy the public half of the key pair (i.e. ``id_rsa.pub``) to the server.
 **e.g.**
 
 ```shell
-ssh-copy-id -i id_rsa.pub -p 2222 tester@127.0.0.1
+ssh-copy-id -i ./id_rsa.pub -p 2222 tester@127.0.0.1
 ```
 
 
@@ -100,7 +100,7 @@ Test if you can SSH into the server using the other half of the key pair (i.e. `
 **e.g.**
 
 ```shell
-ssh -i id_rsa -p 2222 tester@127.0.0.1
+ssh -i ./id_rsa -p 2222 tester@127.0.0.1
 ```
 
 Log out of the server with
