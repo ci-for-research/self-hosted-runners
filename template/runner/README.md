@@ -160,31 +160,35 @@ ci-server | SUCCESS => {
 
 ### Install the runner using the playbook
 
-- Introduce concept of an ansible playbook, and of ``ansible-playbook``
-- Introduce concept of what is a role
-- Introduce concept of ansible requirements file
-- Get a personal access token from GitHub
-- Explain why the playbook asks for REPO, ORG and TOKEN
+For more complicated tasks than ``ping``, it's often inconvenient having to put everything on the command line. Instead,
+a better option is to create a so-called _playbook_ containing all the steps that you want to include in your
+provisioning. The playbook is a YAML file that defines a series of ``tasks``. When creating new tasks, one can start
+from scratch, or make use of tasks that have been published by others (see https://galaxy.ansible.com/).
 
 We're almost ready to use ``ansible-playbook`` to set up a GitHub Runner on your own server, but first we need to
 generate an OAuth token, as follows:
 
 1. Go to [https://github.com/settings/tokens](https://github.com/settings/tokens) and click the ``Generate new token`` button.
 1. Provide your GitHub password when prompted
-1. Fill in a description for the token, for example _GitHub runner for github.com/&lt;org&gt;/&lt;repo&gt;_
+1. Fill in a description for the token, for example _GitHub runner for github.com/&lt;your organization&gt;/&lt;your repository&gt;_
 1. Enable the ``repo`` scope and all of its checkboxes, like so:
 
     ![Token permissions](/images/token_permissions.png)
 
 1. Click ``Generate`` at the bottom. Make sure to copy its value because we'll need it in the next step
 
-Now, configure your server to be able to run continuous integration with the command below. Fill in the password
-``password`` to become sudo in the server when asked. When prompted, fill in the GitHub organization (which might be simply
-your GitHub user name) and the repository name for which you want to run workflows on a self-hosted server, as well
-as the token:
+Configuring your server such that it can run continuous integration requires 4 pieces of information, for which you will be prompted:
+
+1. Because our playbook requires elevated permissions, the command uses the ``--ask-become-pass`` option to prompt for
+the root password. Fill in the password ``password`` to become ``root`` in the server.
+1. Fill in the GitHub organization (which might be simply your GitHub user name) and ...
+1. ...the repository name for which you want to run workflows on a self-hosted server
+1. Finally, you need to supply the Personal Access Token
+
+Now run this command to provision the GitHub Action runner on your server:
 
 ```shell
-ansible-playbook playbook.yml --ask-become-pass -v
+ansible-playbook playbook.yml --ask-become-pass
 ```
 
 If you now go to GitHub [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/settings/actions](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions),
@@ -258,7 +262,8 @@ ansible-playbook playbook.yml --tags uninstall
 
 ### Verify that your newly configured runner is triggered
 
-Add the following simple workflow as ``.github/workflows/self_hosted_ci.yml`` in your repository https://github.com/ORG/REPO:
+Add the following simple workflow as ``.github/workflows/self_hosted_ci.yml`` in your repository
+[https://github.com/&lt;your organization&gt;/&lt;your repository&gt;](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E):
 
 ```yaml
 name: Self-hosted CI example
@@ -280,7 +285,7 @@ With this workflow in place, new pushes and new pull requests should trigger you
 Try making a change to one of the files in your repository to see if you can trigger running the simple workflow
 on your self-hosted server. If successful, the status will change to "Active" while the workflow is running.
 You can see a record of past and current GitHub Actions by pointing your browser to
-https://github.com/ORG/REPO/actions?query=workflow%3A%22Self-hosted+CI+example%22.
+[https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/actions?query=workflow:"Self-hosted+CI+example"](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/actions?query=workflow%3A%22Self-hosted+CI+example%22).
 
 
 ### What's next
