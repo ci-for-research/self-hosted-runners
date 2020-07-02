@@ -38,7 +38,7 @@ Linux Ubuntu.
 | WIP | Windows      | local machine via Docker           | -                                                |  |
 | Completed | Windows      | local machine via Vagrant          | [link](windows-vagrant/runner/README.md)         |  |
 | WIP | Windows      | local machine via VirtualBox       | -                                                |  |
-| WIP | Windows      | remote machine at [SURF HPC Cloud] | [link](/windows-surf-hpc-cloud/runner/README.md) |  |
+| Completed | Windows      | remote machine at [SURF HPC Cloud] | [link](/windows-surf-hpc-cloud/runner/README.md) |  |
 
 # Security
 
