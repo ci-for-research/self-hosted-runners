@@ -20,6 +20,14 @@ printf "\n\033[0;44m---> Configuring the runner.\033[0m\n"
     --unattended \
     --replace
 
+remove_runner() {
+    printf "\n\033[0;44m---> Removing the runner.\033[0m\n"
+    ./config.sh remove --unattended --token "${RUNNER_TOKEN}"
+}
+
+trap 'remove_runner; exit 130' INT
+trap 'remove_runner; exit 143' TERM
+
 printf "\n\033[0;44m---> Starting the runner.\033[0m\n"
 ./run.sh "$*" &
 # ./bin/runsvc.sh
