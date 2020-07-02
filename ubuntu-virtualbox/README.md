@@ -1,4 +1,4 @@
-# Setting up a CI server for a GitHub Action runner with Virtualbox from Linux Ubuntu
+# Setting up a CI server with a GitHub Action runner using VirtualBox, from Linux Ubuntu
 
 After following this guide, you'll have a simple GitHub action workflow on a GitHub repository of your choice. When new
 commits are made to your repository, the workflow delegates work to a server which runs in a Virtual Machine on your own
@@ -96,7 +96,7 @@ Generate a key pair (files ``id_rsa`` and ``id_rsa.pub``) in directory
 
 ```shell
 cd ubuntu-virtualbox/runner/
-ssh-keygen -t rsa -f id_rsa -N ''
+ssh-keygen -t rsa -f ./id_rsa -N ''
 ```
 
 Make sure that the permissions are set correctly:
@@ -118,7 +118,7 @@ stat -c "%a %n" `ls -1`
 Copy the public half of the key pair (i.e. ``id_rsa.pub``) to the server.
 
 ```shell
-ssh-copy-id -i id_rsa.pub -p 2222 tester@127.0.0.1
+ssh-copy-id -i ./id_rsa.pub -p 2222 tester@127.0.0.1
 ```
 
 ### Test connection with server using ``ssh``
@@ -126,8 +126,16 @@ ssh-copy-id -i id_rsa.pub -p 2222 tester@127.0.0.1
 Test if you can SSH into the server using the other half of the key pair (i.e. ``id_rsa``)
 
 ```shell
-ssh -i id_rsa -p 2222 tester@127.0.0.1
+ssh -i ./id_rsa -p 2222 tester@127.0.0.1
 ```
+
+If you get a ``Host key verification failed`` error, clear the existing key with 
+
+```shell
+ssh-keygen -R "[127.0.0.1]:2222"
+```
+
+and try again.
 
 Log out of the server with
 
@@ -152,6 +160,7 @@ all:
       ansible_connection: ssh
       ansible_host: 127.0.0.1
       ansible_port: 2222
+      ansible_python_interpreter: /usr/bin/python3
       ansible_ssh_private_key_file: ./id_rsa
       ansible_user: tester
 ```
@@ -179,9 +188,6 @@ Which should return:
 
 ```text
 ci-server | SUCCESS => {
-    "ansible_facts": {
-        "discovered_interpreter_python": "/usr/bin/python3"
-    },
     "changed": false,
     "ping": "pong"
 }
@@ -189,30 +195,41 @@ ci-server | SUCCESS => {
 
 ### Install the runner using the playbook
 
-- Introduce concept of an ansible playbook, and of ``ansible-playbook``
-- Introduce concept of what is a role
-- Introduce concept of ansible requirements file
-- Get a personal access token from GitHub
-- Explain why the playbook asks for REPO, ORG and TOKEN
-- ansible-playbook -v
-- ansible-playbook --ask-become-pass
+For more complicated tasks than ``ping``, it's often inconvenient having to put everything on the command line. Instead,
+a better option is to create a so-called _playbook_ containing all the steps that you want to include in your
+provisioning. The playbook is a YAML file that defines a series of ``tasks``. When creating new tasks, one can start
+from scratch, or make use of tasks that have been published by others (see https://galaxy.ansible.com/).
 
 We're almost ready to use ``ansible-playbook`` to set up a GitHub Runner on your own server, but first we need to
-generate a token, as follows:
+generate an OAuth token, as follows:
 
-**TODO**
+1. Go to [https://github.com/settings/tokens](https://github.com/settings/tokens) and click the ``Generate new token`` button.
+1. Provide your GitHub password when prompted
+1. Fill in a description for the token, for example _GitHub runner for github.com/&lt;your organization&gt;/&lt;your repository&gt;_
+1. Enable the ``repo`` scope and all of its checkboxes, like so:
 
-Now, configure your server to be able to run continuous integration with the command below. Fill in the password
-``password`` to become sudo in the server when asked. Next, fill in the GitHub organization (which might be simply
-your GitHub user name) and the repository name for which you want to run workflows on a self-hosted server, as well
-as the token when prompted:
+    ![Token permissions](/images/token_permissions.png)
+
+1. Click ``Generate`` at the bottom. Make sure to copy its value because we'll need it in the next step
+
+Configuring your server such that it can run continuous integration requires 4 pieces of information, for which you will be prompted:
+
+1. Because our playbook requires elevated permissions, the command uses the ``--ask-become-pass`` option to prompt for
+the root password. Fill in the password ``password`` to become ``root`` in the server.
+1. Fill in the GitHub organization (which might be simply your GitHub user name) and ...
+1. ...the repository name for which you want to run workflows on a self-hosted server
+1. Finally, you need to supply the Personal Access Token
+
+Now run this command to provision the GitHub Action runner on your server:
 
 ```shell
-ansible-playbook playbook.yml --ask-become-pass -v
+ansible-playbook playbook.yml --ask-become-pass
 ```
 
 If you now go to GitHub [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/settings/actions](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions),
-you should see a self-hosted runner with status "Idle".
+you should see a self-hosted runner with status "Idle":
+
+![Self hosted runner status is Idle](/images/github-self-hosted-runners-status-idle.png)
 
 ### Monitoring the runner service's logs
 
@@ -259,7 +276,8 @@ ansible-playbook playbook.yml --tags uninstall
 
 ### Verify that your newly configured runner is triggered
 
-Add the following simple workflow as ``.github/workflows/self_hosted_ci.yml`` in your repository https://github.com/ORG/REPO:
+Add the following simple workflow as ``.github/workflows/self_hosted_ci.yml`` in your repository
+[https://github.com/&lt;your organization&gt;/&lt;your repository&gt;](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E):
 
 ```yaml
 name: Self-hosted CI example
@@ -281,7 +299,7 @@ With this workflow in place, new pushes and new pull requests should trigger you
 Try making a change to one of the files in your repository to see if you can trigger running the simple workflow
 on your self-hosted server. If successful, the status will change to "Active" while the workflow is running.
 You can see a record of past and current GitHub Actions by pointing your browser to
-https://github.com/ORG/REPO/actions?query=workflow%3A%22Self-hosted+CI+example%22.
+[https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/actions?query=workflow:"Self-hosted+CI+example"](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/actions?query=workflow%3A%22Self-hosted+CI+example%22).
 
 ### What's next
 
