@@ -1,6 +1,6 @@
 # Setup GitHub Action runner on a VM on SURF HPC Cloud from Windows
 
-Most of the steps in [../ubuntu-surf-hpc-cloud/runner/README.md](../ubuntu-surf-hpc-cloud/runner/README.md) can be reused except for installing Ansible.
+Most of the steps in [/ubuntu-surf-hpc-cloud/README.md](/ubuntu-surf-hpc-cloud/README.md) can be reused except for installing Ansible.
 
 Ansible can not be initiated from Windows powershell or command prompt.
 You will need to install Ansible in [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/) using any of the [WSL OS choices](https://docs.microsoft.com/en-us/windows/wsl/install-win10#install-your-linux-distribution-of-choice) that [Ansible supports](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) like Ubuntu 20.04.
