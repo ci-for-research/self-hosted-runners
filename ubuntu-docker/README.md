@@ -84,6 +84,9 @@ You will need to adjust `<username>` and `<user password>` for the normal user w
 ### Run the server
 
 #### Temporary mode
+
+The command below will run the docker image and setup the runner. When user presses `CTRL+C`, it automatically removes the runner from GitHub and removes the Docker container as well.
+
 ```shell
 docker run --rm --name ga-runner \
     -e PERSONAL_ACCESS_TOKEN="<personal access token>" \
