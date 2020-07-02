@@ -20,3 +20,5 @@ WORKDIR /home/${SSH_USER}/actions-runner
 RUN curl -L "https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz" > actions_runner.tar.gz && \
     tar -zxf actions_runner.tar.gz && \
     rm -f actions_runner.tar.gz
+
+RUN chown -R ${SSH_USER} /home/${SSH_USER}
