@@ -1,7 +1,7 @@
 FROM ubuntu:19.10
 
-ARG SSH_USER
-ARG SSH_PASS
+ARG DOCKER_USER
+ARG DOCKER_PASS
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV RUNNER_VERSION=2.267.1
@@ -16,20 +16,20 @@ RUN apt-get update && \
     tar
 
 RUN printf "\n\033[0;44m---> Creating SSH user.\033[0m\n"
-RUN useradd -rm -d /home/${SSH_USER} -s /bin/bash -G sudo -u 1001 ${SSH_USER}
-RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd
-WORKDIR /home/${SSH_USER}/actions-runner
+RUN useradd -rm -d /home/${DOCKER_USER} -s /bin/bash -G sudo -u 1001 ${DOCKER_USER}
+RUN echo "${DOCKER_USER}:${DOCKER_PASS}" | chpasswd
+WORKDIR /home/${DOCKER_USER}/actions-runner
 
 RUN curl -L "https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz" > actions_runner.tar.gz && \
     tar -zxf actions_runner.tar.gz && \
     rm -f actions_runner.tar.gz && \
     ./bin/installdependencies.sh
 
-RUN chown -R ${SSH_USER} /home/${SSH_USER}
+RUN chown -R ${DOCKER_USER} /home/${DOCKER_USER}
 
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
-USER ${SSH_USER}
+USER ${DOCKER_USER}
 
 ENTRYPOINT ["/entrypoint.sh"]
