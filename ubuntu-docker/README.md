@@ -16,6 +16,54 @@ For guides on how to configure other features in addition to just the runner, go
 
 E.g. how to configure VirtualBox, how to run docker container, how to configure HPC cloud machine
 
+### Testing your Docker setup
+https://docs.docker.com/docker-for-windows/#test-your-installation
+
+
+1. Open a terminal window (Command Prompt or PowerShell, but not PowerShell ISE).
+
+2. Run docker --version to ensure that you have a supported version of Docker:
+
+```shell
+> docker --version
+
+Docker version 19.03.11-ce, build 42e35e61f3
+```
+
+3. Pull the hello-world image from Docker Hub and run a container:
+
+```shell
+> docker run hello-world
+
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+0e03bdcc26d7: Pull complete
+Digest: sha256:d58e752213a51785838f9eed2b7a498ffa1cb3aa7f946dda11af39286c3db9a9
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+...
+```
+
+4. List the hello-world image that was downloaded from Docker Hub:
+
+```shell
+> docker image ls
+
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+hello-world         latest              bf756fb1ae65        6 months ago        13.3kB
+```
+
+5. List the hello-world container (that exited after displaying “Hello from Docker!”):
+
+```shell
+> docker container ls --all
+
+CONTAINER ID        IMAGE               COMMAND             CREATED              STATUS                          PORTS               NAMES
+1d624a063f22        hello-world         "/hello"            About a minute ago   Exited (0) About a minute ago                       flamboyant_ramanujan
+```
+
 ### Build image
 
 ```shell
