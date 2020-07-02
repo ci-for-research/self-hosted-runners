@@ -44,71 +44,51 @@ _Describe things that users need to install on their system to follow the guide.
 
 How to run docker container
 
-### Docker image
-
-```shell
-docker pull ubuntu:20.04
-```
-
-Output:
-```
-REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-ubuntu              20.04               74435f89ab78        12 days ago         73.9MB
-```
-
 ### Build image
 
-https://docs.docker.com/engine/examples/running_ssh_service/
+```shell
+docker build -t ghrunner \
+  --build-arg SSH_USER="ubuntu" \
+  --build-arg SSH_PASS="ubuntu" \
+  .
+```
+
+### Run the server
 
 ```shell
-docker build -t ghrunner .
+docker run -ti --rm -p 2222:2222 --name test_sshd  ghrunner
 ```
 
 ### Test
 
-Start the server
-
-```shell
-docker run -d -P --name test_sshd ghrunner
-```
-
-You can then use `docker port` to find out what host port the container’s port 22 is mapped to:
-
-```shell
-docker port test_sshd 22
-```
-
-Output
-
-```
-docker port test_sshd 22
-0.0.0.0:32768
-```
-
 Use `docker inspect` to find out the IP address of the container
-
 ```shell
 docker inspect --format '{{ .NetworkSettings.IPAddress }}' test_sshd
 ```
 
 Output:
-
 ```
 172.17.0.2
 ```
 
-And now you can ssh as root on the container’s IP address (you can find it with docker inspect) or on port 32768 of the Docker daemon’s host IP address (ip address or ifconfig can tell you that) or localhost if on the Docker daemon host:
-
-ssh -i ./id_rsa ubuntu@x.x.x.x
-
+```shell
+ssh-copy-id -i ./id_rsa -p 2222 ubuntu@172.17.0.2
+```
 
 ```shell
-ssh root@192.168.1.2 -p 32768
-# or
-ssh root@localhost -p 32768
-# The password is ``screencast``.
-root@f38c87f2a42d:/#
+ssh -i ./id_rsa -p 2222 ubuntu@172.17.0.2
 ```
+
+docker run --rm -ti -v $PWD:/data --workdir=/data ansible/ansible-runner ansible all -m ping
+
+docker run --rm -ti -v $PWD:/data --workdir=/data ansible/ansible-runner ansible-playbook playbook.yml
+
+ansible-galaxy install -r requirements.yml
+
+ansible-playbook playbook.yml --ask-become-pass
+
+docker exec -ti test_sshd /bin/bash
+
 
 ### Cleanup
 
