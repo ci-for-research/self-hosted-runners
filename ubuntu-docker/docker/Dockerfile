@@ -13,8 +13,7 @@ RUN apt-get update && \
     jq \
     libcurl4-openssl-dev \
     sudo \
-    tar \
-    gettext
+    tar
 
 RUN printf "\n\033[0;44m---> Creating SSH user.\033[0m\n"
 RUN useradd -rm -d /home/${SSH_USER} -s /bin/bash -G sudo -u 1001 ${SSH_USER}
