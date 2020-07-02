@@ -16,3 +16,6 @@ RUN printf "\n\033[0;44m---> Creating SSH user.\033[0m\n"
 RUN useradd -rm -d /home/${SSH_USER} -s /bin/bash -G sudo -u 1001 ${SSH_USER}
 RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd
 WORKDIR /home/${SSH_USER}/actions-runner
+
+RUN curl -L "https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz" > actions_runner.tar.gz && \
+    tar -zxf actions_runner.tar.gz
