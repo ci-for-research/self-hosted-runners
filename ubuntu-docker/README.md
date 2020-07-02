@@ -120,13 +120,23 @@ docker exec -ti test_sshd /bin/bash
 
 ### Cleanup
 
+To stop the running Docker container:
+
 ```shell
-docker container stop test_sshd
-docker container rm test_sshd
-docker image rm ghrunner
+docker container stop ga-runner
 ```
 
+To remove a Docker container
 
+```shell
+docker container rm ga-runner
+```
+
+To remove a Docker image
+
+```shell
+docker image rm ghrunner
+```
 
 
 ## Client side configuration
