@@ -1,0 +1,10 @@
+all-my-hosts:
+  hosts:
+    my-first-host:
+  vars:
+    ansible_connection: ssh
+    ansible_host: <hostname>
+    ansible_port: <port>
+    ansible_python_interpreter: /usr/bin/python3
+    ansible_ssh_private_key_file: <path to keyfile>
+    ansible_user: <username>
