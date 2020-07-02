@@ -26,3 +26,5 @@ RUN curl -L "https://github.com/actions/runner/releases/download/v${RUNNER_VERSI
     ./bin/installdependencies.sh
 
 RUN chown -R ${SSH_USER} /home/${SSH_USER}
+
+USER ${SSH_USER}
