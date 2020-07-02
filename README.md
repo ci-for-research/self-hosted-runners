@@ -27,10 +27,10 @@ Linux Ubuntu.
 
 | Status | Client OS | Server hardware | Runner | Additional functionality |
 | --- | --- | --- | --- | --- |
-| WIP | Linux Ubuntu | local machine via Docker           | [link](/ubuntu-docker/runner/README.md)          |  |
+| WIP | Linux Ubuntu | local machine via Docker           | -         |  |
 | Completed | Linux Ubuntu | local machine via Vagrant          | [link](/ubuntu-vagrant/runner/README.md)         |  |
 | Completed | Linux Ubuntu | local machine via VirtualBox       | [link](/ubuntu-virtualbox/runner/README.md)      |  |
-| Completed | Linux Ubuntu | remote machine at [SURF HPC Cloud] | [link](/ubuntu-surf-hpc-cloud/runner/README.md)  | [CUDA](/ubuntu-surf-hpc-cloud/with-cuda/README.md) |
+| Completed | Linux Ubuntu | remote machine at [SURF HPC Cloud] | [link](/ubuntu-surf-hpc-cloud/runner/README.md)  | [CUDA installation](/ubuntu-surf-hpc-cloud/with-cuda/README.md) |
 | WIP | Mac          | local machine via Docker           | -                                                |  |
 | WIP | Mac          | local machine via Vagrant          | -                                                |  |
 | WIP | Mac          | local machine via VirtualBox       | -                                                |  |
