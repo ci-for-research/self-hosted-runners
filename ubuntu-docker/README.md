@@ -108,15 +108,16 @@ docker run -d --restart always --name ga-runner \
 
 Use `docker inspect` to find out the IP address of the container
 ```shell
-docker inspect --format '{{ .NetworkSettings.IPAddress }}' test_sshd
-```
+> docker inspect --format '{{ .NetworkSettings.IPAddress }}' ga-runner
 
-Output:
-```
 172.17.0.2
 ```
 
-docker exec -ti test_sshd /bin/bash
+If you need an access to a shell on running Docker container:
+
+```shell
+docker exec -ti ga-runner /bin/bash
+```
 
 ### Cleanup
 
