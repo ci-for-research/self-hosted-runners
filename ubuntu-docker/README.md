@@ -111,14 +111,28 @@ docker run -d --restart always --name ga-runner \
     ga-runner:latest
 ```
 
-### Test
+### Get Docker container details
 
-Use `docker inspect` to find out the IP address of the container
+Use `docker inspect` to display details of the container
+```shell
+> docker inspect  ga-runner
+
+[
+    {
+        "Id": "4ff7f37a894e351dc1def53c76959ac30c09083347ada25fcb55dc6687f8d295",
+        "Created": "2020-07-02T18:29:53.106234584Z",
+        "Path": "/bin/sh",
+...
+```
+
+You can use the command below to only find out the IP address of the container
 ```shell
 > docker inspect --format '{{ .NetworkSettings.IPAddress }}' ga-runner
 
 172.17.0.2
 ```
+
+### Accessing Docker container
 
 If you need an access to a shell on running Docker container:
 
