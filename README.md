@@ -5,6 +5,8 @@
 | 3. Community registry | [![Ansible Galaxy badge](https://img.shields.io/badge/galaxy-fixme.fixme-660198.svg)](https://galaxy.ansible.com/fixme/fixme) [![Research Software Directory](https://img.shields.io/badge/rsd-self--hosted--runners-00a3e3.svg)](https://www.research-software.nl/software/self-hosted-runners) |
 | 4. Enable citation | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3904265.svg)](https://doi.org/10.5281/zenodo.3904265) |
 | 5. Checklist | N/A |
+| **Other best practices** | |
+| Markdown Link Checker| ![Check Markdown links](https://github.com/ci-for-research/self-hosted-runners/workflows/Check%20Markdown%20links/badge.svg) |
 
 # How to set up GitHub Action runners on self-hosted infrastructure
 
