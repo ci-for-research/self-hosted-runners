@@ -1,11 +1,21 @@
-Find instructions for installing the runner [here](./runner).
+# Linux Ubuntu client to local machine via Docker
 
-Then follow selected instructions depending on what your use case requires:
+Describe general layout of the approach
 
-- [CUDA](./with-cuda)
-- [Intel Fortran compiler](./with-ifort)
-- [Open MPI](./with-ompi)
-- [OpenCL](./with-opencl)
-- [OpenCV](./with-opencv)
-- [OpenMP](./with-openmp)
-- [Slurm](./with-slurm)
+## prerequisites
+
+- install docker
+
+## server side configuration
+
+- build included Dockerfile
+- run docker container
+
+## client side configuration
+
+- install ansible from PPA (mind the version)
+- install openssh-client
+- generate key pair
+- copy key pair to server
+- test ssh -i keyfile -p 2222 username@127.0.0.1|localhost
+- test hello world playbook

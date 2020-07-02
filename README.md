@@ -30,17 +30,17 @@ Linux Ubuntu.
 | Status | Client OS | Server hardware | Runner | Additional functionality |
 | --- | --- | --- | --- | --- |
 | :hourglass_flowing_sand: WIP | Linux Ubuntu | local machine via Docker           | -         |  |
-| :heavy_check_mark: Completed | Linux Ubuntu | local machine via Vagrant          | [link](/ubuntu-vagrant/runner/README.md)         |  |
-| :heavy_check_mark: Completed | Linux Ubuntu | local machine via VirtualBox       | [link](/ubuntu-virtualbox/runner/README.md)      |  |
-| :heavy_check_mark: Completed | Linux Ubuntu | remote machine at [SURF HPC Cloud] | [link](/ubuntu-surf-hpc-cloud/runner/README.md)  | [CUDA installation](/ubuntu-surf-hpc-cloud/with-cuda/README.md) |
+| :heavy_check_mark: Completed | Linux Ubuntu | local machine via Vagrant          | [link](/ubuntu-vagrant/README.md)         |  |
+| :heavy_check_mark: Completed | Linux Ubuntu | local machine via VirtualBox       | [link](/ubuntu-virtualbox/README.md)      |  |
+| :heavy_check_mark: Completed | Linux Ubuntu | remote machine at [SURF HPC Cloud] | [link](/ubuntu-surf-hpc-cloud/README.md)  | [CUDA installation](/ubuntu-surf-hpc-cloud/with-cuda/README.md) |
 | :hourglass_flowing_sand: WIP | Mac          | local machine via Docker           | -                                                |  |
 | :hourglass_flowing_sand: WIP | Mac          | local machine via Vagrant          | -                                                |  |
 | :hourglass_flowing_sand: WIP | Mac          | local machine via VirtualBox       | -                                                |  |
 | :hourglass_flowing_sand: WIP | Mac          | remote machine at [SURF HPC Cloud] | -                                                |  |
 | :hourglass_flowing_sand: WIP | Windows      | local machine via Docker           | -                                                |  |
-| :heavy_check_mark: Completed | Windows      | local machine via Vagrant          | [link](windows-vagrant/runner/README.md)         |  |
+| :heavy_check_mark: Completed | Windows      | local machine via Vagrant          | [link](windows-vagrant/README.md)         |  |
 | :hourglass_flowing_sand: WIP | Windows      | local machine via VirtualBox       | -                                                |  |
-| :heavy_check_mark: Completed | Windows      | remote machine at [SURF HPC Cloud] | [link](/windows-surf-hpc-cloud/runner/README.md) |  |
+| :heavy_check_mark: Completed | Windows      | remote machine at [SURF HPC Cloud] | [link](/windows-surf-hpc-cloud/README.md) |  |
 
 # Security
 
