@@ -6,7 +6,7 @@
 | 4. Enable citation | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3904265.svg)](https://doi.org/10.5281/zenodo.3904265) |
 | 5. Checklist | N/A |
 | **Other best practices** | |
-| Markdown Link Checker| ![Check Markdown links](https://github.com/ci-for-research/self-hosted-runners/workflows/Check%20Markdown%20links/badge.svg) |
+| Markdown Link Checker| [![Check Markdown links](https://github.com/ci-for-research/self-hosted-runners/workflows/Check%20Markdown%20links/badge.svg)](https://github.com/ci-for-research/self-hosted-runners/actions?query=workflow%3A%22Check+Markdown+links%22) |
 
 # How to set up GitHub Action runners on self-hosted infrastructure
 
