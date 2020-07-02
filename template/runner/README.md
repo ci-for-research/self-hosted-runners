@@ -103,6 +103,15 @@ Test if you can SSH into the server using the other half of the key pair (i.e. `
 ssh -i ./id_rsa -p 2222 tester@127.0.0.1
 ```
 
+If you get a ``Host key verification failed`` error, clear the existing key with 
+
+```shell
+ssh-keygen -R "[127.0.0.1]:2222"
+```
+
+and try again.
+ 
+ 
 Log out of the server with
 
 ```shell
