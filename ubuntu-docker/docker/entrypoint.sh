@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [[ -z "${RUNNER_NAME}" ]]; then
+    RUNNER_NAME="docker-$(hostname)"
+fi
+
 printf "\n\033[0;44m---> Configuring the runner.\033[0m\n"
 ./config.sh \
     --name ${RUNNER_NAME} \
