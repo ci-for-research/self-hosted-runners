@@ -1,9 +1,11 @@
 #!/bin/bash
 
+printf "\n\033[0;44m---> Configuring the runner.\033[0m\n"
 ./config.sh \
+    --name ${RUNNER_NAME} \
     --token ${RUNNER_TOKEN} \
     --url https://github.com/${GITHUB_ORG}/${GITHUB_REPO} \
-    --name ${RUNNER_NAME} \
+    --work ${RUNNER_WORKDIR} \
     --labels "docker,github" \
     --unattended \
     --replace
