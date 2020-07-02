@@ -79,6 +79,9 @@ docker build \
 
 You will need to adjust `<username>` and `<user password>` for the normal user which will be added to the Docker image.
 
+## Client side configuration
+
+
 ### Run the server
 
 #### Temporary mode
@@ -139,36 +142,9 @@ To remove a Docker image
 docker image rm ghrunner
 ```
 
-
-## Client side configuration
-
-
-### Test connection with server using ``ssh``
-
-Test if you can SSH into the server using the other half of the key pair (i.e. ``id_rsa``)
-
-**e.g.**
-
-```shell
-ssh -i id_rsa -p 2222 tester@127.0.0.1
-```
-
-Log out of the server with
-
-```shell
-exit
-```
-
 ### Monitoring the runner service's logs
 
 #TODO:
-
-### Start the runner
-
-#### Temporary Mode
-
-#### Deamon mode
-
 
 ### Verify that your newly configured runner is triggered
 
