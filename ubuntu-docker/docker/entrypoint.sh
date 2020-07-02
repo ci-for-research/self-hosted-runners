@@ -10,4 +10,5 @@ printf "\n\033[0;44m---> Configuring the runner.\033[0m\n"
     --unattended \
     --replace
 
+printf "\n\033[0;44m---> Starting the runner.\033[0m\n"
 ./run.sh
