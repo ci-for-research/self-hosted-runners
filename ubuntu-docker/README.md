@@ -12,14 +12,9 @@ For guides on how to configure other features in addition to just the runner, go
 1. Install Docker: https://docs.docker.com/engine/install/
 2. Follow post-installation steps https://docs.docker.com/engine/install/linux-postinstall/
 
-## Server side configuration
-
-E.g. how to configure VirtualBox, how to run docker container, how to configure HPC cloud machine
-
 ### Testing your Docker setup
 
 Refence: https://docs.docker.com/docker-for-windows/#test-your-installation
-
 
 1. Open a terminal window (Command Prompt or PowerShell, but not PowerShell ISE).
 
@@ -64,6 +59,10 @@ hello-world         latest              bf756fb1ae65        6 months ago        
 CONTAINER ID        IMAGE               COMMAND             CREATED              STATUS                          PORTS               NAMES
 1d624a063f22        hello-world         "/hello"            About a minute ago   Exited (0) About a minute ago                       flamboyant_ramanujan
 ```
+
+## Server side configuration
+
+E.g. how to configure VirtualBox, how to run docker container, how to configure HPC cloud machine
 
 ### Build image
 
