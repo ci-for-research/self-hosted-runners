@@ -17,7 +17,8 @@ For guides on how to configure other features in addition to just the runner, go
 E.g. how to configure VirtualBox, how to run docker container, how to configure HPC cloud machine
 
 ### Testing your Docker setup
-https://docs.docker.com/docker-for-windows/#test-your-installation
+
+Refence: https://docs.docker.com/docker-for-windows/#test-your-installation
 
 
 1. Open a terminal window (Command Prompt or PowerShell, but not PowerShell ISE).
@@ -66,18 +67,20 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 
 ### Build image
 
+Now we are ready to build our Docker image. The following command will use [Dockerfile](docker/Dockerfile) in `docker` folder to build the image. It will create a system user, install necassary system packages and dependencies for the runner.
+
 ```shell
-docker build -t ghrunner \
-  --build-arg SSH_USER="ubuntu" \
-  --build-arg SSH_PASS="ubuntu" \
-  .
+docker build \
+    -t ga-runner \
+    --build-arg DOCKER_USER="<username>" \
+    --build-arg DOCKER_PASS="<user password>" \
+    ./docker
 ```
+
+You will need to adjust `<username>` and `<user password>` for the normal user which will be added to the Docker image.
 
 ### Run the server
 
-```shell
-docker run -ti --rm -p 2222:2222 --name test_sshd  ghrunner
-```
 
 ### Test
 
