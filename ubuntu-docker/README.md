@@ -116,22 +116,6 @@ Output:
 172.17.0.2
 ```
 
-```shell
-ssh-copy-id -i ./id_rsa -p 2222 ubuntu@172.17.0.2
-```
-
-```shell
-ssh -i ./id_rsa -p 2222 ubuntu@172.17.0.2
-```
-
-docker run --rm -ti -v $PWD:/data --workdir=/data ansible/ansible-runner ansible all -m ping
-
-docker run --rm -ti -v $PWD:/data --workdir=/data ansible/ansible-runner ansible-playbook playbook.yml
-
-ansible-galaxy install -r requirements.yml
-
-ansible-playbook playbook.yml --ask-become-pass
-
 docker exec -ti test_sshd /bin/bash
 
 ### Cleanup
