@@ -3,19 +3,74 @@
 After following this guide, you'll have a simple GitHub action workflow on a GitHub repository of your choice. When new commits are made to your repository, the workflow delegates work to a server which runs in a [Docker](https://www.docker.com/) container. You can follow these instructions on your own computer or a Linux server.
 
 This guide distinguishes between the _client_ and the _server_; the client is your own machine; the server is whichever
-machine will run the tests. This document describes the case where the server is a Docker container on localhost.
+machine will run the tests. This document describes the case where the server is a Docker container running on your own machine.
 
 For guides on how to configure other features in addition to just the runner, go [here](/README.md).
 
 ## Prerequisites
 
-_Describe things that users need to install on their system to follow the guide. Things like VirtualBox, Vagrant,
-Docker, Windows Subsystem for Linux, where to get iso images, how to get an account for remote hardware, etc. Out of
-scope for this section: ssh, putty, Ansible_
+1. Install Docker: https://docs.docker.com/engine/install/
+2. Follow post-installation steps https://docs.docker.com/engine/install/linux-postinstall/
 
 ## Server side configuration
 
 E.g. how to configure VirtualBox, how to run docker container, how to configure HPC cloud machine
+
+### Build image
+
+```shell
+docker build -t ghrunner \
+  --build-arg SSH_USER="ubuntu" \
+  --build-arg SSH_PASS="ubuntu" \
+  .
+```
+
+### Run the server
+
+```shell
+docker run -ti --rm -p 2222:2222 --name test_sshd  ghrunner
+```
+
+### Test
+
+Use `docker inspect` to find out the IP address of the container
+```shell
+docker inspect --format '{{ .NetworkSettings.IPAddress }}' test_sshd
+```
+
+Output:
+```
+172.17.0.2
+```
+
+```shell
+ssh-copy-id -i ./id_rsa -p 2222 ubuntu@172.17.0.2
+```
+
+```shell
+ssh -i ./id_rsa -p 2222 ubuntu@172.17.0.2
+```
+
+docker run --rm -ti -v $PWD:/data --workdir=/data ansible/ansible-runner ansible all -m ping
+
+docker run --rm -ti -v $PWD:/data --workdir=/data ansible/ansible-runner ansible-playbook playbook.yml
+
+ansible-galaxy install -r requirements.yml
+
+ansible-playbook playbook.yml --ask-become-pass
+
+docker exec -ti test_sshd /bin/bash
+
+### Cleanup
+
+```shell
+docker container stop test_sshd
+docker container rm test_sshd
+docker image rm ghrunner
+```
+
+
+
 
 ## Client side configuration
 
@@ -106,58 +161,12 @@ exit
 Getting SSH connections to work can be tricky. Check out [this document](/docs/troubleshooting-ssh.md) if you're
 experiencing difficulties.
 
-### The inventory file
 
-Ansible uses so-called _inventory_ files to define how to connect to remote machines. The inventory file is typically
-called  ``hosts``. The following inventory file is equivalent to the ``ssh`` command line we just used:
+### Test connection with server
 
-```yaml
-all:
-  hosts:
-    ci-server:
-      ansible_connection: ssh
-      ansible_host: 127.0.0.1
-      ansible_port: 2222
-      ansible_ssh_private_key_file: ./id_rsa
-      ansible_user: tester
-```
-
-This inventory file defines a group ``all`` with just one machine in it, which we labeled ``ci-server``. ``ci-server``
-has a bunch of variables that define how to connect to it. For more information on inventory files, read
-[Ansible's documentation](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html).
-
-### The Ansible configuration file
-
-In addition to the inventory file, it's often convenient to use a configuration file. The default filename for this file
-is ``ansible.cfg``, and it can be used to specify Ansible's behavior. The configuration option documentation can be
-found [here](https://docs.ansible.com/ansible/latest/reference_appendices/config.html#the-configuration-file).
-
-### Test connection with server using ``ansible``
-
-We're about ready to test if we can connect to the server using Ansible. For this we will use the ``ping`` module, and
-we'll instruct Ansible to run the module on all hosts as defined in the inventory, as follows:
-
-```shell
-ansible all -m ping
-```
-
-Which should return:
-
-```text
-ci-server | SUCCESS => {
-    "ansible_facts": {
-        "discovered_interpreter_python": "/usr/bin/python3"
-    },
-    "changed": false,
-    "ping": "pong"
-}
-```
 
 ### Install the runner using the playbook
 
-- Introduce concept of an ansible playbook, and of ``ansible-playbook``
-- Introduce concept of what is a role
-- Introduce concept of ansible requirements file
 - Get a personal access token from GitHub
 - Explain why the playbook asks for REPO, ORG and TOKEN
 
@@ -215,34 +224,12 @@ Then
 journalctl -u actions.runner.*
 ```
 
-### Start the runner each time the machine boots
-
-```shell
-ansible-playbook playbook.yml --tags enable
-```
-
 ### Start the runner
 
-```shell
-ansible-playbook playbook.yml --tags start
-```
+#### Temporary Mode
 
-### Managing the runner service through the playbook
+#### Deamon mode
 
-```shell
-ansible-playbook playbook.yml --tags start
-ansible-playbook playbook.yml --tags stop
-ansible-playbook playbook.yml --tags restart
-ansible-playbook playbook.yml --tags status
-ansible-playbook playbook.yml --tags enable
-ansible-playbook playbook.yml --tags disable
-```
-
-Uninstalling the runner
-
-```shell
-ansible-playbook playbook.yml --tags uninstall
-```
 
 ### Verify that your newly configured runner is triggered
 
