@@ -81,6 +81,28 @@ You will need to adjust `<username>` and `<user password>` for the normal user w
 
 ### Run the server
 
+#### Temporary mode
+```shell
+docker run --rm --name ga-runner \
+    -e PERSONAL_ACCESS_TOKEN="<personal access token>" \
+    -e RUNNER_NAME="<runner name to appear on Github>" \
+    -e RUNNER_WORKDIR="/tmp/actions-runner-repo" \
+    -e GITHUB_ORG="<organization or username>" \
+    -e GITHUB_REPO="<name of the repository>" \
+    ga-runner:latest
+```
+
+#### Daemon mode
+
+```shell
+docker run -d --restart always --name ga-runner \
+    -e PERSONAL_ACCESS_TOKEN="<personal access token>" \
+    -e RUNNER_NAME="<runner name to appear on Github>" \
+    -e RUNNER_WORKDIR="/tmp/actions-runner-repo" \
+    -e GITHUB_ORG="<organization or username>" \
+    -e GITHUB_REPO="<name of the repository>" \
+    ga-runner:latest
+```
 
 ### Test
 
