@@ -27,4 +27,9 @@ RUN curl -L "https://github.com/actions/runner/releases/download/v${RUNNER_VERSI
 
 RUN chown -R ${SSH_USER} /home/${SSH_USER}
 
+COPY entrypoint.sh /
+RUN chmod +x /entrypoint.sh
+
 USER ${SSH_USER}
+
+ENTRYPOINT ["/entrypoint.sh"]
