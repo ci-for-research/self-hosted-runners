@@ -10,9 +10,10 @@ Stage: build
 #     /file1
 #     /file1 /opt
 
-# %environment
-#     export LISTEN_PORT=12345
-#     export LC_ALL=C
+%environment
+    export LC_ALL=C
+    export DEBIAN_FRONTEND=noninteractive
+    export RUNNER_VERSION=2.267.1
 
 %post
     apt-get update && \
