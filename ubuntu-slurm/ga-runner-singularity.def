@@ -16,13 +16,15 @@ Stage: build
     export RUNNER_VERSION=2.267.1
 
 %post
-    apt-get update && \
+    apt-get install -y --no-install-recommends software-properties-common
+    add-apt-repository universe
+    add-apt-repository multiverse
+    apt-get update -y
     apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
     jq \
-    libcurl4-openssl-dev \
-    sudo
+    libcurl4-openssl-dev
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
 
