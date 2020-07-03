@@ -26,10 +26,10 @@ Stage: build
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
 
-# %runscript
-#     echo "Container was created $NOW"
-#     echo "Arguments received: $*"
-#     exec /bin/bash /entrypoint.sh "$@"
+%runscript
+    echo "Container was created $NOW"
+    echo "Arguments received: $*"
+    exec /bin/bash /entrypoint.sh "$@"
 
 
 # %startscript
