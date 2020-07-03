@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
+
 if [[ -z "${RUNNER_NAME}" ]]; then
     RUNNER_NAME="docker-$(hostname)"
 fi
