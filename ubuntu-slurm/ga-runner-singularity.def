@@ -6,9 +6,9 @@ Stage: build
 #     touch /file1
 #     touch ${SINGULARITY_ROOTFS}/file2
 
-# %files
-#     /file1
-#     /file1 /opt
+%files
+    /entrypoint.sh
+    # /file1 /opt
 
 %environment
     export LC_ALL=C
