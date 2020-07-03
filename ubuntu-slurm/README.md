@@ -1,50 +1,26 @@
-# Title
-
-Title format:
-
-- Setting up a CI server for a GitHub Action runner with [Docker|Virtualbox|Vagrant] from [Linux Ubuntu|MacOS|Windows]
-- Setting up a CI server for a GitHub Action runner on [HPC Cloud|other hardware] from [Linux Ubuntu|MacOS|Windows]
+# Setting up a CI server for a GitHub Action runner on a HPC cluster from Linux Ubuntu
 
 After following this guide, you'll have a simple GitHub action workflow on a GitHub repository of your choice. When new
-commits are made to your repository, the workflow delegates work to a server which runs **<in a Virtual Machine on your own
-computer.>**
+commits are made to your repository, the workflow delegates work to a server which runs in a HPC cluster.The guide assumes that you have an acess to a HPC cluster which uses `slurm` as a scheduler.
 
 This guide distinguishes between the _client_ and the _server_; the client is your own machine; the server is whichever
-machine will run the tests. This document describes the case where the server is **<something something, e.g. a HPC
-cloud machine, a VirtualBox Vm running on localhost, etc.>.**
+machine will run the tests. This document describes the case where the server is a HPC cluster.
 
 For guides on how to configure other features in addition to just the runner, go [here](/README.md).
 
 ## Prerequisites
 
-_Describe things that users need to install on their system to follow the guide. Things like VirtualBox, Vagrant,
-Docker, Windows Subsystem for Linux, where to get iso images, how to get an account for remote hardware, etc. Out of
-scope for this section: ssh, putty, Ansible_
+1. Install singularity
+
+```shell
+> singularity version
+
+3.5.3
+```
 
 ## Server side configuration
 
 E.g. how to configure VirtualBox, how to run docker container, how to configure HPC cloud machine
-
-## Client side configuration
-
-### Install Ansible
-
-Ansible is a tool with which you can do so-called _provisioning_, i.e. automated system administration of remote
-machines. We'll use it to set up the GitHub Actions runner.
-
-Install Ansible:
-
-- default repositories for the OS if they're available (apt, ndf, apk, homebrew)
-- PPA (for Ubuntu)
-- PyPI: ``pip install ansible``
-- other options see [docs](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#selecting-an-ansible-version-to-install)
-
-Make sure your Ansible version is 2.9.9 or later with:
-```shell
-ansible --version
-```
-
-(Find more information [here](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu)).
 
 ### Install SSH Client
 
