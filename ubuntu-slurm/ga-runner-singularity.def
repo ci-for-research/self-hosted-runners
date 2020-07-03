@@ -2,43 +2,50 @@ Bootstrap: library
 From: ubuntu:19.10
 Stage: build
 
-%setup
-    touch /file1
-    touch ${SINGULARITY_ROOTFS}/file2
+# %setup
+#     touch /file1
+#     touch ${SINGULARITY_ROOTFS}/file2
 
-%files
-    /file1
-    /file1 /opt
+# %files
+#     /file1
+#     /file1 /opt
 
-%environment
-    export LISTEN_PORT=12345
-    export LC_ALL=C
+# %environment
+#     export LISTEN_PORT=12345
+#     export LC_ALL=C
 
 %post
-    apt-get update && apt-get install -y netcat
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+    ca-certificates \
+    curl \
+    jq \
+    libcurl4-openssl-dev \
+    sudo
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
 
-%runscript
-    echo "Container was created $NOW"
-    echo "Arguments received: $*"
-    exec echo "$@"
+# %runscript
+#     echo "Container was created $NOW"
+#     echo "Arguments received: $*"
+#     exec /bin/bash /entrypoint.sh "$@"
 
-%startscript
-    nc -lp $LISTEN_PORT
 
-%test
-    grep -q NAME=\"Ubuntu\" /etc/os-release
-    if [ $? -eq 0 ]; then
-        echo "Container base is Ubuntu as expected."
-    else
-        echo "Container base is not Ubuntu."
-    fi
+# %startscript
+#     nc -lp $LISTEN_PORT
 
-%labels
-    Author d@sylabs.io
-    Version v0.0.1
+# %test
+#     grep -q NAME=\"Ubuntu\" /etc/os-release
+#     if [ $? -eq 0 ]; then
+#         echo "Container base is Ubuntu as expected."
+#     else
+#         echo "Container base is not Ubuntu."
+#     fi
 
-%help
-    This is a demo container used to illustrate a def file that uses all
-    supported sections.
+# %labels
+#     Author d@sylabs.io
+#     Version v0.0.1
+
+# %help
+#     This is a demo container used to illustrate a def file that uses all
+#     supported sections.
