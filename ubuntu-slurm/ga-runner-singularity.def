@@ -7,8 +7,8 @@ Stage: build
 #     touch ${SINGULARITY_ROOTFS}/file2
 
 %files
-    /entrypoint.sh
-    # /file1 /opt
+    ./entrypoint.sh /
+    # /entrypoint.sh /
 
 %environment
     export LC_ALL=C
@@ -30,7 +30,6 @@ Stage: build
     echo "Container was created $NOW"
     echo "Arguments received: $*"
     exec /bin/bash /entrypoint.sh "$@"
-
 
 # %startscript
 #     nc -lp $LISTEN_PORT
