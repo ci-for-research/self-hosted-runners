@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
+
 if [[ -z "${RUNNER_NAME}" ]]; then
     RUNNER_NAME="docker-$(hostname)"
 fi
@@ -30,4 +32,5 @@ trap 'remove_runner; exit 143' TERM
 
 printf "\n\033[0;44m---> Starting the runner.\033[0m\n"
 ./run.sh "$*" &
+# ./bin/runsvc.sh
 wait $!
