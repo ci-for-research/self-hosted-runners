@@ -32,4 +32,5 @@ trap 'remove_runner; exit 143' TERM
 
 printf "\n\033[0;44m---> Starting the runner.\033[0m\n"
 ./run.sh "$*" &
+# ./bin/runsvc.sh
 wait $!
