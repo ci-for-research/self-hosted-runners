@@ -1,6 +1,6 @@
 # Setting up a CI server for a GitHub Action runner with Docker from Linux Ubuntu
 
-After following this guide, you'll have a simple GitHub action workflow on a GitHub repository of your choice. When new commits are made to your repository, the workflow delegates work to a server which runs in a [Docker](https://www.docker.com/) container. You can follow these instructions on your own computer or a Linux server.
+After following this guide, you'll have a simple GitHub action workflow on a GitHub repository of your choice. When new commits are made to your repository, the workflow delegates work to a server which runs in a [Docker](https://www.docker.com/) container.
 
 This guide distinguishes between the _client_ and the _server_; the client is your own machine; the server is whichever
 machine will run the tests. This document describes the case where the server is a Docker container running on your own machine.
