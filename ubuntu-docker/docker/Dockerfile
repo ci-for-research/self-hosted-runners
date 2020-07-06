@@ -27,7 +27,7 @@ RUN curl -L "https://github.com/actions/runner/releases/download/v${RUNNER_VERSI
     ./bin/installdependencies.sh
 
 RUN chown -R ${DOCKER_USER} /home/${DOCKER_USER}
-RUN mkdir -p /opt/hostedtoolcache && chown -R ${DOCKER_USER}:${DOCKER_USER} /opt/hostedtoolcache/
+RUN mkdir -p /opt/hostedtoolcache && chown -R ${DOCKER_USER}:${DOCKER_USER} $AGENT_TOOLSDIRECTORY
 
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh

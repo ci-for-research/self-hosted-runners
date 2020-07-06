@@ -1,0 +1,53 @@
+Bootstrap: library
+From: ubuntu:19.10
+Stage: build
+
+# %setup
+#     touch /file1
+#     touch ${SINGULARITY_ROOTFS}/file2
+
+%files
+    ./entrypoint.sh /
+    # /entrypoint.sh /
+
+%environment
+    export LC_ALL=C
+    export DEBIAN_FRONTEND=noninteractive
+    export RUNNER_VERSION=2.267.1
+
+%post
+    apt-get install -y --no-install-recommends software-properties-common
+    add-apt-repository universe
+    add-apt-repository multiverse
+    apt-get update -y
+    apt-get install -y --no-install-recommends \
+    ca-certificates \
+    curl \
+    jq \
+    libcurl4-openssl-dev
+    NOW=`date`
+    echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
+
+%runscript
+    echo "Container was created $NOW"
+    echo "Arguments received: $*"
+    exec /bin/bash /entrypoint.sh "$@"
+
+# %startscript
+#     nc -lp $LISTEN_PORT
+
+# %test
+#     grep -q NAME=\"Ubuntu\" /etc/os-release
+#     if [ $? -eq 0 ]; then
+#         echo "Container base is Ubuntu as expected."
+#     else
+#         echo "Container base is not Ubuntu."
+#     fi
+
+# %labels
+#     Author d@sylabs.io
+#     Version v0.0.1
+
+# %help
+#     This is a demo container used to illustrate a def file that uses all
+#     supported sections.
