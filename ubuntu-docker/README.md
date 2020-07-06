@@ -70,7 +70,7 @@ Now we are ready to build our Docker image. The following command will use [Dock
 
 ```shell
 docker build \
-    -t ga-runner \
+    --tag github-actions-runner \
     --build-arg DOCKER_USER="<username>" \
     --build-arg DOCKER_PASS="<user password>" \
     ./docker
@@ -88,13 +88,13 @@ You will need to adjust `<username>` and `<user password>` for the normal user w
 The command below will run the docker image and setup the runner. When user presses `CTRL+C`, it automatically removes the runner from GitHub and removes the Docker container as well.
 
 ```shell
-docker run --rm --name ga-runner \
+docker run --rm --name github-actions-runner \
     -e PERSONAL_ACCESS_TOKEN="<personal access token>" \
     -e RUNNER_NAME="<runner name to appear on Github>" \
     -e RUNNER_WORKDIR="/tmp/actions-runner-repo" \
     -e GITHUB_ORG="<organization or username>" \
     -e GITHUB_REPO="<name of the repository>" \
-    ga-runner:latest
+    github-actions-runner:latest
 ```
 
 #### Daemon mode
@@ -102,20 +102,20 @@ docker run --rm --name ga-runner \
 The command below will start the Docker container in daemon mode. The Docker container will run in the background and the terminal will be available. To stop the running container you need to run stop command which explained in [](#cleanup) section.
 
 ```shell
-docker run -d --restart always --name ga-runner \
+docker run -d --restart always --name github-actions-runner \
     -e PERSONAL_ACCESS_TOKEN="<personal access token>" \
     -e RUNNER_NAME="<runner name to appear on Github>" \
     -e RUNNER_WORKDIR="/tmp/actions-runner-repo" \
     -e GITHUB_ORG="<organization or username>" \
     -e GITHUB_REPO="<name of the repository>" \
-    ga-runner:latest
+    github-actions-runner:latest
 ```
 
 ### Get Docker container details
 
 Use `docker inspect` to display details of the container
 ```shell
-> docker inspect  ga-runner
+> docker inspect  github-actions-runner
 
 [
     {
@@ -127,7 +127,7 @@ Use `docker inspect` to display details of the container
 
 You can use the command below to only find out the IP address of the container
 ```shell
-> docker inspect --format '{{ .NetworkSettings.IPAddress }}' ga-runner
+> docker inspect --format '{{ .NetworkSettings.IPAddress }}' github-actions-runner
 
 172.17.0.2
 ```
@@ -137,7 +137,7 @@ You can use the command below to only find out the IP address of the container
 If you need an access to a shell on running Docker container:
 
 ```shell
-docker exec -ti ga-runner /bin/bash
+docker exec -ti github-actions-runner /bin/bash
 ```
 
 ### Cleanup
@@ -145,13 +145,13 @@ docker exec -ti ga-runner /bin/bash
 To stop the running Docker container:
 
 ```shell
-docker container stop ga-runner
+docker container stop github-actions-runner
 ```
 
 To remove a Docker container
 
 ```shell
-docker container rm ga-runner
+docker container rm github-actions-runner
 ```
 
 To remove a Docker image
