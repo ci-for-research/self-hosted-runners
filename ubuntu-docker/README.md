@@ -68,7 +68,7 @@ Now we are ready to build our Docker image. The following command will use [Dock
 
 ```shell
 docker build \
-    -t ga-runner \
+    --tag ga-runner \
     --build-arg DOCKER_USER="<username>" \
     --build-arg DOCKER_PASS="<user password>" \
     ./docker
