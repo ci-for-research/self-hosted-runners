@@ -115,7 +115,7 @@ docker run -d --restart always --name ga-runner \
 
 Use `docker inspect` to display details of the container
 ```shell
-> docker inspect  ga-runner
+> docker inspect ga-runner
 
 [
     {
