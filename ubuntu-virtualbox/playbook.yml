@@ -19,7 +19,7 @@
 
   tasks:
     - name: Verify that user exists on the server
-      become: True
+      become: yes
       user:
         name: "{{ ansible_user }}"
         groups: sudo,adm
@@ -30,13 +30,13 @@
         msg: "Setting up a GitHub runner for repository: https://github.com/{{ ORG }}/{{ REPO }}"
 
     - name: Only run "apt update-cache" if the last one is more than 3600 seconds old
-      become: True
+      become: yes
       apt:
         update_cache: yes
         cache_valid_time: 3600
 
     - name: Install jq
-      become: True
+      become: yes
       apt:
         name:
           - jq
@@ -70,53 +70,53 @@
         cmd: ./config.sh --url https://github.com/{{ ORG }}/{{ REPO }} --name {{ RUNNER_NAME }} --token {{ CURL_OUTPUT.stdout }} --unattended --replace
 
     - name: Install the GitHub Action runner as a service
-      become: True
+      become: yes
       shell:
         chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}
         cmd: ./svc.sh install
 
     - name: Enable starting the runner service when the machine starts
-      become: True
+      become: yes
       shell: systemctl enable actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
       tags:
         - enable
 
     - name: Starting the runner service
-      become: True
+      become: yes
       shell: systemctl start actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
       tags:
         - start
 
     - name: Stopping the runner service
-      become: True
+      become: yes
       shell: systemctl stop actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
       tags:
         - never
         - stop
 
     - name: Disable starting the runner service when the system boots
-      become: True
+      become: yes
       shell: systemctl disable actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
       tags:
         - never
         - disable
 
     - name: Restart the runner service
-      become: True
+      become: yes
       shell: systemctl restart actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
       tags:
         - never
         - restart
 
     - name: Show the runner service status
-      become: True
+      become: yes
       shell: systemctl status actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
       tags:
         - never
         - status
 
     - name: Unregister the runner with GitHub
-      become: True
+      become: yes
       shell:
         chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}
         cmd: ./svc.sh uninstall
