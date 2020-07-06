@@ -69,12 +69,18 @@ Now we are ready to build our Docker image. The following command will use [Dock
 ```shell
 docker build \
     --tag github-actions-runner \
+    ./docker
+```
+
+The Docker image will create a user called ``tester`` with a password ``password``. If you want to change the default username and the password, you will need to adjust `<username>` and `<user password>` for the user which will be added to the Docker image.
+
+```shell
+docker build \
+    --tag github-actions-runner \
     --build-arg DOCKER_USER="<username>" \
     --build-arg DOCKER_PASS="<user password>" \
     ./docker
 ```
-
-You will need to adjust `<username>` and `<user password>` for the user which will be added to the Docker image.
 
 ## Client side configuration
 
