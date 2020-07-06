@@ -83,7 +83,7 @@ You will need to adjust `<username>` and `<user password>` for the user which wi
 
 #### Temporary mode
 
-The command below will run the docker image and setup the runner. When user presses `CTRL+C`, it automatically removes the runner from GitHub and removes the Docker container as well.
+The command below will run the docker image and set up the runner. When user presses `CTRL+C`, it automatically removes the runner from GitHub and removes the Docker container as well.
 
 ```shell
 docker run --rm --name ga-runner \
