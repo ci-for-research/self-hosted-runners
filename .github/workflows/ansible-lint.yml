@@ -1,0 +1,27 @@
+name: Lint Ansible
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Show directory listing
+        shell: bash -l {0}
+        run: |
+          ls -la
+      - name: Lint Ansible Playbook
+        uses: ansible/ansible-lint-action@master
+        with:
+          override-deps: |
+            ansible==2.9
+            ansible-lint==4.2.0
+          targets: |
+            ./docs/install-cuda/playbook-install-cuda-gridk2.yml
+            ./template/playbook.yml
+            ./ubuntu-surf-hpc-cloud/with-cuda/playbook-install-cuda-gridk2.yml
+            ./ubuntu-surf-hpc-cloud/playbook.yml
+            ./ubuntu-vagrant/playbook.yml
+            ./windows-vagrant/playbook.yml
+            ./ubuntu-virtualbox/playbook.yml
