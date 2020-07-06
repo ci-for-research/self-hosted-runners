@@ -122,7 +122,64 @@ docker run -d --restart always --name github-actions-runner \
     github-actions-runner:latest
 ```
 
-### Get Docker container details
+
+#### Adding a CI workflow on Github
+
+If you now go to GitHub [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/settings/actions](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions),
+you should see a self-hosted runner with status "Idle":
+
+![Self hosted runner status is Idle](/images/github-self-hosted-runners-status-idle.png)
+
+Add the following simple workflow as ``.github/workflows/self_hosted_ci.yml`` in your repository:
+
+```yaml
+name: Self-hosted CI example
+on: [push, pull_request]
+jobs:
+  test:
+    name: test
+    runs-on: self-hosted
+    steps:
+      - name: Show directory listing
+        shell: bash -l {0}
+        run: |
+          ls -la
+```
+
+Now try making a change to one of the files in your repository to see if you can trigger running the simple workflow
+on your self-hosted server. If successful, the status will change to "Active" while the workflow is running. You can
+get an overview of previous GitHub actions by navigating to [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/actions](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/actions).
+
+
+### Cleanup
+
+To stop the running Docker container:
+
+```shell
+docker container stop github-actions-runner
+```
+
+To start the running Docker container:
+
+```shell
+docker container start github-actions-runner
+```
+
+To remove a Docker container
+
+```shell
+docker container rm github-actions-runner
+```
+
+To remove a Docker image
+
+```shell
+docker image rm github-actions-runner
+```
+
+### Extras
+
+#### Get Docker container details
 
 Use `docker inspect` to display details of the container
 ```shell
@@ -143,64 +200,13 @@ You can use the command below to only find out the IP address of the container
 172.17.0.2
 ```
 
-### Accessing Docker container
+#### Accessing Docker container
 
 If you need an access to a shell on running Docker container:
 
 ```shell
 docker exec -ti github-actions-runner /bin/bash
 ```
-
-### Cleanup
-
-To stop the running Docker container:
-
-```shell
-docker container stop github-actions-runner
-```
-
-To remove a Docker container
-
-```shell
-docker container rm github-actions-runner
-```
-
-To remove a Docker image
-
-```shell
-docker image rm ghrunner
-```
-
-### Monitoring the runner service's logs
-
-#TODO:
-
-### Verify that your newly configured runner is triggered
-
-Add the following simple workflow as ``.github/workflows/self_hosted_ci.yml`` in your repository https://github.com/ORG/REPO:
-
-```yaml
-name: Self-hosted CI example
-
-on: [push, pull_request]
-
-jobs:
-  test:
-    name: test
-    runs-on: self-hosted
-    steps:
-      - name: Show directory listing
-        shell: bash -l {0}
-        run: |
-          ls -la
-```
-
-With this workflow in place, new pushes and new pull requests should trigger your self-hosted server.
-Try making a change to one of the files in your repository to see if you can trigger running the simple workflow
-on your self-hosted server. If successful, the status will change to "Active" while the workflow is running.
-You can see a record of past and current GitHub Actions by pointing your browser to
-https://github.com/ORG/REPO/actions?query=workflow%3A%22Self-hosted+CI+example%22.
-
 
 ### What's next
 
