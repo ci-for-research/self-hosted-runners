@@ -62,8 +62,6 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 
 ## Server side configuration
 
-E.g. how to configure VirtualBox, how to run docker container, how to configure HPC cloud machine
-
 ### Build image
 
 Now we are ready to build our Docker image. The following command will use [Dockerfile](docker/Dockerfile) in `docker` folder to build the image. It will create a system user, install necassary system packages and dependencies for the runner.
