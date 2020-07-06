@@ -1,6 +1,6 @@
 # Setting up a CI server for a GitHub Action runner with Docker from Linux Ubuntu
 
-After following this guide, you'll have a simple GitHub action workflow on a GitHub repository of your choice. When new commits are made to your repository, the workflow delegates work to a server which runs in a [Docker](https://www.docker.com/) container. You can follow these instructions on your own computer or a Linux server.
+After following this guide, you'll have a simple GitHub action workflow on a GitHub repository of your choice. When new commits are made to your repository, the workflow delegates work to a server which runs in a [Docker](https://www.docker.com/) container.
 
 This guide distinguishes between the _client_ and the _server_; the client is your own machine; the server is whichever
 machine will run the tests. This document describes the case where the server is a Docker container running on your own machine.
@@ -10,15 +10,15 @@ For guides on how to configure other features in addition to just the runner, go
 ## Prerequisites
 
 1. Install Docker: https://docs.docker.com/engine/install/
-2. Follow post-installation steps https://docs.docker.com/engine/install/linux-postinstall/
+2. Follow post-installation steps https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user to manage docker as a non-root user
 
 ### Testing your Docker setup
 
 Refence: https://docs.docker.com/docker-for-windows/#test-your-installation
 
-1. Open a terminal window (Command Prompt or PowerShell, but not PowerShell ISE).
+1. Open a terminal window
 
-2. Run docker --version to ensure that you have a supported version of Docker:
+2. Run ``docker --version`` to ensure that you have a supported version of Docker:
 
 ```shell
 > docker --version
@@ -62,11 +62,9 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 
 ## Server side configuration
 
-E.g. how to configure VirtualBox, how to run docker container, how to configure HPC cloud machine
-
 ### Build image
 
-Now we are ready to build our Docker image. The following command will use [Dockerfile](docker/Dockerfile) in `docker` folder to build the image. It will create a system user, install necassary system packages and dependencies for the runner.
+Now we are ready to build our Docker image. The following command will use [Dockerfile](docker/Dockerfile) in `docker` folder to build the image. It will create a system user, install necessary system packages and dependencies for the runner.
 
 ```shell
 docker build \
@@ -76,7 +74,7 @@ docker build \
     ./docker
 ```
 
-You will need to adjust `<username>` and `<user password>` for the normal user which will be added to the Docker image.
+You will need to adjust `<username>` and `<user password>` for the user which will be added to the Docker image.
 
 ## Client side configuration
 
@@ -85,7 +83,7 @@ You will need to adjust `<username>` and `<user password>` for the normal user w
 
 #### Temporary mode
 
-The command below will run the docker image and setup the runner. When user presses `CTRL+C`, it automatically removes the runner from GitHub and removes the Docker container as well.
+The command below will run the docker image and set up the runner. When user presses `CTRL+C`, it automatically removes the runner from GitHub and removes the Docker container as well.
 
 ```shell
 docker run --rm --name github-actions-runner \
