@@ -89,11 +89,11 @@ The command below will run the docker image and setup the runner. When user pres
 
 ```shell
 docker run --rm --name github-actions-runner \
-    -e PERSONAL_ACCESS_TOKEN="<personal access token>" \
-    -e RUNNER_NAME="<runner name to appear on Github>" \
-    -e RUNNER_WORKDIR="/tmp/actions-runner-repo" \
-    -e GITHUB_ORG="<organization or username>" \
-    -e GITHUB_REPO="<name of the repository>" \
+    --env PERSONAL_ACCESS_TOKEN="<personal access token>" \
+    --env RUNNER_NAME="<runner name to appear on Github>" \
+    --env RUNNER_WORKDIR="/tmp/actions-runner-repo" \
+    --env GITHUB_ORG="<organization or username>" \
+    --env GITHUB_REPO="<name of the repository>" \
     github-actions-runner:latest
 ```
 
