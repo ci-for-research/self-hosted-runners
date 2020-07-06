@@ -74,7 +74,7 @@ docker build \
     ./docker
 ```
 
-You will need to adjust `<username>` and `<user password>` for the normal user which will be added to the Docker image.
+You will need to adjust `<username>` and `<user password>` for the user which will be added to the Docker image.
 
 ## Client side configuration
 
