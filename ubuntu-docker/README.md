@@ -10,7 +10,7 @@ For guides on how to configure other features in addition to just the runner, go
 ## Prerequisites
 
 1. Install Docker: https://docs.docker.com/engine/install/
-2. Follow post-installation steps https://docs.docker.com/engine/install/linux-postinstall/ to manage docker as a non-root user
+2. Follow post-installation steps https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user to manage docker as a non-root user
 
 ### Testing your Docker setup
 
