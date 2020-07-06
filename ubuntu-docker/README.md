@@ -94,6 +94,34 @@ generate an OAuth token, as follows:
 
 ### Run the server
 
+#### Daemon mode
+
+The command below will start the Docker container in daemon mode. The Docker container will run in the background and the terminal will be available. To stop the running container you need to run stop command which explained in [](#cleanup) section.
+
+```shell
+docker run -d --restart always --name github-actions-runner \
+    -e PERSONAL_ACCESS_TOKEN="<Github OAuth token>" \
+    -e RUNNER_NAME="<runner name to appear on Github>" \
+    -e RUNNER_WORKDIR="/tmp/actions-runner-repo" \
+    -e GITHUB_ORG="<organization or username>" \
+    -e GITHUB_REPO="<name of the repository>" \
+    github-actions-runner:latest
+```
+
+If you stop the running container, the Github actions runner will also stop.
+
+To stop the running Docker container:
+
+```shell
+docker container stop github-actions-runner
+```
+
+To start the running Docker container:
+
+```shell
+docker container start github-actions-runner
+```
+
 #### Temporary mode
 
 The command below will run the docker image and set up the runner. When user presses `CTRL+C`, it automatically removes the runner from GitHub and removes the Docker container as well.
@@ -108,20 +136,7 @@ docker run --rm --name github-actions-runner \
     github-actions-runner:latest
 ```
 
-#### Daemon mode
-
-The command below will start the Docker container in daemon mode. The Docker container will run in the background and the terminal will be available. To stop the running container you need to run stop command which explained in [](#cleanup) section.
-
-```shell
-docker run -d --restart always --name github-actions-runner \
-    -e PERSONAL_ACCESS_TOKEN="<personal access token>" \
-    -e RUNNER_NAME="<runner name to appear on Github>" \
-    -e RUNNER_WORKDIR="/tmp/actions-runner-repo" \
-    -e GITHUB_ORG="<organization or username>" \
-    -e GITHUB_REPO="<name of the repository>" \
-    github-actions-runner:latest
-```
-
+**Warning:** If you use ``--rm`` argument, Docker will remove the container and you will loose your changes. However, this can be useful for testing purposes.
 
 #### Adding a CI workflow on Github
 
