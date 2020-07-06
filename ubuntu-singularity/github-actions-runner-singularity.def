@@ -11,11 +11,18 @@ Stage: build
     # /entrypoint.sh /
 
 %environment
-    export LC_ALL=C
-    export DEBIAN_FRONTEND=noninteractive
-    export RUNNER_VERSION=2.267.1
+    # export LC_ALL=C
+    # export DEBIAN_FRONTEND=noninteractive
+    # export RUNNER_VERSION=2.267.1
+    # echo 'export RUNNER_VERSION=2.267.1' >>$SINGULARITY_ENVIRONMENT
+    export AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
+    export platform_version=18.04
 
 %post
+    export RUNNER_VERSION=2.267.1
+    # main script
+    chmod +x /entrypoint.sh
+
     apt-get install -y --no-install-recommends software-properties-common
     add-apt-repository universe
     add-apt-repository multiverse
@@ -25,8 +32,20 @@ Stage: build
     curl \
     jq \
     libcurl4-openssl-dev
+
+
+    echo ${RUNNER_VERSION}
+    mkdir /opt/actions-runner && cd /opt/actions-runner
+    curl -L "https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz" > actions_runner.tar.gz && \
+    tar -zxf actions_runner.tar.gz && \
+    rm -f actions_runner.tar.gz && \
+    ./bin/installdependencies.sh
+    # chmod -R 755 /opt/actions-runner
+
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
+    echo "export AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache" >> $SINGULARITY_ENVIRONMENT
+
 
 %runscript
     echo "Container was created $NOW"

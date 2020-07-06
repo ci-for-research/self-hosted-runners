@@ -29,7 +29,8 @@ Linux Ubuntu.
 
 | Status | Client OS | Server hardware | Runner | Additional functionality |
 | --- | --- | --- | --- | --- |
-| :heavy_check_mark: Completed | Linux Ubuntu | local machine via Docker           | -         |  |
+| :heavy_check_mark: Completed | Linux Ubuntu | local machine via Docker           | [link](/ubuntu-docker/README.md)         |  |
+| :heavy_check_mark: Completed | Linux Ubuntu | local machine via Singularity      | [link](/ubuntu-singularity/README.md)         |  |
 | :heavy_check_mark: Completed | Linux Ubuntu | local machine via Vagrant          | [link](/ubuntu-vagrant/README.md)         |  |
 | :heavy_check_mark: Completed | Linux Ubuntu | local machine via VirtualBox       | [link](/ubuntu-virtualbox/README.md)      |  |
 | :heavy_check_mark: Completed | Linux Ubuntu | remote machine at [SURF HPC Cloud] | [link](/ubuntu-surf-hpc-cloud/README.md)  | [CUDA installation](/ubuntu-surf-hpc-cloud/with-cuda/README.md) |
