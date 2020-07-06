@@ -64,12 +64,12 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 
 ### Build image
 
-Now we are ready to build our Docker image. The following command will use [Dockerfile](docker/Dockerfile) in `docker` folder to build the image. It will create a system user, install necessary system packages and dependencies for the runner.
+Now we are ready to build our Docker image. The following command will use [Dockerfile](docker/Dockerfile) to build the image. It will create a system user, install necessary system packages and dependencies for the runner.
 
 ```shell
 docker build \
     --tag github-actions-runner \
-    ./docker
+    .
 ```
 
 The Docker image will create a user called ``tester`` with a password ``password``. If you want to change the default username and the password, you will need to adjust `<username>` and `<user password>` for the user which will be added to the Docker image.
@@ -79,7 +79,7 @@ docker build \
     --tag github-actions-runner \
     --build-arg DOCKER_USER="<username>" \
     --build-arg DOCKER_PASS="<user password>" \
-    ./docker
+    .
 ```
 
 ## Client side configuration
