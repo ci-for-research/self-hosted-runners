@@ -217,7 +217,7 @@ You can use the command below to only find out the IP address of the container
 
 #### Accessing Docker container
 
-If you need an access to a shell on running Docker container:
+If you need access to a shell on the running Docker container:
 
 ```shell
 docker exec -ti github-actions-runner /bin/bash
