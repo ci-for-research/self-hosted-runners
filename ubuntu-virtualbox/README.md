@@ -205,19 +205,20 @@ generate an OAuth token, as follows:
 
 1. Go to [https://github.com/settings/tokens](https://github.com/settings/tokens) and click the ``Generate new token`` button.
 1. Provide your GitHub password when prompted
-1. Fill in a description for the token, for example _GitHub runner for github.com/&lt;your organization&gt;/&lt;your repository&gt;_
+1. Fill in a description for the token, for example _Token for self-hosted GitHub runners_
 1. Enable the ``repo`` scope and all of its checkboxes, like so:
 
     ![Token permissions](/images/token_permissions.png)
 
 1. Click ``Generate`` at the bottom. Make sure to copy its value because we'll need it in the next step
 
-Configuring your server such that it can run continuous integration requires 4 pieces of information, for which you will be prompted:
+Configuring your server such that it can run continuous integration requires 5 pieces of information, for which you will be prompted:
 
 1. Because our playbook requires elevated permissions, the command uses the ``--ask-become-pass`` option to prompt for
 the root password. Fill in the password ``password`` to become ``root`` in the server.
 1. Fill in the GitHub organization (which might be simply your GitHub user name) and ...
 1. ...the repository name for which you want to run workflows on a self-hosted server
+1. Specify how you want the runner to show up in the GitHub interface
 1. Finally, you need to supply the Personal Access Token
 
 Now run this command to provision the GitHub Action runner on your server:
@@ -303,4 +304,4 @@ You can see a record of past and current GitHub Actions by pointing your browser
 
 ### What's next
 
-Find instructions for provisioning additional functionality [here](../README.md).
+Find instructions for provisioning additional functionality [here](/README.md).

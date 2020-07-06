@@ -4,19 +4,56 @@
     RUNNER_VERSION: 2.169.1
   vars_prompt:
     - name: "ORG"
-      prompt: "What is the GitHub organization for which you want to enable this self-hosted runner?"
+      prompt: "What is the GitHub organization associated with this self-hosted runner?"
       private: no
+      default: jspaaks
     - name: "REPO"
-      prompt: "What is the GitHub repository for which you want to enable this self-hosted runner?"
+      prompt: "What is the GitHub repository associated with this self-hosted runner?"
       private: no
-    - name: "TOKEN"
-      prompt: "Please enter the GitHub Actions token for this workflow. Go to https://github.com/<org>/<repo>/settings/actions/add-new-runner and copy it from the 'Configure' section."
+      default: example-python-1
+    - name: "RUNNER_NAME"
+      prompt: "Under what name should the runner show up on GitHub?"
       private: no
-  remote_user: tester
+      default: therunner1
+    - name: "PERSONAL_ACCESS_TOKEN"
+      prompt: "Please enter a personal access token for this workflow. Go to https://github.com/settings/tokens to get it."
+      private: no
+      default: 2f6c50525175d7569067c7a2318e5f3dcf45714f
+
   tasks:
+    - name: Verify that user exists on the server
+      become: True
+      user:
+        name: "{{ ansible_user }}"
+        groups: sudo,adm
+        state: present
+
     - name: Showing the input variables
       debug:
         msg: "Setting up a GitHub runner for repository: https://github.com/{{ ORG }}/{{ REPO }}"
+
+    - name: Only run "apt update-cache" if the last one is more than 3600 seconds old
+      become: True
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install jq
+      become: True
+      apt:
+        name:
+          - jq
+          - curl
+        state: present
+
+    - name: "Requesting registration"
+      shell:
+        cmd: "curl -sX POST -H \"Authorization: token {{ PERSONAL_ACCESS_TOKEN }}\" \"https://api.github.com/repos/{{ ORG }}/{{ REPO }}/actions/runners/registration-token\" | jq .token --raw-output"
+      register: CURL_OUTPUT
+      tags:
+        - uninstall
+      args:
+        warn: false
 
     - name: Creating a directory for the runner
       file:
@@ -31,18 +68,69 @@
         remote_src: yes
 
     - name: Configuring the GitHub Action runner
-      command: chdir=/home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }} ./config.sh --unattended --url https://github.com/{{ ORG }}/{{ REPO }} --token {{ TOKEN }} --replace
+      shell:
+        chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}
+        cmd: ./config.sh --url https://github.com/{{ ORG }}/{{ REPO }} --name {{ RUNNER_NAME }} --token {{ CURL_OUTPUT.stdout }} --unattended --replace
 
     - name: Install the GitHub Action runner as a service
-      become: true
+      become: True
       shell:
         chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}
         cmd: ./svc.sh install
 
     - name: Enable starting the runner service when the machine starts
-      become: true
-      shell: systemctl enable actions.runner.{{ ORG }}-{{ REPO }}.{{ ansible_hostname }}.service
+      become: True
+      shell: systemctl enable actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+      tags:
+        - enable
 
     - name: Starting the runner service
-      become: true
-      shell: systemctl start actions.runner.{{ ORG }}-{{ REPO }}.{{ ansible_hostname }}.service
+      become: True
+      shell: systemctl start actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+      tags:
+        - start
+
+    - name: Stopping the runner service
+      become: True
+      shell: systemctl stop actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+      tags:
+        - never
+        - stop
+
+    - name: Disable starting the runner service when the system boots
+      become: True
+      shell: systemctl disable actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+      tags:
+        - never
+        - disable
+
+    - name: Restart the runner service
+      become: True
+      shell: systemctl restart actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+      tags:
+        - never
+        - restart
+
+    - name: Show the runner service status
+      become: True
+      shell: systemctl status actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+      tags:
+        - never
+        - status
+
+    - name: Unregister the runner with GitHub
+      become: True
+      shell:
+        chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}
+        cmd: ./svc.sh uninstall
+      tags:
+        - never
+        - uninstall
+
+    - name: Unregister the runner with GitHub and uninstall the runner service
+      shell:
+        chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}
+        cmd: ./config.sh remove --token {{ CURL_OUTPUT.stdout }}
+      tags:
+        - never
+        - uninstall
