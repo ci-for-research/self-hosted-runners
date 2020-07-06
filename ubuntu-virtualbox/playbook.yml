@@ -6,19 +6,16 @@
     - name: "ORG"
       prompt: "What is the GitHub organization associated with this self-hosted runner?"
       private: no
-      default: jspaaks
     - name: "REPO"
       prompt: "What is the GitHub repository associated with this self-hosted runner?"
       private: no
-      default: example-python-1
     - name: "RUNNER_NAME"
       prompt: "Under what name should the runner show up on GitHub?"
       private: no
-      default: therunner1
+      default: GitHub Action Runner
     - name: "PERSONAL_ACCESS_TOKEN"
       prompt: "Please enter a personal access token for this workflow. Go to https://github.com/settings/tokens to get it."
       private: no
-      default: 2f6c50525175d7569067c7a2318e5f3dcf45714f
 
   tasks:
     - name: Verify that user exists on the server
