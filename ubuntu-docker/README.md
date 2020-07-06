@@ -16,7 +16,7 @@ For guides on how to configure other features in addition to just the runner, go
 
 Refence: https://docs.docker.com/docker-for-windows/#test-your-installation
 
-1. Open a terminal window (Command Prompt or PowerShell, but not PowerShell ISE).
+1. Open a terminal window
 
 2. Run docker --version to ensure that you have a supported version of Docker:
 
