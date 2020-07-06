@@ -18,7 +18,7 @@ Refence: https://docs.docker.com/docker-for-windows/#test-your-installation
 
 1. Open a terminal window
 
-2. Run docker --version to ensure that you have a supported version of Docker:
+2. Run ``docker --version`` to ensure that you have a supported version of Docker:
 
 ```shell
 > docker --version
