@@ -78,6 +78,19 @@ You will need to adjust `<username>` and `<user password>` for the user which wi
 
 ## Client side configuration
 
+### Generate an OAuth token
+
+We're almost ready to use our Docker image to set up a GitHub Runner, but first we need to
+generate an OAuth token, as follows:
+
+1. Go to [https://github.com/settings/tokens](https://github.com/settings/tokens) and click the ``Generate new token`` button.
+2. Provide your GitHub password when prompted
+3. Fill in a description for the token, for example _GitHub runner for github.com/&lt;your organization&gt;/&lt;your repository&gt;_
+4. Enable the ``repo`` scope and all of its checkboxes, like so:
+
+    ![Token permissions](/images/token_permissions.png)
+
+5. Click ``Generate`` at the bottom. Make sure to copy its value because we'll need it in the next step
 
 ### Run the server
 
