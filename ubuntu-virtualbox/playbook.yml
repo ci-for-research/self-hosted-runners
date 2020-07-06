@@ -12,9 +12,9 @@
     - name: "RUNNER_NAME"
       prompt: "Under what name should the runner show up on GitHub?"
       private: no
-      default: GitHub Action Runner
+      default: GitHubActionRunner
     - name: "PERSONAL_ACCESS_TOKEN"
-      prompt: "Please enter a personal access token for this workflow. Go to https://github.com/settings/tokens to get it."
+      prompt: "Please enter a personal access token for this workflow. Go to https://github.com/settings/tokens to get it"
       private: no
 
   tasks:
@@ -27,7 +27,7 @@
 
     - name: Showing the input variables
       debug:
-        msg: "Setting up a GitHub runner for repository: https://github.com/{{ ORG }}/{{ REPO }}"
+        msg: "Setting up a GitHub runner '{{ RUNNER_NAME }}' for repository: https://github.com/{{ ORG }}/{{ REPO }}"
 
     - name: Only run "apt update-cache" if the last one is more than 3600 seconds old
       become: yes
@@ -54,25 +54,25 @@
 
     - name: Creating a directory for the runner
       file:
-        path: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}
+        path: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
         state: directory
 
     - name: Downloading and extracting the runner
       unarchive:
         src: https://github.com/actions/runner/releases/download/v{{ RUNNER_VERSION }}/actions-runner-linux-x64-{{ RUNNER_VERSION }}.tar.gz
-        dest: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}
-        creates: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/config.sh
+        dest: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
+        creates: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}/config.sh
         remote_src: yes
 
     - name: Configuring the GitHub Action runner
       shell:
-        chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}
+        chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
         cmd: ./config.sh --url https://github.com/{{ ORG }}/{{ REPO }} --name {{ RUNNER_NAME }} --token {{ CURL_OUTPUT.stdout }} --unattended --replace
 
     - name: Install the GitHub Action runner as a service
       become: yes
       shell:
-        chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}
+        chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
         cmd: ./svc.sh install
 
     - name: Enable starting the runner service when the machine starts
@@ -118,7 +118,7 @@
     - name: Unregister the runner with GitHub
       become: yes
       shell:
-        chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}
+        chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
         cmd: ./svc.sh uninstall
       tags:
         - never
@@ -126,7 +126,7 @@
 
     - name: Unregister the runner with GitHub and uninstall the runner service
       shell:
-        chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}
+        chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
         cmd: ./config.sh remove --token {{ CURL_OUTPUT.stdout }}
       tags:
         - never
