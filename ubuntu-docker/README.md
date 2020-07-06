@@ -99,7 +99,7 @@ docker run --rm --name ga-runner \
 
 #### Daemon mode
 
-The command below will start the Docker container in daemon mode. The Docker container will run in the background and the terminal will be available. To stop the running container you need to run stop command which explained in [](#cleanup) section.
+The command below will start the Docker container in daemon mode. The Docker container will run in the background and the terminal will be available. To stop the running container you need to run the ``stop`` command, which is explained in the [Cleanup](#cleanup) section.
 
 ```shell
 docker run -d --restart always --name ga-runner \
