@@ -8,6 +8,11 @@
 # link checker
 /node_modules
 
+# anything labeled secret...
+/**/*/*secret*
+#...except the template file
+!/ubuntu-virtualbox/secret.yml.template
+
 # vagrant
 /**/*/*.vagrant
 
@@ -22,3 +27,4 @@
 
 # other
 /**/*/pyproject.toml
+
