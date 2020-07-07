@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
+
+cd /opt/actions-runner
 
 if [[ -z "${RUNNER_NAME}" ]]; then
     RUNNER_NAME="singularity-$(hostname)"
