@@ -1,29 +1,62 @@
-# Title
-
-Title format:
-
-- Setting up a CI server for a GitHub Action runner with [Docker|Virtualbox|Vagrant] from [Linux Ubuntu|MacOS|Windows]
-- Setting up a CI server for a GitHub Action runner on [HPC Cloud|other hardware] from [Linux Ubuntu|MacOS|Windows]
+# Setting up a CI server with a GitHub Action runner using VirtualBox, from Linux Ubuntu
 
 After following this guide, you'll have a simple GitHub action workflow on a GitHub repository of your choice. When new
-commits are made to your repository, the workflow delegates work to a server which runs **<in a Virtual Machine on your own
-computer.>**
+commits are made to your repository, the workflow delegates work to a server which runs in a Virtual Machine on your own
+computer.
 
 This guide distinguishes between the _client_ and the _server_; the client is your own machine; the server is whichever
-machine will run the tests. This document describes the case where the server is **<something something, e.g. a HPC
-cloud machine, a VirtualBox Vm running on localhost, etc.>.**
+machine runs the tests. This document describes the case where the server is a virtual machine, running on your own
+physical machine. For guides on how to configure other features in addition to just the runner, go [here](/README.md).
 
-For guides on how to configure other features in addition to just the runner, go [here](/README.md).
+## TL;DR
+
+1. create a virtual machine with an SSH server
+1. enable access to the server via SSH keys
+1. ``ansible-playbook playbook.yml``
 
 ## Prerequisites
 
-_Describe things that users need to install on their system to follow the guide. Things like VirtualBox, Vagrant,
-Docker, Windows Subsystem for Linux, where to get iso images, how to get an account for remote hardware, etc. Out of
-scope for this section: ssh, putty, Ansible_
+1. Install VirtualBox on the client: https://www.virtualbox.org/wiki/Linux_Downloads
+1. Download an Ubuntu iso image from https://ubuntu.com/#download. Both the desktop and the server variant are
+suitable --choose whichever you're comfortable with.
 
 ## Server side configuration
 
-E.g. how to configure VirtualBox, how to run docker container, how to configure HPC cloud machine
+1. Create a new virtual machine in VirtualBox. It's recommended to give it at least 4 GB memory, 2 CPUs, and 20 GB disk space (dynamically allocated).
+1. For the new virtual machine, go to _Settings_ > _Storage_, then under _IDE controller_ select the item marked _Empty_. Then click the icon to load something into the virtual optical disk, then select the Ubuntu iso file.
+1. For the new virtual machine, go to _Settings_ > _Network_
+    1. On the _Adapter 1_ tab,
+        - make sure that the _Enable Network Adapter_ checkbox is checked
+        - set the _Attached to_ dropdown menu to _NAT_
+        - Click _Advanced_, then _Port Forwarding_
+        - Add a new rule, with _Protocol_ TCP, _HostIP_ 127.0.0.1, _Host Port_ 2222, leave _Guest IP_ empty, and _Guest Port_ 22
+1. Start the Virtual Machine for the first time.
+1. In Ubuntu's install wizard, call the user ``tester``
+1. In Ubuntu's install wizard, set the user's password to ``password``
+1. Update packages
+
+    ```
+    sudo apt update
+    sudo apt upgrade
+    ```
+
+1. Configure an SSH server (OpenSSH) for remote connection; check permissions on relevant files and directories:
+
+    ```
+    sudo apt install openssh-server
+    chmod go-w /home/tester
+    mkdir /home/tester/.ssh
+    chmod 700 /home/tester/.ssh
+    touch /home/tester/.ssh/known_hosts && chmod 644 /home/tester/.ssh/known_hosts
+    touch /home/tester/.ssh/config      && chmod 600 /home/tester/.ssh/config
+    chown -R tester:tester /home/tester/.ssh
+    ```
+
+    Note you can use ``stat``'s ``%a`` option to see a file's permissions as an octal number, e.g.
+
+    ```shell
+    stat -c "%a %n" <filename>
+    ```
 
 ## Client side configuration
 
@@ -32,12 +65,11 @@ E.g. how to configure VirtualBox, how to run docker container, how to configure 
 Ansible is a tool with which you can do so-called _provisioning_, i.e. automated system administration of remote
 machines. We'll use it to set up the GitHub Actions runner.
 
-Install Ansible:
+Install Ansible from Ubuntu's repositories:
 
-- default repositories for the OS if they're available (apt, ndf, apk, homebrew)
-- PPA (for Ubuntu)
-- PyPI: ``pip install ansible``
-- other options see [docs](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#selecting-an-ansible-version-to-install)
+```shell
+sudo apt install ansible
+```
 
 Make sure your Ansible version is 2.9.9 or later with:
 ```shell
@@ -46,27 +78,27 @@ ansible --version
 
 (Find more information [here](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu)).
 
-### Install SSH Client
+### Install SSH client
 
-e.g.
+To be able to connect to remote machines via SSH, we'll need an SSH client. We'll use OpenSSH. Install it from Ubuntu's
+repositories with:
 
-- sudo apt install openssh-client
-- install putty
-- homebrew install ssh
+```shell
+sudo apt install openssh-client
+```
 
 ### Generate SSH key pair
 
 Generate a key pair (files ``id_rsa`` and ``id_rsa.pub``) in directory
-[``something/something``](something/something) using RSA encryption:
+[``/ubuntu-virtualbox/``](/ubuntu-virtualbox/) using RSA encryption:
 
 **Note: ``id_rsa`` is the private half of the SSH key pair; don't share it with anybody else.**
 
-**e.g.**
-
 ```shell
-cd something/something/
+cd ubuntu-virtualbox/
 ssh-keygen -t rsa -f ./id_rsa -N ''
 ```
+
 Make sure that the permissions are set correctly:
 
 ```
@@ -81,23 +113,17 @@ stat -c "%a %n" <filename>
 stat -c "%a %n" `ls -1`
 ```
 
-
-### Copy the key pair to server
+### Copy the key pair to the server
 
 Copy the public half of the key pair (i.e. ``id_rsa.pub``) to the server.
-
-**e.g.**
 
 ```shell
 ssh-copy-id -i ./id_rsa.pub -p 2222 tester@127.0.0.1
 ```
 
-
 ### Test connection with server using ``ssh``
 
 Test if you can SSH into the server using the other half of the key pair (i.e. ``id_rsa``)
-
-**e.g.**
 
 ```shell
 ssh -i ./id_rsa -p 2222 tester@127.0.0.1
@@ -110,7 +136,6 @@ ssh-keygen -R "[127.0.0.1]:2222"
 ```
 
 and try again.
-
 
 Log out of the server with
 
@@ -135,6 +160,7 @@ all:
       ansible_connection: ssh
       ansible_host: 127.0.0.1
       ansible_port: 2222
+      ansible_python_interpreter: /usr/bin/python3
       ansible_ssh_private_key_file: ./id_rsa
       ansible_user: tester
 ```
@@ -205,29 +231,6 @@ you should see a self-hosted runner with status "Idle":
 
 ![Self hosted runner status is Idle](/images/github-self-hosted-runners-status-idle.png)
 
-Add the following simple workflow as ``.github/workflows/self_hosted_ci.yml`` in your repository:
-
-```yaml
-name: Self-hosted CI example
-
-on: [push, pull_request]
-
-jobs:
-  test:
-    name: test
-    runs-on: self-hosted
-    steps:
-      - name: Show directory listing
-        shell: bash -l {0}
-        run: |
-          ls -la
-```
-
-Now try making a change to one of the files in your repository to see if you can trigger running the simple workflow
-on your self-hosted server. If successful, the status will change to "Active" while the workflow is running. You can
-get an overview of previous GitHub actions by navigating to [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/actions](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/actions).
-
-
 ### Monitoring the runner service's logs
 
 The log of the runner can be viewed with
@@ -297,7 +300,6 @@ Try making a change to one of the files in your repository to see if you can tri
 on your self-hosted server. If successful, the status will change to "Active" while the workflow is running.
 You can see a record of past and current GitHub Actions by pointing your browser to
 [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/actions?query=workflow:"Self-hosted+CI+example"](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/actions?query=workflow%3A%22Self-hosted+CI+example%22).
-
 
 ### What's next
 

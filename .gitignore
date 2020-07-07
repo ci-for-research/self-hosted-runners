@@ -4,3 +4,6 @@
 # ignore ssh key files anywhere
 /**/*/*.pub
 /**/*/*id_rsa*
+
+# link checker
+/node_modules
