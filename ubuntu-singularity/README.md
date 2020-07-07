@@ -1,6 +1,6 @@
 # Setting up a CI server for a GitHub Action runner Singularity from Linux Ubuntu
 
-After following this guide, you'll have a simple GitHub action workflow on a GitHub repository of your choice. When new commits are made to your repository, the workflow delegates work to a server which runs in a [Singlularity](https://sylabs.io/singularity/) container. You can use this Singularity container to on a HPC cluster.
+After following this guide, you'll have a simple GitHub action workflow on a GitHub repository of your choice. When new commits are made to your repository, the workflow delegates work to a server which runs in a [Singlularity](https://sylabs.io/singularity/) container. You can use this Singularity container to on a HPC cluster as a regular user and you will not need root permissions.
 
 This guide distinguishes between the _client_ and the _server_; the client is your own machine; the server is whichever
 machine will run the tests. This document describes the case where the server is a Singularity container running on your own machine.
@@ -130,3 +130,36 @@ To start the Singularity instance again:
 singularity instance start github-actions-runner
 ```
 
+
+### Extras
+
+#### Get Singularity image details
+
+Use `singularity inspect` to display details of the image
+
+```shell
+> singularity inspect github-actions-runner-singularity.sif*
+WARNING: No SIF metadata partition, searching in container...
+org.label-schema.build-date: Monday_6_July_2020_16:55:58_CEST
+org.label-schema.schema-version: 1.0
+org.label-schema.usage.singularity.deffile.bootstrap: library
+org.label-schema.usage.singularity.deffile.from: ubuntu:19.10
+org.label-schema.usage.singularity.deffile.mirrorurl: http://us.archive.ubuntu.com/ubuntu/
+org.label-schema.usage.singularity.deffile.osversion: eoan
+org.label-schema.usage.singularity.deffile.stage: build
+org.label-schema.usage.singularity.version: 3.5.3
+```
+
+#### Accessing Singularity container
+
+If you need access to a shell on the running Singularity container:
+
+```shell
+singularity shell \
+    --writable-tmpfs \
+    github-actions-runner-singularity.sif
+```
+
+### What's next
+
+Find instructions for provisioning additional functionality [here](../README.md).
