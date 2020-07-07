@@ -6,6 +6,8 @@
     driver_version: "367.134"
     cuda_version_major: "8.0"
     cuda_version_minor: "61_375.26"
+    nvidia_url: http://us.download.nvidia.com/XFree86/Linux-x86_64
+    cuda_url: https://developer.nvidia.com/compute/cuda
   tasks:
 
   - name:  Install gcc-5 and g++-5
@@ -32,25 +34,27 @@
     args:
       creates: /usr/bin/g++
 
-  - name: Ensures {{download_path}} dir exists
-    file: path={{download_path}} state=directory
+  - name: Ensures {{ download_path }} dir exists
+    file: path={{ download_path }} state=directory
 
   - name: Download Nvidia driver
     get_url:
-      url: http://us.download.nvidia.com/XFree86/Linux-x86_64/{{driver_version}}/NVIDIA-Linux-x86_64-{{driver_version}}.run
-      dest: /tmp/installers/NVIDIA-Linux-x86_64-{{driver_version}}.run
+      url: "{{ nvidia_url }}/{{ driver_version }}/NVIDIA-Linux-x86_64-{{ driver_version }}.run"
+      dest: /tmp/installers/NVIDIA-Linux-x86_64-{{ driver_version }}.run
     tags:
       - cuda
 
   - name: Install Nvidia driver
-    command: sh ./NVIDIA-Linux-x86_64-367.134.run --accept-license  -s
+    command: >-
+      sh ./NVIDIA-Linux-x86_64-367.134.run
+      --accept-license  -s
     args:
       chdir: /tmp/installers/
 
   - name: Download CUDA
     get_url:
-      url: https://developer.nvidia.com/compute/cuda/{{cuda_version_major}}/Prod2/local_installers/cuda_{{cuda_version_major}}.{{cuda_version_minor}}_linux-run
-      dest: /tmp/installers/cuda_{{cuda_version_major}}.{{cuda_version_minor}}_linux-run
+      url: "{{ cuda_url }}/{{ cuda_version_major }}/Prod2/local_installers/cuda_{{ cuda_version_major }}.{{ cuda_version_minor }}_linux-run"
+      dest: /tmp/installers/cuda_{{ cuda_version_major }}.{{ cuda_version_minor }}_linux-run
     tags:
       - cuda
 
@@ -87,8 +91,8 @@
     blockinfile:
       dest: "/etc/profile.d/cuda.sh"
       block: |
-        export PATH=$PATH:/usr/local/cuda-{{cuda_version_major}}/bin
-        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-{{cuda_version_major}}/lib64
+        export PATH=$PATH:/usr/local/cuda-{{ cuda_version_major }}/bin
+        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-{{ cuda_version_major }}/lib64
       marker: '# {mark} CUDA environment variables'
       insertbefore: BOF
       create: yes
