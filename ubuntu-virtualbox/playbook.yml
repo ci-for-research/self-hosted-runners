@@ -76,43 +76,46 @@
 
     - name: Enable starting the runner service when the machine starts
       become: yes
-      shell: systemctl enable actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+      systemd:
+        name: actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+        enabled: yes
       tags:
         - enable
 
     - name: Starting the runner service
       become: yes
-      shell: systemctl start actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+      systemd:
+        name: actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+        state: started
       tags:
         - start
 
     - name: Stopping the runner service
       become: yes
-      shell: systemctl stop actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+      systemd:
+        name: actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+        state: stopped
       tags:
         - never
         - stop
 
     - name: Disable starting the runner service when the system boots
       become: yes
-      shell: systemctl disable actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+      systemd:
+        name: actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+        enabled: no
       tags:
         - never
         - disable
 
     - name: Restart the runner service
       become: yes
-      shell: systemctl restart actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+      systemd:
+        name: actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+        state: restarted
       tags:
         - never
         - restart
-
-    - name: Show the runner service status
-      become: yes
-      shell: systemctl status actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
-      tags:
-        - never
-        - status
 
     - name: Unregister the runner with GitHub
       become: yes
@@ -123,7 +126,7 @@
         - never
         - uninstall
 
-    - name: Unregister the runner with GitHub and uninstall the runner service
+    - name: Uninstall the runner service
       shell:
         chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
         cmd: ./config.sh remove --token {{ CURL_OUTPUT.stdout }}
