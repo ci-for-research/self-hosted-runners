@@ -1,11 +1,10 @@
 ---
 - name: GitHub Actions Runner
   hosts: hpchosts
-  # become: yes
+  become: yes
   vars:
     # you can pin the runner version otherwise the latest version will be used
     # - runner_version: "2.263.0"
-    - runner_user: runner
     - hide_sensitive_logs: yes
   vars_prompt:
     - name: "github_account"
@@ -21,7 +20,7 @@
 
     - name: Runner User
       user:
-        name: '{{ runner_user }}'
+        name: '{{ ansible_user }}'
         groups: sudo,adm
         state: present
 
@@ -44,7 +43,7 @@
         name: nickjj.docker
       vars:
         docker__users:
-          - '{{ runner_user }}'
+          - '{{ ansible_user }}'
 
     - name: Setup GitHub actions runner
       include_role:

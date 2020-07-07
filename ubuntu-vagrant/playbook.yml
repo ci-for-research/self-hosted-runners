@@ -2,17 +2,15 @@
 - name: GitHub Actions Runner
   hosts: vagrants
   become: yes
-  vars:
-    - runner_user: runner
   tasks:
     - name: User for runner service
       user:
-        name: '{{ runner_user }}'
+        name: '{{ ansible_user }}'
         state: present
-    - name: Passwordless sudo for {{ runner_user }} user 
+    - name: Passwordless sudo for {{ ansible_user }} user
       lineinfile:
-        path: /etc/sudoers.d/{{ runner_user }}
-        line: '{{ runner_user }} ALL=(ALL) NOPASSWD: ALL'
+        path: /etc/sudoers.d/{{ ansible_user }}
+        line: '{{ ansible_user }} ALL=(ALL) NOPASSWD: ALL'
         state: present
         mode: 0440
         create: yes
@@ -20,13 +18,13 @@
     - name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
       apt:
         update_cache: yes
-        cache_valid_time: 3600        
+        cache_valid_time: 3600
     - name: Setup Docker engine
       include_role:
         name: nickjj.docker
       vars:
         docker__users:
-          - '{{ runner_user }}'
+          - '{{ ansible_user }}'
     - name: Setup GitHub actions runner
       include_role:
         name: monolithprojects.github_actions_runner

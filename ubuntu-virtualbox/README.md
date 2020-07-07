@@ -12,7 +12,7 @@ physical machine. For guides on how to configure other features in addition to j
 
 1. create a virtual machine with an SSH server
 1. enable access to the server via SSH keys
-1. ``ansible-playbook playbook.yml``
+1. ``ansible-playbook --ask-become-pass playbook.yml``
 
 ## Prerequisites
 
@@ -203,14 +203,19 @@ from scratch, or make use of tasks that have been published by others (see https
 We're almost ready to use ``ansible-playbook`` to set up a GitHub Runner on your own server, but first we need to
 generate an OAuth token, as follows:
 
+1. Make a copy of the template file. We will store your token in the copied file momentarily.
+
+    ```
+    cp secret.yml.template secret.yml
+    ```
 1. Go to [https://github.com/settings/tokens](https://github.com/settings/tokens) and click the ``Generate new token`` button.
 1. Provide your GitHub password when prompted
-1. Fill in a description for the token, for example _GitHub runner for github.com/&lt;your organization&gt;/&lt;your repository&gt;_
+1. Fill in a description for the token, for example _Token for self-hosted GitHub runners_
 1. Enable the ``repo`` scope and all of its checkboxes, like so:
 
     ![Token permissions](/images/token_permissions.png)
 
-1. Click ``Generate`` at the bottom. Make sure to copy its value because we'll need it in the next step
+1. Click ``Generate`` at the bottom, and update the value of ``PERSONAL_ACCESS_TOKEN`` in ``secret.yml``. **Don't share the contents of ``secret.yml``.**
 
 Configuring your server such that it can run continuous integration requires 4 pieces of information, for which you will be prompted:
 
@@ -218,12 +223,13 @@ Configuring your server such that it can run continuous integration requires 4 p
 the root password. Fill in the password ``password`` to become ``root`` in the server.
 1. Fill in the GitHub organization (which might be simply your GitHub user name) and ...
 1. ...the repository name for which you want to run workflows on a self-hosted server
-1. Finally, you need to supply the Personal Access Token
+1. Specify how you want the runner to show up in the GitHub interface
+
 
 Now run this command to provision the GitHub Action runner on your server:
 
 ```shell
-ansible-playbook playbook.yml --ask-become-pass
+ansible-playbook --ask-become-pass playbook.yml
 ```
 
 If you now go to GitHub [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/settings/actions](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions),
@@ -248,30 +254,30 @@ journalctl -u actions.runner.*
 ### Start the runner each time the machine boots
 
 ```shell
-ansible-playbook playbook.yml --tags enable
+ansible-playbook --ask-become-pass playbook.yml --tags enable
 ```
 
 ### Start the runner
 
 ```shell
-ansible-playbook playbook.yml --tags start
+ansible-playbook --ask-become-pass playbook.yml --tags start
 ```
 
 ### Managing the runner service through the playbook
 
 ```shell
-ansible-playbook playbook.yml --tags start
-ansible-playbook playbook.yml --tags stop
-ansible-playbook playbook.yml --tags restart
-ansible-playbook playbook.yml --tags status
-ansible-playbook playbook.yml --tags enable
-ansible-playbook playbook.yml --tags disable
+ansible-playbook --ask-become-pass playbook.yml --tags start
+ansible-playbook --ask-become-pass playbook.yml --tags stop
+ansible-playbook --ask-become-pass playbook.yml --tags restart
+ansible-playbook --ask-become-pass playbook.yml --tags status
+ansible-playbook --ask-become-pass playbook.yml --tags enable
+ansible-playbook --ask-become-pass playbook.yml --tags disable
 ```
 
 Uninstalling the runner
 
 ```shell
-ansible-playbook playbook.yml --tags uninstall
+ansible-playbook --ask-become-pass playbook.yml --tags uninstall
 ```
 
 ### Verify that your newly configured runner is triggered
@@ -303,4 +309,4 @@ You can see a record of past and current GitHub Actions by pointing your browser
 
 ### What's next
 
-Find instructions for provisioning additional functionality [here](../README.md).
+Find instructions for provisioning additional functionality [here](/README.md).

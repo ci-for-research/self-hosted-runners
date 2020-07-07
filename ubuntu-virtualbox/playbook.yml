@@ -2,47 +2,137 @@
 - hosts: all
   vars:
     RUNNER_VERSION: 2.169.1
+  vars_files:
+    - secret.yml
   vars_prompt:
-    - name: "ORG"
-      prompt: "What is the GitHub organization for which you want to enable this self-hosted runner?"
+    - name: ORG
+      prompt: What is the GitHub organization associated with this self-hosted runner?
       private: no
-    - name: "REPO"
-      prompt: "What is the GitHub repository for which you want to enable this self-hosted runner?"
+    - name: REPO
+      prompt: What is the GitHub repository associated with this self-hosted runner?
       private: no
-    - name: "TOKEN"
-      prompt: "Please enter the GitHub Actions token for this workflow. Go to https://github.com/<org>/<repo>/settings/actions/add-new-runner and copy it from the 'Configure' section."
+    - name: RUNNER_NAME
+      prompt: What is the runner's name on GitHub?
       private: no
-  remote_user: tester
+      default: github-action-runner
+
   tasks:
+    - name: Verify that user exists on the server
+      become: yes
+      user:
+        name: "{{ ansible_user }}"
+        groups: sudo,adm
+        state: present
+
     - name: Showing the input variables
       debug:
-        msg: "Setting up a GitHub runner for repository: https://github.com/{{ ORG }}/{{ REPO }}"
+        msg: "Setting up a GitHub runner {{ RUNNER_NAME }} for repository: https://github.com/{{ ORG }}/{{ REPO }}"
+
+    - name: Requesting registration
+      uri:
+        url: https://api.github.com/repos/{{ ORG }}/{{ REPO }}/actions/runners/registration-token
+        method: POST
+        headers:
+          Authorization: "Token {{ PERSONAL_ACCESS_TOKEN }}"
+          Accept: "application/json"
+        status_code: 201
+      register: URI_OUTPUT
+      tags:
+        - uninstall
 
     - name: Creating a directory for the runner
       file:
-        path: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}
+        path: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
         state: directory
 
     - name: Downloading and extracting the runner
       unarchive:
         src: https://github.com/actions/runner/releases/download/v{{ RUNNER_VERSION }}/actions-runner-linux-x64-{{ RUNNER_VERSION }}.tar.gz
-        dest: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}
-        creates: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/config.sh
+        dest: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
+        creates: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}/config.sh
         remote_src: yes
 
     - name: Configuring the GitHub Action runner
-      command: chdir=/home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }} ./config.sh --unattended --url https://github.com/{{ ORG }}/{{ REPO }} --token {{ TOKEN }} --replace
+      args:
+        chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
+        creates: .runner
+      command:
+        argv:
+          - ./config.sh
+          - --url
+          - "https://github.com/{{ ORG }}/{{ REPO }}"
+          - --name
+          - "{{ RUNNER_NAME }}"
+          - --token
+          - "{{ URI_OUTPUT['json']['token'] }}"
+          - --unattended
+          - --replace
 
     - name: Install the GitHub Action runner as a service
-      become: true
-      shell:
-        chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}
-        cmd: ./svc.sh install
+      args:
+        chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
+        creates: /etc/systemd/system/actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+      become: yes
+      command: ./svc.sh install
 
     - name: Enable starting the runner service when the machine starts
-      become: true
-      shell: systemctl enable actions.runner.{{ ORG }}-{{ REPO }}.{{ ansible_hostname }}.service
+      become: yes
+      systemd:
+        name: actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+        enabled: yes
+      tags:
+        - enable
 
     - name: Starting the runner service
-      become: true
-      shell: systemctl start actions.runner.{{ ORG }}-{{ REPO }}.{{ ansible_hostname }}.service
+      become: yes
+      systemd:
+        name: actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+        state: started
+      tags:
+        - start
+
+    - name: Stopping the runner service
+      become: yes
+      systemd:
+        name: actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+        state: stopped
+      tags:
+        - never
+        - stop
+
+    - name: Disable starting the runner service when the system boots
+      become: yes
+      systemd:
+        name: actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+        enabled: no
+      tags:
+        - never
+        - disable
+
+    - name: Restart the runner service
+      become: yes
+      systemd:
+        name: actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+        state: restarted
+      tags:
+        - never
+        - restart
+
+    - name: Unregister the runner with GitHub
+      args:
+        chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
+        removes: /etc/systemd/system/actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
+      become: yes
+      command: ./svc.sh uninstall
+      tags:
+        - never
+        - uninstall
+
+    - name: Uninstall the runner service
+      args:
+        chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
+        removes: .runner
+      command: ./config.sh remove --token {{ URI_OUTPUT['json']['token'] }}
+      tags:
+        - never
+        - uninstall
