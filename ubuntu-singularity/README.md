@@ -87,6 +87,12 @@ export SINGULARITYENV_GITHUB_ORG="<organization or username>"
 export SINGULARITYENV_GITHUB_REPO="<name of the repository>"
 ```
 
+Create an envionment file which will be user by the runner to save some variables.
+
+```shell
+cp env.template env
+```
+
 #### Temporary mode
 
 Now we can run Singularity container with the following command.
@@ -94,6 +100,7 @@ Now we can run Singularity container with the following command.
 ```shell
 singularity run \
     --writable-tmpfs \
+    --bind ./env:/opt/actions-runner/.env \
     github-actions-runner-singularity.sif
 ```
 
@@ -106,7 +113,7 @@ If you stop the running container or interrupt it by pressing to ``CTRL+C``, the
 Alternatively, you can start it as an instance (service).
 
 ```shell
-singularity instance start github-actions-runner-singularity.sif github-actions-runner --writable-tmpfs
+singularity instance start github-actions-runner-singularity.sif github-actions-runner --writable-tmpfs --bind ./env:/opt/actions-runner/.env
 ```
 
 For more information about Singularity services see [this link](https://sylabs.io/guides/3.5/user-guide/running_services.html).
