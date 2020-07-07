@@ -172,7 +172,7 @@ ci-server | SUCCESS => {
 For more complicated tasks than ``ping``, it's often inconvenient having to put everything on the command line. Instead,
 a better option is to create a so-called _playbook_ containing all the steps that you want to include in your
 provisioning. The playbook is a YAML file that defines a series of ``tasks``. When creating new tasks, one can start
-from scratch, or make use of tasks that have been published by others (see https://galaxy.ansible.com/).
+from scratch, or make use of tasks that have been published by others (see [https://galaxy.ansible.com/](https://galaxy.ansible.com/)).
 
 We're almost ready to use ``ansible-playbook`` to set up a GitHub Runner on your own server, but first we need to
 generate an OAuth token, as follows:
