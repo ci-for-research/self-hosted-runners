@@ -73,6 +73,8 @@
         chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
       become: yes
       command: ./svc.sh install
+      creates:
+        - /etc/systemd/system/actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
 
     - name: Enable starting the runner service when the machine starts
       become: yes
