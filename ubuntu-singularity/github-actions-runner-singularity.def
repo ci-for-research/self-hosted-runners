@@ -26,19 +26,15 @@ Stage: build
     jq \
     libcurl4-openssl-dev
 
-
     echo ${RUNNER_VERSION}
     mkdir /opt/actions-runner && cd /opt/actions-runner
     curl -L "https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz" > actions_runner.tar.gz && \
     tar -zxf actions_runner.tar.gz && \
     rm -f actions_runner.tar.gz && \
     ./bin/installdependencies.sh
-    # chmod -R 755 /opt/actions-runner
 
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
-    echo "export AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache" >> $SINGULARITY_ENVIRONMENT
-
 
 %runscript
     echo "Container was created $NOW"
