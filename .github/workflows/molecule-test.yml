@@ -2,7 +2,7 @@
 # See : https://molecule.readthedocs.io/en/latest/ci.html
 
 name: Molecule Test
-on: [push, commit]
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
