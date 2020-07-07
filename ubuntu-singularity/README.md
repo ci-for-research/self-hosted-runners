@@ -101,3 +101,32 @@ Singularity containers by-default starts in ``read-only`` mode so you cannot mak
 
 If you stop the running container or interrupt it by pressing to ``CTRL+C``, the Github actions runner will stop and it will be unregistered from your Github repository.
 
+#### Instance mode
+
+Alternatively, you can start it as an instance (service).
+
+```shell
+singularity instance start github-actions-runner-singularity.sif github-actions-runner --writable-tmpfs
+```
+
+For more information about Singularity services see [this link](https://sylabs.io/guides/3.5/user-guide/running_services.html).
+
+
+To list the running instances:
+
+```shell
+singularity instance list
+```
+
+To stop the running Singularity instance:
+
+```shell
+singularity instance stop github-actions-runner
+```
+
+To start the Singularity instance again:
+
+```shell
+singularity instance start github-actions-runner
+```
+
