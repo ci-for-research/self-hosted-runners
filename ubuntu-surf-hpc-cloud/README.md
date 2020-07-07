@@ -123,8 +123,7 @@ First unregister runner with
 ansible-playbook --ask-become-pass playbook.yml --tags uninstall
 ```
 
-## Examples:
+## Examples
 
 - [Simple Python example](https://github.com/ci-for-science/example-python-1)
-
 - [Simple GPU example](https://github.com/ci-for-science/example-gpu-houston)

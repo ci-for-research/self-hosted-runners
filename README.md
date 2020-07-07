@@ -1,3 +1,5 @@
+# Self-hosted runners
+
 | Five recommendations for fair software from [fair-software.nl](https://fair-software.nl) | Badges |
 | --- | --- |
 | 1. Code repository | [![GitHub badge](https://img.shields.io/badge/github-repo-000.svg?logo=github&labelColor=gray&color=blue)](https://github.com/ci-for-science/self-hosted-runners/) |
@@ -8,7 +10,7 @@
 | **Other best practices** | |
 | Markdown Link Checker| [![Check Markdown links](https://github.com/ci-for-research/self-hosted-runners/workflows/Check%20Markdown%20links/badge.svg)](https://github.com/ci-for-research/self-hosted-runners/actions?query=workflow%3A%22Check+Markdown+links%22) |
 
-# How to set up GitHub Action runners on self-hosted infrastructure
+## How to set up GitHub Action runners on self-hosted infrastructure
 
 This repository explains how to set up a server for running continuous integration tests on other hardware than what
 GitHub provides. This can be useful when the code you want to test has special requirements, for example if
@@ -42,14 +44,17 @@ Linux Ubuntu.
 | :hourglass_flowing_sand: WIP | Windows      | local machine via VirtualBox       | -                                         |
 | :heavy_check_mark: Completed | Windows      | remote machine at [SURF HPC Cloud] | [link](/windows-surf-hpc-cloud/README.md) |
 
-# Security
+## Security
 
-**A warning from GitHub for self-hosted runners in combination with public repositories is shown [here](https://help.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners#self-hosted-runner-security-with-public-repositories). Please take this seriously. It basically means that the combination of a self-hosted runner and a public GitHub repository is unsafe. However, there was a [recent discussion](https://github.com/actions/runner/issues/494) indicating that GitHub may add features to make this combination safe in the near future.**
+**A warning from GitHub for self-hosted runners in combination with public repositories is shown
+[here](https://help.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners#self-hosted-runner-security-with-public-repositories).
+Please take this seriously. It basically means that the combination of a self-hosted runner and a public GitHub
+repository is unsafe. However, there was a [recent discussion](https://github.com/actions/runner/issues/494) indicating
+that GitHub may add features to make this combination safe in the near future.**
 
 [SURF HPC Cloud]: https://userinfo.surfsara.nl/systems/hpc-cloud
 
-
-# Documentation for developers
+## Documentation for developers
 
 
 If you want to check if the links in your markdown work, install markdown-link-check

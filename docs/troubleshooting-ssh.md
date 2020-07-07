@@ -68,7 +68,7 @@ for ``root`` or for a user.
 1. strict host key checking ``strictHostKeyChecking``
 1. removing a given host's key goes like this
 
-    ```
+    ```shell
     ssh-keygen -R [localhost]:10022
     ```
 

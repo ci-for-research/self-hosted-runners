@@ -56,7 +56,7 @@ Clone the repo again, this time within the disk space managed by WSL. Because of
 
 To have access to the machine from WSL, the private key needs to be copied from Windows to the WSL repo. To do this, copy the `/window-vagrant/.vagrant` into WSL. Correct the permissions with chmod
 
-```
+```shell
 chmod go-rwx .vagrant/machines/default/virtualbox/private_key
 ```
 
