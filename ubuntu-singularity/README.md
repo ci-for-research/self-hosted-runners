@@ -130,6 +130,34 @@ To start the Singularity instance again:
 singularity instance start github-actions-runner
 ```
 
+## Using on a HPC Cluster
+
+In oder to use the Singularity image on a HPC cluster, we first need to create a jobscript. The job script will be handled by the scheduler and eventually it will set up the runner when it is executed.
+
+Example:
+```
+#!/bin/bash
+#SBATCH -t 1:00:00
+#SBATCH -n 480
+
+cd $HOME/work
+
+export SINGULARITYENV_PERSONAL_ACCESS_TOKEN="<Github OAuth token>"
+export SINGULARITYENV_RUNNER_NAME="<runner name to appear on Github>"
+export SINGULARITYENV_RUNNER_WORKDIR="/tmp/actions-runner-repo"
+export SINGULARITYENV_GITHUB_ORG="<organization or username>"
+export SINGULARITYENV_GITHUB_REPO="<name of the repository>"
+
+srun singularity run \
+    --writable-tmpfs \
+    github-actions-runner-singularity.sif
+```
+
+To submit the job script using ``sbatch``:
+
+```shell
+sbatch jobscript
+```
 
 ### Extras
 
