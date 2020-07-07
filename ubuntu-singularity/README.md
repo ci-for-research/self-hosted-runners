@@ -87,3 +87,17 @@ export SINGULARITYENV_GITHUB_ORG="<organization or username>"
 export SINGULARITYENV_GITHUB_REPO="<name of the repository>"
 ```
 
+#### Temporary mode
+
+Now we can run Singularity container with the following command.
+
+```shell
+singularity run \
+    --writable-tmpfs \
+    github-actions-runner-singularity.sif
+```
+
+Singularity containers by-default starts in ``read-only`` mode so you cannot make changes. While setting up the runner, some scripts needs to create a few files so we need a write access. This is achieved by adding ``--writable-tmpfs`` argument.
+
+If you stop the running container or interrupt it by pressing to ``CTRL+C``, the Github actions runner will stop and it will be unregistered from your Github repository.
+
