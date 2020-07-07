@@ -8,5 +8,7 @@
 # link checker
 /node_modules
 
-# anything labeled secret
+# anything labeled secret...
 /**/*/*secret*
+#...except the template file
+!/ubuntu-virtualbox/secret.yml.template

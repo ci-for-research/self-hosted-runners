@@ -203,6 +203,11 @@ from scratch, or make use of tasks that have been published by others (see https
 We're almost ready to use ``ansible-playbook`` to set up a GitHub Runner on your own server, but first we need to
 generate an OAuth token, as follows:
 
+1. Copy ``secret.yml.template`` to ``secret.yml``
+
+    ```
+    cp secret.yml.template secret.yml
+    ```
 1. Go to [https://github.com/settings/tokens](https://github.com/settings/tokens) and click the ``Generate new token`` button.
 1. Provide your GitHub password when prompted
 1. Fill in a description for the token, for example _Token for self-hosted GitHub runners_
