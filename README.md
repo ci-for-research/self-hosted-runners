@@ -68,3 +68,4 @@ then run
 ```shell
 find . -name '*.md' -not -path './node_modules/*' -exec markdown-link-check '{}' --config .mlc-config.json ';'
 ```
+
