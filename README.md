@@ -13,7 +13,7 @@
 This repository explains how to set up a server for running continuous integration tests on other hardware than what
 GitHub provides. This can be useful when the code you want to test has special requirements, for example if
 
-- it needs a GPU to run
+- it needs a GPU to run ([CUDA installation with ansible instructions](/docs/install-cuda/README.md))
 - it needs multiple nodes
 - testing requires data that needs to stay on-premises for privacy reasons or legal reasons
 - testing requires data that is too big to move
