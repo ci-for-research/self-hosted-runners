@@ -90,12 +90,12 @@ sudo apt install openssh-client
 ### Generate SSH key pair
 
 Generate a key pair (files ``id_rsa`` and ``id_rsa.pub``) in directory
-[``ubuntu-virtualbox/runner``](/ubuntu-virtualbox/runner) using RSA encryption:
+[``/ubuntu-virtualbox/``](/ubuntu-virtualbox/) using RSA encryption:
 
 **Note: ``id_rsa`` is the private half of the SSH key pair; don't share it with anybody else.**
 
 ```shell
-cd ubuntu-virtualbox/runner/
+cd ubuntu-virtualbox/
 ssh-keygen -t rsa -f ./id_rsa -N ''
 ```
 
@@ -129,7 +129,7 @@ Test if you can SSH into the server using the other half of the key pair (i.e. `
 ssh -i ./id_rsa -p 2222 tester@127.0.0.1
 ```
 
-If you get a ``Host key verification failed`` error, clear the existing key with 
+If you get a ``Host key verification failed`` error, clear the existing key with
 
 ```shell
 ssh-keygen -R "[127.0.0.1]:2222"

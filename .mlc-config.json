@@ -1,7 +1,23 @@
 {
+    "_comment": "Markdown Link Checker configuration, see https://github.com/gaurav-nelson/github-action-markdown-link-check and https://github.com/tcort/markdown-link-check",
     "ignorePatterns": [
         {
             "pattern": "^http://localhost"
+        },
+        {
+            "pattern": "^https://github.com/sverhoeven/example-gpu-houston"
+        },
+        {
+            "pattern": "something/something"
+        },
+        {
+            "pattern": "^https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E"
+        }
+    ],
+    "replacementPatterns": [
+        {
+            "pattern": "^/",
+            "replacement": "https://github.com/ci-for-research/self-hosted-runners/blob/master/"
         }
     ]
 }

@@ -29,7 +29,7 @@ Linux Ubuntu.
 
 | Status | Client OS | Server hardware | Runner | Additional functionality |
 | --- | --- | --- | --- | --- |
-| :hourglass_flowing_sand: WIP | Linux Ubuntu | local machine via Docker           | -         |  |
+| :heavy_check_mark: Completed | Linux Ubuntu | local machine via Docker           | -         |  |
 | :heavy_check_mark: Completed | Linux Ubuntu | local machine via Vagrant          | [link](/ubuntu-vagrant/README.md)         |  |
 | :heavy_check_mark: Completed | Linux Ubuntu | local machine via VirtualBox       | [link](/ubuntu-virtualbox/README.md)      |  |
 | :heavy_check_mark: Completed | Linux Ubuntu | remote machine at [SURF HPC Cloud] | [link](/ubuntu-surf-hpc-cloud/README.md)  | [CUDA installation](/ubuntu-surf-hpc-cloud/with-cuda/README.md) |
@@ -47,3 +47,19 @@ Linux Ubuntu.
 **A warning from GitHub for self-hosted runners in combination with public repositories is shown [here](https://help.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners#self-hosted-runner-security-with-public-repositories). Please take this seriously. It basically means that the combination of a self-hosted runner and a public GitHub repository is unsafe. However, there was a [recent discussion](https://github.com/actions/runner/issues/494) indicating that GitHub may add features to make this combination safe in the near future.**
 
 [SURF HPC Cloud]: https://userinfo.surfsara.nl/systems/hpc-cloud
+
+
+# Documentation for developers
+
+
+If you want to check if the links in your markdown work, install markdown-link-check
+
+```shell
+npm install
+```
+
+then run
+
+```shell
+find . -name '*.md' -not -path './node_modules/*' -exec markdown-link-check '{}' --config .mlc-config.json ';'
+```
