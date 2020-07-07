@@ -106,11 +106,11 @@ The command below will start the Docker container in daemon mode. The Docker con
 
 ```shell
 docker run -d --restart always --name github-actions-runner \
-    -e PERSONAL_ACCESS_TOKEN=<Github OAuth token> \
-    -e RUNNER_NAME=<runner name to appear on Github> \
-    -e RUNNER_WORKDIR=/tmp/actions-runner-repo \
-    -e GITHUB_ORG=<organization or username> \
-    -e GITHUB_REPO=<name of the repository> \
+    --env PERSONAL_ACCESS_TOKEN=<Github OAuth token> \
+    --env RUNNER_NAME=<runner name to appear on Github> \
+    --env RUNNER_WORKDIR=/tmp/actions-runner-repo \
+    --env GITHUB_ORG=<organization or username> \
+    --env GITHUB_REPO=<name of the repository> \
     github-actions-runner:latest
 ```
 

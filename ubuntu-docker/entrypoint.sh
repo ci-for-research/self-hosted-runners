@@ -10,7 +10,8 @@ ACTIONS_URL="https://api.github.com/repos/${GITHUB_ORG}/${GITHUB_REPO}/actions/r
 echo "Requesting registration URL at '${ACTIONS_URL}'"
 
 PAYLOAD=$(curl -sX POST -H "Authorization: token ${PERSONAL_ACCESS_TOKEN}" "${ACTIONS_URL}")
-export RUNNER_TOKEN=$(echo "${PAYLOAD}" | jq .token --raw-output)
+export RUNNER_TOKEN
+RUNNER_TOKEN=$(echo "${PAYLOAD}" | jq .token --raw-output)
 
 printf "\n\033[0;44m---> Configuring the runner.\033[0m\n"
 ./config.sh \
