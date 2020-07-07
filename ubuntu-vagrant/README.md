@@ -44,7 +44,7 @@ This will output something like
 ```shell
 Host default
   HostName 127.0.0.1
-  User vagrant
+  User tester
   Port 2222
   UserKnownHostsFile /dev/null
   StrictHostKeyChecking no
@@ -113,7 +113,7 @@ ansible-galaxy install -r requirements.yml
 To provision VM use
 
 ```shell
-ansible-playbook playbook.yml
+ansible-playbook --ask-become-pass playbook.yml
 ```
 
 The log of the runner can be viewed with
@@ -127,7 +127,7 @@ vagrant ssh -- journalctl -u actions.runner.*
 First unregister runner with
 
 ```shell
-ansible-playbook playbook.yml --tags uninstall
+ansible-playbook --ask-become-pass playbook.yml --tags uninstall
 ```
 
 To get rid of VM use

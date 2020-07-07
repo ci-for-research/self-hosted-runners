@@ -3,13 +3,13 @@
   hosts: vagrants
   become: yes
   vars:
-    - runner_user: runner
+    - runner_user: tester
   tasks:
     - name: User for runner service
       user:
         name: '{{ runner_user }}'
         state: present
-    - name: Passwordless sudo for {{ runner_user }} user 
+    - name: Passwordless sudo for {{ runner_user }} user
       lineinfile:
         path: /etc/sudoers.d/{{ runner_user }}
         line: '{{ runner_user }} ALL=(ALL) NOPASSWD: ALL'
@@ -20,7 +20,7 @@
     - name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
       apt:
         update_cache: yes
-        cache_valid_time: 3600        
+        cache_valid_time: 3600
     - name: Setup Docker engine
       include_role:
         name: nickjj.docker
