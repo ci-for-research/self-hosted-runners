@@ -203,7 +203,7 @@ from scratch, or make use of tasks that have been published by others (see https
 We're almost ready to use ``ansible-playbook`` to set up a GitHub Runner on your own server, but first we need to
 generate an OAuth token, as follows:
 
-1. Copy ``secret.yml.template`` to ``secret.yml``
+1. Make a copy of the template file. We will store your token in the copied file momentarily.
 
     ```
     cp secret.yml.template secret.yml
@@ -215,7 +215,7 @@ generate an OAuth token, as follows:
 
     ![Token permissions](/images/token_permissions.png)
 
-1. Click ``Generate`` at the bottom, and update the value of ``PERSONAL_ACCESS_TOKEN`` in ``secret.yml``.
+1. Click ``Generate`` at the bottom, and update the value of ``PERSONAL_ACCESS_TOKEN`` in ``secret.yml``. **Don't share the contents of ``secret.yml``.**
 
 Configuring your server such that it can run continuous integration requires 4 pieces of information, for which you will be prompted:
 
