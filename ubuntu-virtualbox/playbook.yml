@@ -71,10 +71,9 @@
     - name: Install the GitHub Action runner as a service
       args:
         chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
+        creates: /etc/systemd/system/actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
       become: yes
       command: ./svc.sh install
-      creates:
-        - /etc/systemd/system/actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
 
     - name: Enable starting the runner service when the machine starts
       become: yes
