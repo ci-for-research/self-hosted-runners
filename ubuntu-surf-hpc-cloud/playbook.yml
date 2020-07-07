@@ -43,7 +43,7 @@
         name: nickjj.docker
       vars:
         docker__users:
-          - '{{ runner_user }}'
+          - '{{ ansible_user }}'
 
     - name: Setup GitHub actions runner
       include_role:
