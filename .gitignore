@@ -12,3 +12,19 @@
 /**/*/*secret*
 #...except the template file
 !/ubuntu-virtualbox/secret.yml.template
+
+# vagrant
+/**/*/*.vagrant
+
+# tar files
+/**/*/actions-runner-linux-*tar.gz
+
+# poetry
+/**/*/poetry.lock
+
+# environment files
+/**/*/.env
+
+# other
+/**/*/pyproject.toml
+
