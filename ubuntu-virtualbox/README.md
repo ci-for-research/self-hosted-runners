@@ -35,7 +35,7 @@ suitable --choose whichever you're comfortable with.
 1. In Ubuntu's install wizard, set the user's password to ``password``
 1. Update packages
 
-    ```shell
+    ```
     sudo apt update
     sudo apt upgrade
     ```
