@@ -45,3 +45,15 @@ Singularity> hostname
 
 archlinux
 ```
+
+## Server side configuration
+
+### Build image
+
+Now we are ready to build our Singularity image. The following command will use [Definition file](github-actions-runner-singularity.def) to build the image. It will create a system install necessary system packages and dependencies for the runner. In order to create a Singularity image, you will need root permission (or sudo) on your system.
+
+```shell
+sudo singularity build github-actions-runner-singularity.sif github-actions-runner-singularity.def
+```
+
+This command will generate ``github-actions-runner-singularity.sif`` image.
