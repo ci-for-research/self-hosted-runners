@@ -12,7 +12,7 @@ physical machine. For guides on how to configure other features in addition to j
 
 1. create a virtual machine with an SSH server
 1. enable access to the server via SSH keys
-1. ``ansible-playbook playbook.yml``
+1. ``ansible-playbook --ask-become-pass playbook.yml``
 
 ## Prerequisites
 
@@ -223,7 +223,7 @@ the root password. Fill in the password ``password`` to become ``root`` in the s
 Now run this command to provision the GitHub Action runner on your server:
 
 ```shell
-ansible-playbook playbook.yml --ask-become-pass
+ansible-playbook --ask-become-pass playbook.yml
 ```
 
 If you now go to GitHub [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/settings/actions](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions),
@@ -248,30 +248,30 @@ journalctl -u actions.runner.*
 ### Start the runner each time the machine boots
 
 ```shell
-ansible-playbook playbook.yml --tags enable
+ansible-playbook --ask-become-pass playbook.yml --tags enable
 ```
 
 ### Start the runner
 
 ```shell
-ansible-playbook playbook.yml --tags start
+ansible-playbook --ask-become-pass playbook.yml --tags start
 ```
 
 ### Managing the runner service through the playbook
 
 ```shell
-ansible-playbook playbook.yml --tags start
-ansible-playbook playbook.yml --tags stop
-ansible-playbook playbook.yml --tags restart
-ansible-playbook playbook.yml --tags status
-ansible-playbook playbook.yml --tags enable
-ansible-playbook playbook.yml --tags disable
+ansible-playbook --ask-become-pass playbook.yml --tags start
+ansible-playbook --ask-become-pass playbook.yml --tags stop
+ansible-playbook --ask-become-pass playbook.yml --tags restart
+ansible-playbook --ask-become-pass playbook.yml --tags status
+ansible-playbook --ask-become-pass playbook.yml --tags enable
+ansible-playbook --ask-become-pass playbook.yml --tags disable
 ```
 
 Uninstalling the runner
 
 ```shell
-ansible-playbook playbook.yml --tags uninstall
+ansible-playbook --ask-become-pass playbook.yml --tags uninstall
 ```
 
 ### Verify that your newly configured runner is triggered
