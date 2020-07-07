@@ -29,7 +29,7 @@ I set the `PAT` environment variable to my GitHub personal access token.
 Provision the runner by running the playbook with
 
 ```shell
-ansible-playbook playbook.yml
+ansible-playbook --ask-become-pass playbook.yml
 ```
 
 Fill in the account and repo name.
