@@ -5,14 +5,14 @@
   vars_files:
     - secret.yml
   vars_prompt:
-    - name: "ORG"
-      prompt: "What is the GitHub organization associated with this self-hosted runner?"
+    - name: ORG
+      prompt: What is the GitHub organization associated with this self-hosted runner?
       private: no
-    - name: "REPO"
-      prompt: "What is the GitHub repository associated with this self-hosted runner?"
+    - name: REPO
+      prompt: What is the GitHub repository associated with this self-hosted runner?
       private: no
-    - name: "RUNNER_NAME"
-      prompt: "What is the runner's name on GitHub?"
+    - name: RUNNER_NAME
+      prompt: What is the runner's name on GitHub?
       private: no
       default: github-action-runner
 
@@ -26,7 +26,7 @@
 
     - name: Showing the input variables
       debug:
-        msg: "Setting up a GitHub runner '{{ RUNNER_NAME }}' for repository: https://github.com/{{ ORG }}/{{ REPO }}"
+        msg: "Setting up a GitHub runner {{ RUNNER_NAME }} for repository: https://github.com/{{ ORG }}/{{ REPO }}"
 
     - name: Only run "apt update-cache" if the last one is more than 3600 seconds old
       become: yes
@@ -42,7 +42,7 @@
           - curl
         state: present
 
-    - name: "Requesting registration"
+    - name: Requesting registration
       shell:
         cmd: "curl -sX POST -H \"Authorization: token {{ PERSONAL_ACCESS_TOKEN }}\" \"https://api.github.com/repos/{{ ORG }}/{{ REPO }}/actions/runners/registration-token\" | jq .token --raw-output"
       register: CURL_OUTPUT
