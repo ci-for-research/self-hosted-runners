@@ -57,7 +57,7 @@ Host default
 So to login with ssh client and to get hostname use
 
 ```shell
-ssh -i .vagrant/machines/default/virtualbox/private_key -p 2222 vagrant@127.0.0.1 hostname
+ssh -i .vagrant/machines/default/virtualbox/private_key -p 2222 tester@127.0.0.1 hostname
 ```
 
 It should output `vagrant`, which is the hostname of the VM.
