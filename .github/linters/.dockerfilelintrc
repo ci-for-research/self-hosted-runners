@@ -1,0 +1,5 @@
+---
+# https://github.com/replicatedhq/dockerfilelint
+
+rules:
+  sudo_usage: off
