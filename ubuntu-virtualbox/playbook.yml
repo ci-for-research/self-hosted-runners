@@ -56,7 +56,17 @@
       args:
         chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
         creates: .runner
-      command: ./config.sh --url https://github.com/{{ ORG }}/{{ REPO }} --name {{ RUNNER_NAME }} --token {{ URI_OUTPUT['json']['token'] }} --unattended --replace
+      command:
+        argv:
+          - ./config.sh
+          - --url
+          - "https://github.com/{{ ORG }}/{{ REPO }}"
+          - --name
+          - "{{ RUNNER_NAME }}"
+          - --token
+          - "{{ URI_OUTPUT['json']['token'] }}"
+          - --unattended
+          - --replace
 
     - name: Install the GitHub Action runner as a service
       args:
