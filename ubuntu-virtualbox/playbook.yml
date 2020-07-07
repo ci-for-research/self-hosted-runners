@@ -66,6 +66,7 @@
     - name: Configuring the GitHub Action runner
       args:
         chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
+        creates: .runner
       command: ./config.sh --url https://github.com/{{ ORG }}/{{ REPO }} --name {{ RUNNER_NAME }} --token {{ CURL_OUTPUT.stdout }} --unattended --replace
 
     - name: Install the GitHub Action runner as a service
@@ -121,6 +122,7 @@
     - name: Unregister the runner with GitHub
       args:
         chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
+        removes: /etc/systemd/system/actions.runner.{{ ORG }}-{{ REPO }}.{{ RUNNER_NAME }}.service
       become: yes
       command: ./svc.sh uninstall
       tags:
@@ -130,6 +132,7 @@
     - name: Uninstall the runner service
       args:
         chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
+        removes: .runner
       command: ./config.sh remove --token {{ CURL_OUTPUT.stdout }}
       tags:
         - never
