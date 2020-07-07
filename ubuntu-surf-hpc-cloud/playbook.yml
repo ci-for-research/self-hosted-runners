@@ -1,11 +1,11 @@
 ---
 - name: GitHub Actions Runner
   hosts: hpchosts
-  # become: yes
+  become: yes
   vars:
     # you can pin the runner version otherwise the latest version will be used
     # - runner_version: "2.263.0"
-    - runner_user: runner
+    - runner_user: tester
     - hide_sensitive_logs: yes
   vars_prompt:
     - name: "github_account"
