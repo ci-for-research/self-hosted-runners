@@ -29,7 +29,7 @@ rules:
   invalid_line: on
 
   # Use of sudo is not allowed in a Dockerfile
-  sudo_usage: on
+  sudo_usage: off
 
   # Consider using a `--no-install-recommends` when `apt-get`
   # installing packages
