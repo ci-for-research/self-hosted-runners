@@ -7,3 +7,6 @@
 
 # link checker
 /node_modules
+
+# anything labeled secret
+/**/*/*secret*

@@ -2,6 +2,8 @@
 - hosts: all
   vars:
     RUNNER_VERSION: 2.169.1
+  vars_files:
+    - secret.yml
   vars_prompt:
     - name: "ORG"
       prompt: "What is the GitHub organization associated with this self-hosted runner?"
@@ -10,12 +12,9 @@
       prompt: "What is the GitHub repository associated with this self-hosted runner?"
       private: no
     - name: "RUNNER_NAME"
-      prompt: "Under what name should the runner show up on GitHub?"
+      prompt: "What is the runner's name on GitHub?"
       private: no
-      default: GitHubActionRunner
-    - name: "PERSONAL_ACCESS_TOKEN"
-      prompt: "Please enter a personal access token for this workflow. Go to https://github.com/settings/tokens to get it"
-      private: no
+      default: github-action-runner
 
   tasks:
     - name: Verify that user exists on the server

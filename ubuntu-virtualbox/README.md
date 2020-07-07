@@ -210,16 +210,16 @@ generate an OAuth token, as follows:
 
     ![Token permissions](/images/token_permissions.png)
 
-1. Click ``Generate`` at the bottom. Make sure to copy its value because we'll need it in the next step
+1. Click ``Generate`` at the bottom, and update the value of ``PERSONAL_ACCESS_TOKEN`` in ``secret.yml``.
 
-Configuring your server such that it can run continuous integration requires 5 pieces of information, for which you will be prompted:
+Configuring your server such that it can run continuous integration requires 4 pieces of information, for which you will be prompted:
 
 1. Because our playbook requires elevated permissions, the command uses the ``--ask-become-pass`` option to prompt for
 the root password. Fill in the password ``password`` to become ``root`` in the server.
 1. Fill in the GitHub organization (which might be simply your GitHub user name) and ...
 1. ...the repository name for which you want to run workflows on a self-hosted server
 1. Specify how you want the runner to show up in the GitHub interface
-1. Finally, you need to supply the Personal Access Token
+
 
 Now run this command to provision the GitHub Action runner on your server:
 
