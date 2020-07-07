@@ -73,3 +73,17 @@ generate an OAuth token, as follows:
     ![Token permissions](/images/token_permissions.png)
 
 5. Click ``Generate`` at the bottom. Make sure to copy its value because we'll need it in the next step
+
+### Run the server
+
+#### Preperation
+Before using the Singularity image we need to set some environment variables. The Singularity container will use these environment variables to set up the runner.
+
+```shell
+export SINGULARITYENV_PERSONAL_ACCESS_TOKEN="<Github OAuth token>"
+export SINGULARITYENV_RUNNER_NAME="<runner name to appear on Github>"
+export SINGULARITYENV_RUNNER_WORKDIR="/tmp/actions-runner-repo"
+export SINGULARITYENV_GITHUB_ORG="<organization or username>"
+export SINGULARITYENV_GITHUB_REPO="<name of the repository>"
+```
+
