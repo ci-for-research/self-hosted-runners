@@ -1,0 +1,29 @@
+---
+# See : https://molecule.readthedocs.io/en/latest/ci.html
+
+name: Molecule Test
+on: [push, commit]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.6, 3.7]
+
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          path: molecule_demo
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          sudo apt install docker
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements.txt
+      - name: Test with molecule
+        run: |
+          molecule test
