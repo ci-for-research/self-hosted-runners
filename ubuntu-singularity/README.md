@@ -93,21 +93,6 @@ Create an envionment file which will be user by the runner to save some variable
 cp env.template env
 ```
 
-#### Temporary mode
-
-Now we can run Singularity container with the following command.
-
-```shell
-singularity run \
-    --writable-tmpfs \
-    --bind ./env:/opt/actions-runner/.env \
-    github-actions-runner-singularity.sif
-```
-
-Singularity containers by-default starts in ``read-only`` mode so you cannot make changes. While setting up the runner, some scripts needs to create a few files so we need a write access. This is achieved by adding ``--writable-tmpfs`` argument.
-
-If you stop the running container or interrupt it by pressing to ``CTRL+C``, the Github actions runner will stop and it will be unregistered from your Github repository.
-
 #### Instance mode
 
 Alternatively, you can start it as an instance (service).
@@ -136,6 +121,21 @@ To start the Singularity instance again:
 ```shell
 singularity instance start github-actions-runner
 ```
+
+#### Temporary mode
+
+Now we can run Singularity container with the following command.
+
+```shell
+singularity run \
+    --writable-tmpfs \
+    --bind ./env:/opt/actions-runner/.env \
+    github-actions-runner-singularity.sif
+```
+
+Singularity containers by-default starts in ``read-only`` mode so you cannot make changes. While setting up the runner, some scripts needs to create a few files so we need a write access. This is achieved by adding ``--writable-tmpfs`` argument.
+
+If you stop the running container or interrupt it by pressing to ``CTRL+C``, the Github actions runner will stop and it will be unregistered from your Github repository.
 
 ## Using on a HPC Cluster
 
