@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export RUNNER_USERNAME=$(id -un)
+export RUNNER_USERGROUP=$(id -un)
+
 export AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
 
 cd /opt/actions-runner
