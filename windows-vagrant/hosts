@@ -2,7 +2,7 @@ vagrants:
   hosts:
     vagrant:
   vars:
-    ansible_user: tester
+    ansible_user: vagrant
     ansible_connection: ssh
     ansible_host: 127.0.0.1
     ansible_port: 2222

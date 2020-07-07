@@ -3,7 +3,7 @@
   hosts: all
   become: yes
   vars:
-    - runner_user: tester
+    - runner_user: vagrant
   tasks:
     - name: Runner User
       user:
