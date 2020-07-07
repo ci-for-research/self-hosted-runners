@@ -50,7 +50,7 @@ Host default
   UserKnownHostsFile /dev/null
   StrictHostKeyChecking no
   PasswordAuthentication no
-  IdentityFile /home/verhoes/git/NLESC-JCER/linux_actions_runner/ubuntu-vagrant/.vagrant/machines/default/virtualbox/private_key
+  IdentityFile /<path-to-repo/windows-vagrant/.vagrant/machines/default/virtualbox/private_key
   IdentitiesOnly yes
   LogLevel FATAL
 ```
