@@ -159,6 +159,11 @@ To submit the job script using ``sbatch``:
 sbatch jobscript
 ```
 
+## GPU support
+
+See [Singularity documentation](https://sylabs.io/guides/3.5/user-guide/gpu.html)
+
+
 ### Extras
 
 #### Get Singularity image details
