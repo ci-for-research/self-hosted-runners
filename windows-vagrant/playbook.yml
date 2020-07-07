@@ -2,12 +2,10 @@
 - name: GitHub Actions Runner
   hosts: all
   become: yes
-  vars:
-    - runner_user: vagrant
   tasks:
     - name: Runner User
       user:
-        name: '{{ runner_user }}'
+        name: '{{ ansible_user }}'
         state: present
     - name: Passwordless sudo for {{ runner_user }} user
       lineinfile:
