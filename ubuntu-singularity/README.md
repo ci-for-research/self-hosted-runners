@@ -56,4 +56,20 @@ Now we are ready to build our Singularity image. The following command will use 
 sudo singularity build github-actions-runner-singularity.sif github-actions-runner-singularity.def
 ```
 
-This command will generate ``github-actions-runner-singularity.sif`` image.
+This command will generate ``github-actions-runner-singularity.sif`` (SIF stands for Singularity Image Format) image which we will use to set up the runner.
+
+## Client side configuration
+
+### Generate an OAuth token
+
+We're almost ready to use our Docker image to set up a GitHub Runner, but first we need to
+generate an OAuth token, as follows:
+
+1. Go to [https://github.com/settings/tokens](https://github.com/settings/tokens) and click the ``Generate new token`` button.
+2. Provide your GitHub password when prompted
+3. Fill in a description for the token, for example _GitHub runner for github.com/&lt;your organization&gt;/&lt;your repository&gt;_
+4. Enable the ``repo`` scope and all of its checkboxes, like so:
+
+    ![Token permissions](/images/token_permissions.png)
+
+5. Click ``Generate`` at the bottom. Make sure to copy its value because we'll need it in the next step
