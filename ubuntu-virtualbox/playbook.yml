@@ -64,15 +64,15 @@
         remote_src: yes
 
     - name: Configuring the GitHub Action runner
-      shell:
+      args:
         chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
-        cmd: ./config.sh --url https://github.com/{{ ORG }}/{{ REPO }} --name {{ RUNNER_NAME }} --token {{ CURL_OUTPUT.stdout }} --unattended --replace
+      command: ./config.sh --url https://github.com/{{ ORG }}/{{ REPO }} --name {{ RUNNER_NAME }} --token {{ CURL_OUTPUT.stdout }} --unattended --replace
 
     - name: Install the GitHub Action runner as a service
-      become: yes
-      shell:
+      args:
         chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
-        cmd: ./svc.sh install
+      become: yes
+      command: ./svc.sh install
 
     - name: Enable starting the runner service when the machine starts
       become: yes
@@ -118,18 +118,18 @@
         - restart
 
     - name: Unregister the runner with GitHub
-      become: yes
-      shell:
+      args:
         chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
-        cmd: ./svc.sh uninstall
+      become: yes
+      command: ./svc.sh uninstall
       tags:
         - never
         - uninstall
 
     - name: Uninstall the runner service
-      shell:
+      args:
         chdir: /home/tester/opt/actions-runner/{{ ORG }}/{{ REPO }}/{{ RUNNER_NAME }}
-        cmd: ./config.sh remove --token {{ CURL_OUTPUT.stdout }}
+      command: ./config.sh remove --token {{ CURL_OUTPUT.stdout }}
       tags:
         - never
         - uninstall
