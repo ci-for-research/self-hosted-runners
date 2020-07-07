@@ -69,7 +69,7 @@ ssh-keygen -t rsa -f ./id_rsa -N ''
 ```
 Make sure that the permissions are set correctly:
 
-```
+```shell
 chmod 600 id_rsa
 chmod 644 id_rsa.pub
 ```
