@@ -34,7 +34,7 @@ Start a shell in the Singlarity container
 singularity shell lolcow_latest.sif
 ```
 
-Sun some test commands
+Run some test commands
 
 ```shell
 Singularity> id
