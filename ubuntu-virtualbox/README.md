@@ -16,8 +16,8 @@ physical machine. For guides on how to configure other features in addition to j
 
 ## Prerequisites
 
-1. Install VirtualBox on the client: https://www.virtualbox.org/wiki/Linux_Downloads
-1. Download an Ubuntu iso image from https://ubuntu.com/#download. Both the desktop and the server variant are
+1. Install VirtualBox on the client: [https://www.virtualbox.org/wiki/Linux_Downloads](https://www.virtualbox.org/wiki/Linux_Downloads)
+1. Download an Ubuntu iso image from [https://ubuntu.com/#download](https://ubuntu.com/#download). Both the desktop and the server variant are
 suitable --choose whichever you're comfortable with.
 
 ## Server side configuration
@@ -35,14 +35,14 @@ suitable --choose whichever you're comfortable with.
 1. In Ubuntu's install wizard, set the user's password to ``password``
 1. Update packages
 
-    ```
+    ```shell
     sudo apt update
     sudo apt upgrade
     ```
 
 1. Configure an SSH server (OpenSSH) for remote connection; check permissions on relevant files and directories:
 
-    ```
+    ```shell
     sudo apt install openssh-server
     chmod go-w /home/tester
     mkdir /home/tester/.ssh
@@ -101,7 +101,7 @@ ssh-keygen -t rsa -f ./id_rsa -N ''
 
 Make sure that the permissions are set correctly:
 
-```
+```shell
 chmod 600 id_rsa
 chmod 644 id_rsa.pub
 ```
@@ -198,14 +198,14 @@ ci-server | SUCCESS => {
 For more complicated tasks than ``ping``, it's often inconvenient having to put everything on the command line. Instead,
 a better option is to create a so-called _playbook_ containing all the steps that you want to include in your
 provisioning. The playbook is a YAML file that defines a series of ``tasks``. When creating new tasks, one can start
-from scratch, or make use of tasks that have been published by others (see https://galaxy.ansible.com/).
+from scratch, or make use of tasks that have been published by others (see [https://galaxy.ansible.com/](https://galaxy.ansible.com/)).
 
 We're almost ready to use ``ansible-playbook`` to set up a GitHub Runner on your own server, but first we need to
 generate an OAuth token, as follows:
 
 1. Make a copy of the template file. We will store your token in the copied file momentarily.
 
-    ```
+    ```shell
     cp secret.yml.template secret.yml
     ```
 1. Go to [https://github.com/settings/tokens](https://github.com/settings/tokens) and click the ``Generate new token`` button.

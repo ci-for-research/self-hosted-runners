@@ -1,4 +1,4 @@
-## Intro
+# Intro
 
 This short guide shows how to install Nvidia drivers and CUDA for GRID K2 hardware. For more information about GPUs on SURF HPC Cloud please visit [SURF HPC Documentation](https://doc.hpccloud.surfsara.nl/gpu-attach).
 
@@ -6,7 +6,7 @@ We have 2 methods to install Nvidia drivers and CUDA.
 - Using ansible playbook
 - Following the steps and installing manually
 
-## 1- Installation using ansible playbook
+## Method 1: Installation using ansible playbook
 
 The command below runs the ansible-playbook and installs all necassary software. This ansible-playbook is specifically written for SURF HPC Cloud platform and GRID K2 hardware. However, it can easily be adapted for different platforms and graphics cards.
 
@@ -22,13 +22,13 @@ docker run --rm -ti -v $PWD:/data --workdir=/data ansible/ansible-runner ansible
 
 ``id_rsa`` is your rivate ssh key and ``hosts`` is the file which has the connection details of the server.
 
-## 2- Manual installation
+## Method 2: Manual installation
 
-## Requirements
+### Requirements
 
 CUDA currently officially supports only two versions of Ubuntu: 18.04 and 16.04. This instructions were tested on Ubuntu 18.04.
 
-## System info
+### System info
 
 Distribution info
 
@@ -55,23 +55,21 @@ lspci | grep -i nvidia
 01:01.0 VGA compatible controller: NVIDIA Corporation GK104GL [GRID K2] (rev a1)
 ```
 
-## Pre install
+### Pre install
 
 For Grid K2 card we will need CUDA 8.0. CUDA 8.0 only works with only gcc 5.0 so it should be installed before.
 
 To decide what version of CUDA and Nvidia drivers you need, please check the links below.
 
 See what drivers you need:
-https://www.nvidia.com/Download/index.aspx?lang=en-us
+[https://www.nvidia.com/Download/index.aspx?lang=en-us](https://www.nvidia.com/Download/index.aspx?lang=en-us)
 
 Check compatibility first:
-https://docs.nvidia.com/deploy/cuda-compatibility/index.html
+[https://docs.nvidia.com/deploy/cuda-compatibility/index.html](https://docs.nvidia.com/deploy/cuda-compatibility/index.html)
 
 ```shell
 apt install gcc-5 g++-5
 ```
-
-## Install
 
 ### Install Nvidia drivers
 
@@ -85,7 +83,7 @@ sh ./NVIDIA-Linux-x86_64-367.134.run --accept-license  -s
 ### Install CUDA
 
 Download CUDA 8.0 installer
-```
+```shell
 # wget https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda_8.0.61_375.26_linux-run
 ```
 
@@ -95,10 +93,8 @@ Download Patch release:
 wget https://developer.nvidia.com/compute/cuda/8.0/Prod2/patches/2/cuda_8.0.61.2_linux-run
 ```
 
-### Fix Perl issue
-
 While installing CUDA, we had some issues related to Perl scripts.
-See: https://forums.developer.nvidia.com/t/cant-locate-installutils-pm-in-inc/46952/10
+See: [https://forums.developer.nvidia.com/t/cant-locate-installutils-pm-in-inc/46952/10](https://forums.developer.nvidia.com/t/cant-locate-installutils-pm-in-inc/46952/10)
 
 
 These commands solves the Perl issues.
@@ -109,8 +105,6 @@ cp InstallUtils.pm /usr/lib/x86_64-linux-gnu/perl-base/
 export $PERL5LIB
 rm -rf InstallUtils.pm cuda-installer.pl run_files uninstall_cuda.pl
 ```
-
-### Install CUDA
 
 After fixing the Perl issue, we can install CUDA.
 
@@ -145,4 +139,4 @@ Cuda compilation tools, release 9.1, V9.1.85
 
 ### Example code
 
-See [gpu-houston](https://github.com/ci-for-science/example-gpu-houston) for a simple example code.
+See [gpu-houston](https://github.com/ci-for-research/example-gpu-houston) for a simple example code.
