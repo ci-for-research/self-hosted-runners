@@ -172,7 +172,7 @@ See [Singularity documentation](https://sylabs.io/guides/3.5/user-guide/gpu.html
 
 ## Limitations
 
-Microsoft servers have some pre-installed software (see [here](https://docs.github.com/en/actions/reference/software-installed-on-github-hosted-runners)). Self hosted runners are able to download and use these software. However, this is only possible if self-hosted runner is being run on one of the supported platforms such as Ubuntu. Otherwise, users have to install the required software by themselves.
+GitHub owned servers have some pre-installed software (see [here](https://docs.github.com/en/actions/reference/software-installed-on-github-hosted-runners)). Self hosted runners are able to download and use these software. However, this is only possible if self-hosted runner is being run on one of the supported platforms such as Ubuntu. Otherwise, users have to install the required software by themselves.
 
 ### Extras
 
