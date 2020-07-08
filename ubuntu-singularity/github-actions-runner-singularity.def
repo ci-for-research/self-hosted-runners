@@ -24,6 +24,7 @@ Stage: build
     ca-certificates \
     curl \
     jq \
+    git \
     libcurl4-openssl-dev
 
     echo ${RUNNER_VERSION}
