@@ -1,18 +1,22 @@
 {
    "creators": [
       {
+         "affiliation": "Netherlands eScience Center",
          "name": "Zapata, Felipe",
          "orcid": "0000-0001-8286-677X"
       },
       {
+         "affiliation": "Netherlands eScience Center",
          "name": "Diblen, Faruk",
          "orcid": "0000-0002-0989-929X"
       },
       {
+         "affiliation": "Netherlands eScience Center",
          "name": "Verhoeven, Stefan",
          "orcid": "0000-0002-5821-2060"
       },
       {
+         "affiliation": "Netherlands eScience Center",
          "name": "Spaaks, Jurriaan H.",
          "orcid": "0000-0002-7064-4069"
       },
@@ -22,6 +26,7 @@
          "orcid": "0000-0002-5529-5761"
       },
       {
+         "affiliation": "Netherlands eScience Center",
          "name": "Spreeuw, Hanno",
          "orcid": "0000-0002-5057-0322"
       },

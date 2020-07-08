@@ -3,18 +3,22 @@
 abstract: "Various resources to set up GitHub Actions on self-hosted hardware."
 authors:
   -
+    affiliation: "Netherlands eScience Center"
     family-names: Zapata
     given-names: Felipe
     orcid: "https://orcid.org/0000-0001-8286-677X"
   -
+    affiliation: "Netherlands eScience Center"
     family-names: Diblen
     given-names: Faruk
     orcid: "https://orcid.org/0000-0002-0989-929X"
   -
+    affiliation: "Netherlands eScience Center"
     family-names: Verhoeven
     given-names: Stefan
     orcid: "https://orcid.org/0000-0002-5821-2060"
   -
+    affiliation: "Netherlands eScience Center"
     family-names: Spaaks
     given-names: Jurriaan H.
     orcid: "https://orcid.org/0000-0002-7064-4069"
@@ -24,6 +28,7 @@ authors:
     given-names: Christiaan
     orcid: "https://orcid.org/0000-0002-5529-5761"
   -
+    affiliation: "Netherlands eScience Center"
     family-names: Spreeuw
     given-names: Hanno
     orcid: "https://orcid.org/0000-0002-5057-0322"
