@@ -1,4 +1,4 @@
-# Setting up a CI server with a GitHub Action runner using VirtualBox, from Linux Ubuntu
+# Setting up a CI server with a GitHub Action runner using VirtualBox, from MacOs
 
 After following this guide, you'll have a simple GitHub action workflow on a GitHub repository of your choice. When new
 commits are made to your repository, the workflow delegates work to a server which runs in a Virtual Machine on your own
@@ -23,6 +23,8 @@ suitable --choose whichever you're comfortable with.
 ## Server side configuration
 
 1. Create a new virtual machine in VirtualBox. It's recommended to give it at least 4 GB memory, 2 CPUs, and 20 GB disk space (dynamically allocated).
+1. check the viruatlBox Network manager in thh main menu go to viruatlBox Network manager
+        - make sure that the _viruatlBox Network Adapter_ exists (name vboxnet0) and the DHCP Server is enables 
 1. For the new virtual machine, go to _Settings_ > _Storage_, then under _IDE controller_ select the item marked _Empty_. Then click the icon to load something into the virtual optical disk, then select the Ubuntu iso file.
 1. For the new virtual machine, go to _Settings_ > _Network_
     1. On the _Adapter 1_ tab,
@@ -30,9 +32,20 @@ suitable --choose whichever you're comfortable with.
         - set the _Attached to_ dropdown menu to _NAT_
         - Click _Advanced_, then _Port Forwarding_
         - Add a new rule, with _Protocol_ TCP, _HostIP_ 127.0.0.1, _Host Port_ 2222, leave _Guest IP_ empty, and _Guest Port_ 22
+    1. on the _Adapter 2_ tab,
+        - make sure that the _Enable Network Adapter_ checkbox is checked
+        - set the _Attached to_ dropdown menu to Host-only Adapter
+        - the name will be set to vboxnet0 (the same name as the _viruatlBox Network Adapter)
 1. Start the Virtual Machine for the first time.
 1. In Ubuntu's install wizard, call the user ``tester``
 1. In Ubuntu's install wizard, set the user's password to ``password``
+1. check Virutal Machine IP address
+    ```
+    ifconfig 
+    ```
+    
+    the virtual machine IP address will be listed something like 192.168.1.<add-the-digits print on your screen>
+      
 1. Update packages
 
     ```
@@ -118,23 +131,26 @@ stat -c "%a %n" `ls -1`
 Copy the public half of the key pair (i.e. ``id_rsa.pub``) to the server.
 
 ```shell
-ssh-copy-id -i ./id_rsa.pub -p 2222 tester@127.0.0.1
+ssh-copy-id -i ./id_rsa.pub -p 22 tester@<virtual machine IP address>
 ```
+change XXX to your own Vistual machine IP address 
 
 ### Test connection with server using ``ssh``
 
 Test if you can SSH into the server using the other half of the key pair (i.e. ``id_rsa``)
 
 ```shell
-ssh -i ./id_rsa -p 2222 tester@127.0.0.1
+ssh -i ./id_rsa -p 22 tester@<virtual machine IP address>
 ```
+change XXX to your own Vistual machine IP address
 
 If you get a ``Host key verification failed`` error, clear the existing key with
 
 ```shell
-ssh-keygen -R "[127.0.0.1]:2222"
+ssh-keygen -R "[<virtual machine IP address>]:22"
 ```
 
+change XXX to your own Vistual machine IP address
 and try again.
 
 Log out of the server with
@@ -158,8 +174,8 @@ all:
   hosts:
     ci-server:
       ansible_connection: ssh
-      ansible_host: 127.0.0.1
-      ansible_port: 2222
+      ansible_host: <virutal machine IP address>
+      ansible_port: 22
       ansible_python_interpreter: /usr/bin/python3
       ansible_ssh_private_key_file: ./id_rsa
       ansible_user: tester
