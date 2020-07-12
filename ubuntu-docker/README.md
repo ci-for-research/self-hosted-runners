@@ -1,4 +1,4 @@
-# Setting up a CI server for a GitHub Action runner with Docker from Linux Ubuntu
+# Setting up a CI server for a GitHub Action runner with Docker from MacOS
 
 After following this guide, you'll have a simple GitHub action workflow on a GitHub repository of your choice. When new commits are made to your repository, the workflow delegates work to a server which runs in a [Docker](https://www.docker.com/) container.
 
@@ -9,12 +9,12 @@ For guides on how to configure other features in addition to just the runner, go
 
 ## Prerequisites
 
-1. Install Docker: https://docs.docker.com/engine/install/
+1. Install Docker: https://docs.docker.com/docker-for-mac/install/
 2. Follow post-installation steps https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user to manage docker as a non-root user
 
 ### Testing your Docker setup
 
-Refence: https://docs.docker.com/docker-for-windows/#test-your-installation
+Refence: https://docs.docker.com/docker-for-mac/
 
 1. Open a terminal window
 
@@ -23,7 +23,7 @@ Refence: https://docs.docker.com/docker-for-windows/#test-your-installation
 ```shell
 > docker --version
 
-Docker version 19.03.11-ce, build 42e35e61f3
+Docker version 19.03.12, build 48a66213fe
 ```
 
 3. Pull the hello-world image from Docker Hub and run a container:
