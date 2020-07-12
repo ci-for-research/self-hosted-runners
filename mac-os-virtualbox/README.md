@@ -119,7 +119,7 @@ chmod 600 id_rsa
 chmod 644 id_rsa.pub
 ```
 
-Note you can use ``stat``'s ``%a`` option to see a file's permissions as an octal number, e.g.
+Note you can use ``stat``'s ``%Lp`` option to see a file's permissions as an octal number, e.g.
 
 ```shell
 stat -f "%Lp" <filename>
