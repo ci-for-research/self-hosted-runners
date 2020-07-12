@@ -122,8 +122,8 @@ chmod 644 id_rsa.pub
 Note you can use ``stat``'s ``%a`` option to see a file's permissions as an octal number, e.g.
 
 ```shell
-stat -c "%a %n" <filename>
-stat -c "%a %n" `ls -1`
+stat -f "%Lp" <filename>
+stat -f "%Lp"  `ls -1`
 ```
 
 ### Copy the key pair to the server
