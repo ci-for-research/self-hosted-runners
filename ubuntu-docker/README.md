@@ -9,12 +9,13 @@ For guides on how to configure other features in addition to just the runner, go
 
 ## Prerequisites
 
-1. Install Docker: https://docs.docker.com/docker-for-mac/install/
-2. Follow post-installation steps https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user to manage docker as a non-root user
+=======
+1. Install Docker: [https://docs.docker.com/engine/install/](https://docs.docker.com/engine/install/)
+2. Follow post-installation steps [https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user) to manage docker as a non-root user
 
 ### Testing your Docker setup
 
-Refence: https://docs.docker.com/docker-for-mac/
+Refence: [https://docs.docker.com/docker-for-windows/#test-your-installation](https://docs.docker.com/docker-for-windows/#test-your-installation)
 
 1. Open a terminal window
 
@@ -106,11 +107,11 @@ The command below will start the Docker container in daemon mode. The Docker con
 
 ```shell
 docker run -d --restart always --name github-actions-runner \
-    -e PERSONAL_ACCESS_TOKEN=<Github OAuth token> \
-    -e RUNNER_NAME=<runner name to appear on Github> \
-    -e RUNNER_WORKDIR=/tmp/actions-runner-repo \
-    -e GITHUB_ORG=<organization or username> \
-    -e GITHUB_REPO=<name of the repository> \
+    --env PERSONAL_ACCESS_TOKEN=<Github OAuth token> \
+    --env RUNNER_NAME=<runner name to appear on Github> \
+    --env RUNNER_WORKDIR=/tmp/actions-runner-repo \
+    --env GITHUB_ORG=<organization or username> \
+    --env GITHUB_REPO=<name of the repository> \
     github-actions-runner:latest
 ```
 

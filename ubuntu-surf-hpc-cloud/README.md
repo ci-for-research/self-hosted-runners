@@ -106,7 +106,7 @@ ansible-galaxy install -r requirements.yml
 To provision VM use
 
 ```shell
-ansible-playbook playbook.yml
+ansible-playbook --ask-become-pass playbook.yml
 ```
 
 To view the log of the runner, you can connect to the server via ssh and run
@@ -120,11 +120,10 @@ journalctl -u actions.runner.*
 First unregister runner with
 
 ```shell
-ansible-playbook playbook.yml --tags uninstall
+ansible-playbook --ask-become-pass playbook.yml --tags uninstall
 ```
 
-## Examples:
+## Examples
 
 - [Simple Python example](https://github.com/ci-for-science/example-python-1)
-
 - [Simple GPU example](https://github.com/ci-for-science/example-gpu-houston)

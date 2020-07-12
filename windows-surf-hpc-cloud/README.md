@@ -29,7 +29,7 @@ I set the `PAT` environment variable to my GitHub personal access token.
 Provision the runner by running the playbook with
 
 ```shell
-ansible-playbook playbook.yml
+ansible-playbook --ask-become-pass playbook.yml
 ```
 
 Fill in the account and repo name.
@@ -40,7 +40,7 @@ Playbook ran successfully.
 
 ![Playbook ran OK](ci-hpc-playbook-end.png)
 
-Now I made a change (commit+push) to the repo (https://github.com/sverhoeven/example-gpu-houston).
+Now I made a change (commit+push) to the repo ([https://github.com/sverhoeven/example-gpu-houston](https://github.com/sverhoeven/example-gpu-houston)).
 
 Check in [https://github.com/sverhoeven/example-gpu-houston/settings/actions](https://github.com/sverhoeven/example-gpu-houston/settings/actions) (replace with your account/repo) for runner being active and it is.
 

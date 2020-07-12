@@ -2,7 +2,7 @@ hpchosts:
   hosts:
     hpc:
   vars:
-    ansible_user: root
+    ansible_user: tester
     ansible_connection: ssh
     ansible_host: SERVER_IP
     ansible_port: 22
