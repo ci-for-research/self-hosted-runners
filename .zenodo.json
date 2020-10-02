@@ -1,12 +1,52 @@
 {
    "creators": [
       {
-         "name": "Zapata, Felipe"
+         "affiliation": "Netherlands eScience Center",
+         "name": "Zapata, Felipe",
+         "orcid": "0000-0001-8286-677X"
+      },
+      {
+         "affiliation": "Netherlands eScience Center",
+         "name": "Diblen, Faruk",
+         "orcid": "0000-0002-0989-929X"
+      },
+      {
+         "affiliation": "Netherlands eScience Center",
+         "name": "Verhoeven, Stefan",
+         "orcid": "0000-0002-5821-2060"
+      },
+      {
+         "affiliation": "Netherlands eScience Center",
+         "name": "Spaaks, Jurriaan H.",
+         "orcid": "0000-0002-7064-4069"
+      },
+      {
+         "affiliation": "Netherlands eScience Center",
+         "name": "Meijer, Christiaan",
+         "orcid": "0000-0002-5529-5761"
+      },
+      {
+         "affiliation": "Netherlands eScience Center",
+         "name": "Spreeuw, Hanno",
+         "orcid": "0000-0002-5057-0322"
+      },
+      {
+         "affiliation": "Netherlands eScience Center",
+         "name": "Belloum, Adam",
+         "orcid": "0000-0001-6306-6937"
       }
-   ], 
-   "description": "An Ansible playbook to use GitHub Actions with your own hardware.", 
+   ],
+   "description": "Various resources to set up GitHub Actions on self-hosted hardware.",
+   "keywords": [
+      "Continuous Integration",
+      "Github Actions",
+      "self-hosted runners",
+      "HPC",
+      "GPU",
+      "CI"
+   ],
    "license": {
       "id": "Apache-2.0"
-   }, 
-   "title": "linux_actions_runner"
+   },
+   "title": "Self-hosted runners"
 }
