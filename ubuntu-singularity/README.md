@@ -137,9 +137,28 @@ Singularity containers by-default starts in ``read-only`` mode so you cannot mak
 
 If you stop the running container or interrupt it by pressing to ``CTRL+C``, the Github actions runner will stop and it will be unregistered from your Github repository.
 
+#### Accessing the logs
+
+The singularity instances save the logs in
+`~/.singularity/instances/logs/INSTANCE_NAME` folder.
+
 ## Using on a HPC Cluster
 
+In most of the cases, the HPC user does not have root persmissions s it wont be possible to build the Singularity image. The Singularity image can be built locally and copied to
+the cluster. We will use `scp` command to copy the singularity image.
+
+```shell
+scp github-actions-runner-singularity.sif USERNAME@CLUSTER_IP_ADDRESS:$REMOTE_FOLDER
+```
+
+The `$REMOTE_FOLDER` is typically your home folder which you can figure out using the command below.
+
+```shell
+echo $HOME
+```
+
 In oder to use the Singularity image on a HPC cluster, we first need to create a jobscript. The job script will be handled by the scheduler and eventually it will set up the runner when it is executed.
+
 
 Example:
 ```

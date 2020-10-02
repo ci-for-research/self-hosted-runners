@@ -8,16 +8,16 @@ ENV RUNNER_VERSION=2.267.1
 ENV AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends ca-certificates \
-                                               curl \
-                                               jq \
-                                               libcurl4-openssl-dev \
-                                               sudo \
-                                               tar && \
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        jq \
+        libcurl4-openssl-dev \
+        tar && \
     rm -rf /var/lib/apt/lists/*
 
 RUN printf "\n\033[0;44m---> Creating SSH user.\033[0m\n"
-RUN useradd -rm -d /home/${DOCKER_USER} -s /bin/bash -G sudo -u 1001 ${DOCKER_USER}
+RUN useradd -rm -d /home/${DOCKER_USER} -s /bin/bash -G ${DOCKER_USER} -u 1001 ${DOCKER_USER}
 RUN echo "${DOCKER_USER}:${DOCKER_PASS}" | chpasswd
 WORKDIR /home/${DOCKER_USER}/actions-runner
 
