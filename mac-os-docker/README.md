@@ -1,21 +1,19 @@
 # Setting up a CI server for a GitHub Action runner with Docker from MacOS
 
-After following this guide, you'll have a simple GitHub action workflow on a GitHub repository of your choice. When new commits are made to your repository, the workflow delegates work to a server which runs in a [Docker](https://www.docker.com/) container.
+After following this guide, you'll have a simple GitHub action workflow on a GitHub repository of your choice. When new
+commits are made to your repository; the workflow delegates work to a server which runs **in a [Docker](https://www.docker.com/) container on your own computer in this case a MacOS.>**
 
 This guide distinguishes between the _client_ and the _server_; the client is your own machine; the server is whichever
-machine will run the tests. This document describes the case where the server is a Docker container running on your own machine.
+machine will run the tests. This document describes the case where the server is **a Docker container running on your MacOS machine.**
 
 For guides on how to configure other features in addition to just the runner, go [here](/README.md).
 
 ## Prerequisites
+Install Docker: https://docs.docker.com/docker-for-mac/install/
+for more information to get started with docker for MacOS https://docs.docker.com/docker-for-mac/
 
-=======
-1. Install Docker: [https://docs.docker.com/engine/install/](https://docs.docker.com/engine/install/)
-2. Follow post-installation steps [https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user) to manage docker as a non-root user
 
 ### Testing your Docker setup
-
-Refence: [https://docs.docker.com/docker-for-windows/#test-your-installation](https://docs.docker.com/docker-for-windows/#test-your-installation)
 
 1. Open a terminal window
 
@@ -24,7 +22,7 @@ Refence: [https://docs.docker.com/docker-for-windows/#test-your-installation](ht
 ```shell
 > docker --version
 
-Docker version 19.03.12, build 48a66213fe
+Docker version 19.03.11-ce, build 42e35e61f3
 ```
 
 3. Pull the hello-world image from Docker Hub and run a container:
@@ -107,11 +105,11 @@ The command below will start the Docker container in daemon mode. The Docker con
 
 ```shell
 docker run -d --restart always --name github-actions-runner \
-    --env PERSONAL_ACCESS_TOKEN=<Github OAuth token> \
-    --env RUNNER_NAME=<runner name to appear on Github> \
-    --env RUNNER_WORKDIR=/tmp/actions-runner-repo \
-    --env GITHUB_ORG=<organization or username> \
-    --env GITHUB_REPO=<name of the repository> \
+    -e PERSONAL_ACCESS_TOKEN=<Github OAuth token> \
+    -e RUNNER_NAME=<runner name to appear on Github> \
+    -e RUNNER_WORKDIR=/tmp/actions-runner-repo \
+    -e GITHUB_ORG=<organization or username> \
+    -e GITHUB_REPO=<name of the repository> \
     github-actions-runner:latest
 ```
 
