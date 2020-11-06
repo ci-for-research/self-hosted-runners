@@ -1,21 +1,21 @@
 Bootstrap: library
-From: ubuntu:19.10
+From: ubuntu:20.04
 Stage: build
 
-# %setup
-#     touch /file1
-#     touch ${SINGULARITY_ROOTFS}/file2
 
 %files
     ./entrypoint.sh /
-    # /entrypoint.sh /
 
 %environment
     export LC_ALL=C
     export DEBIAN_FRONTEND=noninteractive
     export RUNNER_VERSION=2.267.1
+    export AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
 
 %post
+    export RUNNER_VERSION=2.267.1
+    chmod +x /entrypoint.sh
+
     apt-get install -y --no-install-recommends software-properties-common
     add-apt-repository universe
     add-apt-repository multiverse
@@ -24,7 +24,16 @@ Stage: build
     ca-certificates \
     curl \
     jq \
+    git \
     libcurl4-openssl-dev
+
+    echo ${RUNNER_VERSION}
+    mkdir /opt/actions-runner && cd /opt/actions-runner
+    curl -L "https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz" > actions_runner.tar.gz && \
+    tar -zxf actions_runner.tar.gz && \
+    rm -f actions_runner.tar.gz && \
+    ./bin/installdependencies.sh
+
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
 
@@ -32,22 +41,3 @@ Stage: build
     echo "Container was created $NOW"
     echo "Arguments received: $*"
     exec /bin/bash /entrypoint.sh "$@"
-
-# %startscript
-#     nc -lp $LISTEN_PORT
-
-# %test
-#     grep -q NAME=\"Ubuntu\" /etc/os-release
-#     if [ $? -eq 0 ]; then
-#         echo "Container base is Ubuntu as expected."
-#     else
-#         echo "Container base is not Ubuntu."
-#     fi
-
-# %labels
-#     Author d@sylabs.io
-#     Version v0.0.1
-
-# %help
-#     This is a demo container used to illustrate a def file that uses all
-#     supported sections.
