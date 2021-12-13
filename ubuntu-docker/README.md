@@ -146,7 +146,7 @@ docker run --rm --name github-actions-runner \
 
 #### Adding a CI workflow on Github
 
-If you now go to GitHub [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/settings/actions](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions),
+If you now go to GitHub [https://github.com/&lt;your organization&gt;/&lt;your repository&gt;/settings/actions/runners](https://github.com/%3Cyour%20organization%3E/%3Cyour%20repository%3E/settings/actions/runners),
 you should see a self-hosted runner with status "Idle":
 
 ![Self hosted runner status is Idle](/images/github-self-hosted-runners-status-idle.png)
