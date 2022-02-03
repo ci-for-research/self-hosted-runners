@@ -37,7 +37,7 @@ authors:
     family-names: Belloum
     given-names: Adam
     orcid: "https://orcid.org/0000-0001-6306-6937"
-cff-version: "1.1.0"
+cff-version: 1.2.0
 doi: "10.5281/zenodo.3904265"
 keywords:
   - "Continuous Integration"
