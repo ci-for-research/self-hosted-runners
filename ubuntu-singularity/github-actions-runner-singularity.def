@@ -16,6 +16,7 @@ Stage: build
     export RUNNER_VERSION=2.267.1
     chmod +x /entrypoint.sh
 
+    apt-get update -y
     apt-get install -y --no-install-recommends software-properties-common
     add-apt-repository universe
     add-apt-repository multiverse
